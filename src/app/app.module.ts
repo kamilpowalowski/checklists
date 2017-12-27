@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { NbThemeModule, NbSidebarModule, NbLayoutModule, NbSidebarService } from '@nebular/theme';
+import { NbThemeModule, NbLayoutModule, NbSidebarModule } from '@nebular/theme';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
@@ -19,7 +19,7 @@ import { AppRoutingModule } from './app-routing.module';
     SharedModule,
     CoreModule
   ],
-  providers: [NbSidebarService],
+  providers: [...NbSidebarModule.forRoot().providers],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

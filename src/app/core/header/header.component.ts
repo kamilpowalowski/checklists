@@ -1,15 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+
+import { NbMenuService, NbSidebarService } from '@nebular/theme';
 
 @Component({
   selector: 'app-header',
+  styleUrls: ['./header.component.scss'],
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
-
-  ngOnInit() {
+  constructor(private sidebarService: NbSidebarService,
+              private menuService: NbMenuService) {
   }
 
+  ngOnInit() {
+
+  }
+
+  toggleSidebar() {
+    this.sidebarService.toggle(true, 'menu-sidebar');
+  }
+
+  goToHome() {
+    this.menuService.navigateHome();
+  }
 }

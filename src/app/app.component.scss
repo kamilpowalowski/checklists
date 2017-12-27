@@ -7,42 +7,6 @@
     flex: 0.15 !important;
   }
 
-  nb-sidebar.settings-sidebar {
-    $sidebar-width: 7.5rem;
-
-    transition: width 0.3s ease;
-    width: $sidebar-width;
-    overflow: hidden;
-
-    &.collapsed {
-      width: 0;
-
-      /deep/ .main-container {
-        width: 0;
-
-        .scrollable {
-          width: $sidebar-width;
-          padding: 1.25rem;
-        }
-      }
-    }
-
-    /deep/ .main-container {
-      width: $sidebar-width;
-      background: nb-theme(color-bg);
-      transition: width 0.3s ease;
-      overflow: hidden;
-
-      .scrollable {
-        width: $sidebar-width;
-      }
-
-      @include nb-for-theme(cosmic) {
-        background: nb-theme(layout-bg);
-      }
-    }
-  }
-
   nb-sidebar.menu-sidebar {
 
     margin-top: nb-theme(sidebar-header-gap);
@@ -58,26 +22,11 @@
       text-align: center;
     }
 
-    background: transparent;
-
-    .main-btn {
-      padding: 0.75rem 2.5rem;
-      margin-top: -2rem;
-      font-weight: bold;
-      transition: padding 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.48);
-
-      i {
-        font-size: 2rem;
-        text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-      }
-      span {
-        padding-left: 0.25rem;
-      }
-
-      i, span {
-        vertical-align: middle;
-      }
+    /deep/ nb-sidebar-footer {
+      padding-bottom: 3.25rem;
     }
+
+    background: transparent;
 
     &.compacted {
 
@@ -86,7 +35,11 @@
         padding-right: 0;
       }
 
-      .main-btn {
+      /deep/ .theme-switch {
+        display: none;
+      }
+
+      /deep/ .main-btn {
         width: 46px;
         height: 44px;
         padding: 0.375rem;
@@ -123,7 +76,11 @@
       }
     }
 
-    .main-btn {
+    /deep/ .main-btn {
+      display: none;
+    }
+
+    /deep/ .theme-switch {
       display: none;
     }
   }

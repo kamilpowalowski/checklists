@@ -3,7 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './core/home/home.component';
 
 const appRoutes: Routes = [
-    { path: '', component: HomeComponent }
+    { path: '', component: HomeComponent },
+    { path: 'checklists', loadChildren: './checklists/checklists.module#ChecklistsModule' }
 ];
 
 @NgModule({

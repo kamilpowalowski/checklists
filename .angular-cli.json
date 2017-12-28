@@ -25,10 +25,15 @@
         "../node_modules/nebular-icons/scss/nebular-icons.scss",
         "../node_modules/ionicons/scss/ionicons.scss",
         "../node_modules/pace-js/templates/pace-theme-flash.tmpl.css",
+        "../node_modules/prismjs/themes/prism.css",
         "./app/styles/styles.scss"
       ],
       "scripts": [
-        "../node_modules/pace-js/pace.min.js"
+        "../node_modules/pace-js/pace.min.js",
+        "../node_modules/prismjs/prism.js",
+        "../node_modules/prismjs/components/prism-csharp.min.js",
+        "../node_modules/prismjs/components/prism-css.min.js",
+        "../node_modules/marked/lib/marked.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

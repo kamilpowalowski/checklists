@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <nb-card>
+        <nb-card-header>{{ checklist.title }}</nb-card-header>
+        <nb-card-body>
+          <div class="row show-grid" *ngIf="shouldPresentDescription()">
+            <div class="col-md-12">
+              <div><markdown>{{ checklist.description }}</markdown></div>
+            </div>
+          </div>
+          <app-checklist-item *ngFor="let item of checklist.items" [item]="item" [level]="1"></app-checklist-item>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+</div>

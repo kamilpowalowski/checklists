@@ -1,3 +1,4 @@
+import { v4 as uuid } from 'uuid';
 
 export class ChecklistItem {
   id: string;
@@ -6,8 +7,9 @@ export class ChecklistItem {
   items: ChecklistItem[];
 
   constructor(title: string, description: string, items: ChecklistItem[]) {
+    this.id = uuid();
     this.title = title;
     this.description = description;
-    this.items = items;
+    this.items = items != null ? items : [];
   }
 }

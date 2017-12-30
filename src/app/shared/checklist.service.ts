@@ -2,8 +2,13 @@ import { ChecklistItem } from './checklist-item.model';
 import { Checklist } from './checklist.model';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
+import { Subject } from 'rxjs/Subject';
 
 export class ChecklistService {
+
+  selectedIdsChanged = new Subject<void>();
+
+  private selectedIds = new Set<string>();
 
   private exampleChecklist = new Checklist(
     'Deploy Angular 4 App to Firebase using Travis CI',
@@ -18,12 +23,9 @@ export class ChecklistService {
         ]
       ),
       new ChecklistItem(
-        'Add `.travis.yml` to project',
-        'fill it with:\n' +
-        '\n' +
-        'Inline `code` has `back-ticks around` it.\n' +
-        '\n' +
-        '```yaml\n' +
+        'Add `.travis.yml` file to the project',
+        'fill the file with:\n' +
+        '```yml\n' +
         'language: node_js\n' +
         'node_js:\n' +
         '  - node\n' +
@@ -65,5 +67,39 @@ export class ChecklistService {
 
   getChecklist(id: string): Observable<Checklist> {
     return Observable.of(this.exampleChecklist);
+  }
+
+  markAsSelected(item: ChecklistItem) {
+    if (item.items.length === 0) {
+      this.selectedIds.add(item.id);
+      this.selectedIdsChanged.next();
+    } else {
+      for (const subItem of item.items) {
+        this.markAsSelected(subItem);
+      }
+    }
+  }
+
+  markAsUnselected(item: ChecklistItem) {
+    if (item.items.length === 0) {
+      this.selectedIds.delete(item.id);
+      this.selectedIdsChanged.next();
+    } else {
+      for (const subItem of item.items) {
+        this.markAsUnselected(subItem);
+      }
+    }
+  }
+
+  isChecklistItemSelected(item: ChecklistItem): boolean {
+    if (item.items.length === 0) {
+      return this.selectedIds.has(item.id);
+    }
+    for (const subItem of item.items) {
+      if (this.isChecklistItemSelected(subItem) === false) {
+        return false;
+      }
+    }
+    return true;
   }
 }

@@ -1,6 +1,9 @@
 import { ChecklistItem } from '../../../shared/checklist-item.model';
 import { Component, OnInit, Input } from '@angular/core';
 import { Checklist } from '../../../shared/checklist.model';
+import { ChecklistService } from '../../../shared/checklist.service';
+import { Subscription } from 'rxjs/Subscription';
+import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 
 
 @Component({
@@ -8,13 +11,25 @@ import { Checklist } from '../../../shared/checklist.model';
   templateUrl: './checklist-item.component.html',
   styleUrls: ['./checklist-item.component.scss']
 })
-export class ChecklistItemComponent implements OnInit {
+export class ChecklistItemComponent implements OnInit, OnDestroy {
   @Input() item: ChecklistItem;
   @Input() level: number;
 
-  constructor() { }
+  selected = false;
+
+  private selectedIdsChangedSubscription: Subscription;
+
+  constructor(private checklistService: ChecklistService) { }
 
   ngOnInit() {
+    this.selectedIdsChangedSubscription = this.checklistService.selectedIdsChanged
+      .subscribe(() => {
+        this.selected = this.checklistService.isChecklistItemSelected(this.item);
+      });
+  }
+
+  ngOnDestroy() {
+    this.selectedIdsChangedSubscription.unsubscribe();
   }
 
   getClassesForLevel(level: number): string[] {
@@ -25,6 +40,15 @@ export class ChecklistItemComponent implements OnInit {
 
   shouldPresentDescription(): boolean {
     return this.item.description != null && this.item.description.length > 0;
+  }
+
+  onCheckboxValueChanged(newValue: boolean) {
+    this.selected = newValue;
+    if (this.selected === true) {
+      this.checklistService.markAsSelected(this.item);
+    } else {
+      this.checklistService.markAsUnselected(this.item);
+    }
   }
 
 }

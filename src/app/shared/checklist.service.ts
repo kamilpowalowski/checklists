@@ -1,105 +1,97 @@
+import { Injectable } from '@angular/core';
 import { ChecklistItem } from './checklist-item.model';
 import { Checklist } from './checklist.model';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
 import { Subject } from 'rxjs/Subject';
+import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
+import * as firebase from 'firebase';
+import * as consts from './firebase.consts';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
+
+@Injectable()
 export class ChecklistService {
 
-  selectedIdsChanged = new Subject<void>();
+  selectedIds = new BehaviorSubject<Set<string>>(new Set());
 
-  private selectedIds = new Set<string>();
-
-  private exampleChecklist = new Checklist(
-    'Deploy Angular 4 App to Firebase using Travis CI',
-    'This tutorial shows how to deploy OSS Angular 4 app from github to Firebase using Travis CI',
-    [
-      new ChecklistItem(
-        'Active Travis CI',
-        null,
-        [
-          new ChecklistItem('Turn on your project on Travis CI', null, null),
-          new ChecklistItem('Select `build only if .travis.yml is pressent` from settings', null, null)
-        ]
-      ),
-      new ChecklistItem(
-        'Add `.travis.yml` file to the project',
-        'fill the file with:\n' +
-        '```yml\n' +
-        'language: node_js\n' +
-        'node_js:\n' +
-        '  - node\n' +
-        '\n' +
-        'branches:\n' +
-        '  only:\n' +
-        '      - master # will only build for master branch commits\n' +
-        '\n' +
-        'before_script:\n' +
-        '  - npm install -g --silent firebase-tools # installs firebase to run firebase deploy\n' +
-        '  - npm install -g --silent @angular/cli\n' +
-        '\n' +
-        'script:\n' +
-        '  - ng build --prod\n' +
-        '\n' +
-        'after_success:\n' +
-        '  - firebase deploy --token $FIREBASE_TOKEN --non-interactive # firebase deploy after angular-cli build\n' +
-        '\n' +
-        'notifications:\n' +
-        '  email:\n' +
-        '    on_failure: change\n' +
-        '    on_success: change\n' +
-        '```',
-        null
-      ),
-      new ChecklistItem('Obtain FIREBASE_TOKEN', null, [
-        new ChecklistItem('Install firebase CLI', '`npm install -g firebase-tools`', null),
-        new ChecklistItem('Call `firebase login:ci` from command line', null, null)
-      ]),
-      new ChecklistItem(
-        'Add new Enviromental variable to Travis CI',
-        'call it FIREBASE_TOKEN, as value put token returned from `firebase login:ci`',
-        null
-      )
-    ]
-  );
-
-  constructor() { }
+  constructor(private firestore: AngularFirestore) {
+    this.firestore
+      .collection(consts.SELECTED_ITEMS_COLLECTION)
+      .doc<{ [key: string]: boolean; }>('user_id')
+      .valueChanges()
+      .distinctUntilChanged()
+      .filter(data => data != null)
+      .subscribe((data) => {
+        const selectedIdsSet = new Set(Object.keys(data));
+        this.selectedIds.next(selectedIdsSet);
+      });
+  }
 
   getChecklist(id: string): Observable<Checklist> {
-    return Observable.of(this.exampleChecklist);
+    const checklistReference = this.firestore
+      .collection(consts.CHECKLISTS_COLLECTION)
+      .doc<Checklist>(id);
+    return checklistReference.valueChanges()
+      .distinctUntilChanged()
+      .map(data => {
+        const itemsReference = checklistReference
+          .collection<ChecklistItem>(consts.CHECKLISTS_ITEMS_COLLECTION);
+        const items = this.checklistItemsForCollectionReference(itemsReference);
+        const checklist = new Checklist(id, data['title'], data['description'], items);
+        return checklist;
+      });
   }
 
   markAsSelected(item: ChecklistItem) {
-    if (item.items.length === 0) {
-      this.selectedIds.add(item.id);
-      this.selectedIdsChanged.next();
+    if (item.items.getValue().length === 0) {
+      this.firestore
+        .collection(consts.SELECTED_ITEMS_COLLECTION)
+        .doc('user_id')
+        .set({ [item.id]: true }, { merge: true });
     } else {
-      for (const subItem of item.items) {
+      for (const subItem of item.items.getValue()) {
         this.markAsSelected(subItem);
       }
     }
   }
 
   markAsUnselected(item: ChecklistItem) {
-    if (item.items.length === 0) {
-      this.selectedIds.delete(item.id);
-      this.selectedIdsChanged.next();
+    if (item.items.getValue().length === 0) {
+      this.firestore
+        .collection(consts.SELECTED_ITEMS_COLLECTION)
+        .doc('user_id')
+        .set({ [item.id]: firebase.firestore.FieldValue.delete() }, { merge: true });
     } else {
-      for (const subItem of item.items) {
+      for (const subItem of item.items.getValue()) {
         this.markAsUnselected(subItem);
       }
     }
   }
 
   isChecklistItemSelected(item: ChecklistItem): boolean {
-    if (item.items.length === 0) {
-      return this.selectedIds.has(item.id);
+    if (item.items.getValue().length === 0) {
+      return this.selectedIds.getValue().has(item.id);
     }
-    for (const subItem of item.items) {
+    for (const subItem of item.items.getValue()) {
       if (this.isChecklistItemSelected(subItem) === false) {
         return false;
       }
     }
     return true;
+  }
+
+  private checklistItemsForCollectionReference(reference: AngularFirestoreCollection<ChecklistItem>): Observable<ChecklistItem[]> {
+    return reference.snapshotChanges()
+      .map(actions => {
+        return actions.map(action => {
+          const data = action.payload.doc.data();
+          const id = action.payload.doc.id;
+          const itemsReference = reference
+            .doc(id)
+            .collection<ChecklistItem>(consts.CHECKLISTS_ITEMS_COLLECTION);
+          const items = this.checklistItemsForCollectionReference(itemsReference);
+          return new ChecklistItem(id, data['order'], data['title'], data['description'], items);
+        });
+      });
   }
 }

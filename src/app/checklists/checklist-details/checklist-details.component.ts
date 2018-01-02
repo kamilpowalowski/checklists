@@ -1,8 +1,11 @@
+import { Observable } from 'rxjs/Observable';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { ChecklistService } from '../../shared/checklist.service';
 import { Checklist } from '../../shared/checklist.model';
-import 'rxjs/add/operator/take';
+import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/do';
+import { ChecklistItem } from '../../shared/checklist-item.model';
 
 @Component({
   selector: 'app-checklist-details',
@@ -11,7 +14,9 @@ import 'rxjs/add/operator/take';
 })
 export class ChecklistDetailsComponent implements OnInit {
 
-  checklist: Checklist;
+  checklist: Observable<Checklist>;
+  description = '';
+  items: Observable<ChecklistItem[]>;
 
   constructor(
     private checklistService: ChecklistService,
@@ -22,20 +27,11 @@ export class ChecklistDetailsComponent implements OnInit {
     this.route.params
       .subscribe((params: Params) => {
         const id = params['id'];
-        this.getChecklist(id);
+        this.checklist = this.checklistService.getChecklist(id)
+          .do((checklist) => {
+            this.description = checklist.description;
+          });
+        this.items = this.checklist.mergeMap(checklist => checklist.items);
       });
   }
-
-  shouldPresentDescription(): boolean {
-    return this.checklist.description != null && this.checklist.description.length > 0;
-  }
-
-  private getChecklist(id: string) {
-    this.checklistService.getChecklist(id)
-      .take(1)
-      .subscribe((checklist) => {
-        this.checklist = checklist;
-      });
-  }
-
 }

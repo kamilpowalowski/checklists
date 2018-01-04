@@ -10,7 +10,7 @@ export class Checklist {
   items = new BehaviorSubject<ChecklistItem[]>([]);
 
   constructor(
-    public id,
+    public id: string,
     public title: string,
     public description: string,
     items: Observable<ChecklistItem[]>

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChecklistService } from './checklist.service';
+import { AccountService } from './account.service';
 
 @NgModule({
   imports: [
@@ -8,7 +9,8 @@ import { ChecklistService } from './checklist.service';
   ],
   declarations: [],
   providers: [
-    ChecklistService
+    ChecklistService,
+    AccountService
   ]
 })
 export class SharedModule { }

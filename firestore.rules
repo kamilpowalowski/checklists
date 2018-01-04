@@ -1,7 +1,32 @@
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write;
+  	match /checklists/{checklistId} {
+
+      function canReadChecklist() {
+      	return get(/databases/$(database)/documents/checklists/$(checklistId)).data.public == true;
+      }
+
+      function canReadAndWriteChecklist() {
+      	return get(/databases/$(database)/documents/checklists/$(checklistId)).data.owner == request.auth.uid;
+      }
+
+      allow read: if canReadChecklist();
+      allow read, write: if canReadAndWriteChecklist();
+
+      match /{allChildren=**} {
+        allow read: if canReadChecklist();
+      	allow read, write: if canReadAndWriteChecklist();
+      }
     }
+
+    match /users/{userId} {
+    	allow read: if request.auth != null;
+      allow read, write: if request.auth.uid == userId;
+    }
+
+    match /selected/{userId} {
+      allow read, write: if request.auth.uid == userId;
+    }
+
   }
 }

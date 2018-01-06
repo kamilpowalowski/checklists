@@ -8,11 +8,11 @@ import 'rxjs/add/operator/do';
 import { ChecklistItem } from '../../shared/checklist-item.model';
 
 @Component({
-  selector: 'app-checklist-details',
-  templateUrl: './checklist-details.component.html',
-  styleUrls: ['./checklist-details.component.scss']
+  selector: 'app-checklist',
+  templateUrl: './checklist.component.html',
+  styleUrls: ['./checklist.component.scss']
 })
-export class ChecklistDetailsComponent implements OnInit {
+export class ChecklistComponent implements OnInit {
 
   checklist: Observable<Checklist>;
   description = '';

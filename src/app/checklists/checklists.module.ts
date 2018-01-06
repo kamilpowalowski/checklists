@@ -2,11 +2,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
 import { ChecklistsRoutingModule } from './checklists-routing.module';
-import { ChecklistDetailsComponent } from './checklist-details/checklist-details.component';
-import { ChecklistsCollectionComponent } from './checklists-collection/checklists-collection.component';
-import { NbCardModule, NbCheckboxModule } from '@nebular/theme';
-import { ChecklistItemComponent } from './checklist-details/checklist-item/checklist-item.component';
+import { ChecklistComponent } from './checklist/checklist.component';
+import { ChecklistsComponent } from './checklists/checklists.component';
+import { NbCardModule, NbCheckboxModule, NbMenuModule } from '@nebular/theme';
+import { ChecklistItemComponent } from './checklist/checklist-item/checklist-item.component';
 import { MarkdownModule } from 'ngx-markdown';
+import { ChecklistsTagsComponent } from './checklists/checklists-tags/checklists-tags.component';
+import { ChecklistsItemsComponent } from './checklists/checklists-items/checklists-items.component';
 
 @NgModule({
   imports: [
@@ -15,12 +17,15 @@ import { MarkdownModule } from 'ngx-markdown';
     ChecklistsRoutingModule,
     NbCardModule,
     NbCheckboxModule,
+    NbMenuModule,
     MarkdownModule.forChild()
   ],
   declarations: [
-    ChecklistDetailsComponent,
-    ChecklistsCollectionComponent,
-    ChecklistItemComponent
+    ChecklistsComponent,
+    ChecklistComponent,
+    ChecklistItemComponent,
+    ChecklistsTagsComponent,
+    ChecklistsItemsComponent
   ]
 })
 export class ChecklistsModule { }

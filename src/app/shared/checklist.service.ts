@@ -38,7 +38,6 @@ export class ChecklistService {
       .collection(consts.CHECKLISTS_COLLECTION)
       .doc<Checklist>(id);
     return checklistReference.valueChanges()
-      .distinctUntilChanged()
       .map(data => {
         const itemsReference = checklistReference
           .collection<ChecklistItem>(consts.CHECKLISTS_ITEMS_COLLECTION);
@@ -111,7 +110,6 @@ export class ChecklistService {
 
     this.selectedIdsSubscription = this.selectedIdsReference
       .valueChanges()
-      .distinctUntilChanged()
       .filter(data => data != null)
       .subscribe((data) => {
         const selectedIdsSet = new Set(Object.keys(data));

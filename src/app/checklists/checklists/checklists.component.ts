@@ -18,7 +18,6 @@ export class ChecklistsComponent implements OnInit {
     this.route.params
     .subscribe((params: Params) => {
       const tag = params['tag'];
-      this.tagsComponent.selectedTag = tag;
     });
   }
 

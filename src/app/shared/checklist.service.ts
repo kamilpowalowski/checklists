@@ -10,6 +10,7 @@ import * as firebase from 'firebase';
 import * as consts from './firebase.consts';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subscription } from 'rxjs/Subscription';
+import 'rxjs/add/operator/distinctUntilChanged';
 
 
 @Injectable()
@@ -38,11 +39,13 @@ export class ChecklistService {
       .collection(consts.CHECKLISTS_COLLECTION)
       .doc<Checklist>(id);
     return checklistReference.valueChanges()
+      .distinctUntilChanged()
       .map(data => {
+        const tags = Object.keys(data['tags']);
         const itemsReference = checklistReference
           .collection<ChecklistItem>(consts.CHECKLISTS_ITEMS_COLLECTION);
         const items = this.checklistItems(itemsReference);
-        const checklist = new Checklist(id, data['title'], data['description'], items);
+        const checklist = new Checklist(id, data['title'], data['description'], tags, items);
         return checklist;
       });
   }
@@ -110,6 +113,7 @@ export class ChecklistService {
 
     this.selectedIdsSubscription = this.selectedIdsReference
       .valueChanges()
+      .distinctUntilChanged()
       .filter(data => data != null)
       .subscribe((data) => {
         const selectedIdsSet = new Set(Object.keys(data));

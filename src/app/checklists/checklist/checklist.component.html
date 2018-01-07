@@ -6,12 +6,18 @@
         <nb-card-body>
           <div class="row show-grid" *ngIf="description.length > 0">
             <div class="col-md-12">
-              <div><markdown>{{ description }}</markdown></div>
+              <div>
+                <markdown>{{ description }}</markdown>
+              </div>
             </div>
           </div>
           <app-checklist-item *ngFor="let item of (items | async)" [item]="item" [level]="1"></app-checklist-item>
         </nb-card-body>
-        <nb-card-footer></nb-card-footer>
+        <nb-card-footer>
+          <a *ngFor="let tag of (checklist | async)?.tags" [routerLink]="['/checklists', 'tags', tag]" routerLinkActive="active">
+            <i class="ion-pound"></i><span>{{ tag }}</span>
+          </a>
+        </nb-card-footer>
       </nb-card>
     </div>
   </div>

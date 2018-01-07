@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NbMenuItem } from '@nebular/theme';
+import { NbMenuItem, NbMenuService } from '@nebular/theme';
 
 @Component({
   selector: 'app-sidebar',
@@ -10,9 +10,29 @@ export class SidebarComponent implements OnInit {
 
   menu: NbMenuItem[] = [];
 
-  constructor() { }
+  constructor(private menuService: NbMenuService) { }
 
   ngOnInit() {
-
+    this.menu = [
+      {
+        title: 'Home',
+        icon: 'nb-home',
+        link: '/home',
+        pathMatch: 'full',
+        home: true
+      },
+      {
+        title: 'Public checklists',
+        icon: 'nb-list',
+        link: '/checklists',
+        pathMatch: 'not-full'
+      },
+      {
+        title: 'My checklists',
+        icon: 'nb-person',
+        link: '/my/checklists',
+        pathMatch: 'not-full'
+      }
+    ];
   }
 }

@@ -6,17 +6,18 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/take';
 
 export class Checklist {
-  tags: string;
   items = new BehaviorSubject<ChecklistItem[]>([]);
 
   constructor(
     public id: string,
     public title: string,
     public description: string,
+    public tags: string[],
     items: Observable<ChecklistItem[]>
   ) {
     this.id = id == null ? uuid() : id;
     this.description = description == null ? '' : description;
+    this.tags = tags == null ? [] : tags;
     items
       .take(1)
       .subscribe((currentItems) => {

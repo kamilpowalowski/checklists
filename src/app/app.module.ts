@@ -18,7 +18,7 @@ import { AppRoutingModule } from './app-routing.module';
   imports: [
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebase, 'checklists'),
-    AngularFirestoreModule,
+    AngularFirestoreModule.enablePersistence(),
     AngularFireAuthModule,
     NbThemeModule.forRoot({ name: 'cosmic' }),
     NbLayoutModule,

@@ -8,7 +8,6 @@ import { NbMenuService, NbMenuItem } from '@nebular/theme';
 })
 export class ChecklistsTagsComponent implements OnInit {
   @Input() tags: string[];
-  @Input() selectedTag: string;
 
   items: NbMenuItem[];
 

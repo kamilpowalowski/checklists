@@ -8,10 +8,12 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { ThemeSwitcherComponent } from './theme-switcher/theme-switcher.component';
 import { SidebarFooterComponent } from './sidebar-footer/sidebar-footer.component';
 import { SidebarHeaderComponent } from './sidebar-header/sidebar-header.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [
     CommonModule,
+    RouterModule,
     NbActionsModule,
     NbMenuModule,
     NbSidebarModule,

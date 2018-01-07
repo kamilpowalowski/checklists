@@ -9,8 +9,7 @@ import { NbMenuService, NbSidebarService } from '@nebular/theme';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private sidebarService: NbSidebarService,
-              private menuService: NbMenuService) {
+  constructor(private sidebarService: NbSidebarService) {
   }
 
   ngOnInit() {
@@ -19,9 +18,5 @@ export class HeaderComponent implements OnInit {
 
   toggleSidebar() {
     this.sidebarService.toggle(true, 'menu-sidebar');
-  }
-
-  goToHome() {
-    this.menuService.navigateHome();
   }
 }

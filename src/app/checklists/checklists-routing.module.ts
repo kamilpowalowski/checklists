@@ -4,7 +4,8 @@ import { ChecklistComponent } from './checklist/checklist.component';
 import { ChecklistsComponent } from './checklists/checklists.component';
 
 const checklistsRoutes: Routes = [
-  { path: '', component: ChecklistsComponent, pathMatch: 'full' },
+  { path: '', redirectTo: 'featured', pathMatch: 'full' },
+  { path: 'featured', component: ChecklistsComponent, pathMatch: 'full' },
   { path: 'tags/:tag', component: ChecklistsComponent, pathMatch: 'full' },
   { path: ':id', component: ChecklistComponent }
 ];

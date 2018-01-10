@@ -1,5 +1,5 @@
-<nb-card>
-  <nb-card-body>
-    checklists items works
+<nb-card *ngFor="let checklist of checklists">
+  <nb-card-body [routerLink]="['/checklists', checklist.id]" routerLinkActive="active">
+    {{ checklist.title }}
   </nb-card-body>
 </nb-card>

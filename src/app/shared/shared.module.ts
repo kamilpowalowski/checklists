@@ -1,3 +1,5 @@
+import { TagsService } from './tags.service';
+import { ChecklistsService } from './checklists.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChecklistService } from './checklist.service';
@@ -9,7 +11,9 @@ import { AccountService } from './account.service';
   ],
   declarations: [],
   providers: [
+    ChecklistsService,
     ChecklistService,
+    TagsService,
     AccountService
   ]
 })

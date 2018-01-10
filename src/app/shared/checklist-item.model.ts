@@ -14,11 +14,11 @@ export class ChecklistItem {
     public description: string,
     items: Observable<ChecklistItem[]>
   ) {
-    this.id = id == null ? uuid() : id;
-    this.description = description == null ? '' : description;
+    this.id = id ? id :  uuid();
+    this.description = description ? description : '';
     items
       .take(1)
-      .subscribe((currentItems) => {
+      .subscribe(currentItems => {
         this.items.next(currentItems);
       });
   }

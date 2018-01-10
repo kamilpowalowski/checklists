@@ -9,6 +9,7 @@ import { ChecklistItemComponent } from './checklist/checklist-item/checklist-ite
 import { MarkdownModule } from 'ngx-markdown';
 import { ChecklistsTagsComponent } from './checklists/checklists-tags/checklists-tags.component';
 import { ChecklistsItemsComponent } from './checklists/checklists-items/checklists-items.component';
+import { ChecklistsMenuComponent } from './checklists/checklists-menu/checklists-menu.component';
 
 @NgModule({
   imports: [
@@ -25,7 +26,8 @@ import { ChecklistsItemsComponent } from './checklists/checklists-items/checklis
     ChecklistComponent,
     ChecklistItemComponent,
     ChecklistsTagsComponent,
-    ChecklistsItemsComponent
+    ChecklistsItemsComponent,
+    ChecklistsMenuComponent
   ]
 })
 export class ChecklistsModule { }

@@ -15,7 +15,6 @@ import { ChecklistItem } from '../../shared/checklist-item.model';
 export class ChecklistComponent implements OnInit {
 
   checklist: Observable<Checklist>;
-  description = '';
   items: Observable<ChecklistItem[]>;
 
   constructor(
@@ -27,10 +26,7 @@ export class ChecklistComponent implements OnInit {
     this.route.params
       .subscribe((params: Params) => {
         const id = params['id'];
-        this.checklist = this.checklistService.getChecklist(id)
-          .do((checklist) => {
-            this.description = checklist.description;
-          });
+        this.checklist = this.checklistService.observeChecklist(id);
         this.items = this.checklist.mergeMap(checklist => checklist.items);
       });
   }

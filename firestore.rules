@@ -1,19 +1,19 @@
 service cloud.firestore {
   match /databases/{database}/documents {
-  	match /checklists/{checklistId} {
+  	match /checklists/{checklist} {
 
-      function canReadChecklist() {
-      	return get(/databases/$(database)/documents/checklists/$(checklistId)).data.public == true;
-      }
-
-      function canReadAndWriteChecklist() {
-      	return get(/databases/$(database)/documents/checklists/$(checklistId)).data.owner == request.auth.uid;
-      }
-
-      allow read: if canReadChecklist();
-      allow read, write: if canReadAndWriteChecklist();
+      allow read: if resource.data.public == true;
+      allow read, write: if resource.data.owner == request.auth.uid;
 
       match /{allChildren=**} {
+        function canReadChecklist() {
+      		return get(/databases/$(database)/documents/checklists/$(checklist)).data.public == true;
+      	}
+
+        function canReadAndWriteChecklist() {
+      		return get(/databases/$(database)/documents/checklists/$(checklist)).data.owner == request.auth.uid;
+      	}
+
         allow read: if canReadChecklist();
       	allow read, write: if canReadAndWriteChecklist();
       }
@@ -26,6 +26,10 @@ service cloud.firestore {
 
     match /selected/{userId} {
       allow read, write: if request.auth.uid == userId;
+    }
+
+    match /tags/{tag=**} {
+    	allow read: if request.auth != null;
     }
 
   }

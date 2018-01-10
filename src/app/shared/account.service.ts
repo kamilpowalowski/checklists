@@ -15,13 +15,13 @@ export class AccountService {
     private firebaseAuth: AngularFireAuth
   ) {
     this.firebaseAuth.authState
-      .subscribe((user) => {
-        if (user == null) {
-          this.account.next(null);
-        } else {
+      .subscribe(user => {
+        if (user) {
           const account = new Account(user.uid, user.isAnonymous);
           this.saveAccount(account);
           this.account.next(account);
+        } else {
+          this.account.next(null);
         }
       });
   }

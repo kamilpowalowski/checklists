@@ -13,15 +13,17 @@ export class Checklist {
     public title: string,
     public description: string,
     public tags: string[],
-    items: Observable<ChecklistItem[]>
+    items: Observable<ChecklistItem[]> | null
   ) {
-    this.id = id == null ? uuid() : id;
-    this.description = description == null ? '' : description;
-    this.tags = tags == null ? [] : tags;
-    items
-      .take(1)
-      .subscribe((currentItems) => {
-        this.items.next(currentItems);
-      });
+    this.id = id ? id : uuid();
+    this.description = description ? description : '';
+    this.tags = tags ? tags : [];
+    if (items) {
+      items
+        .take(1)
+        .subscribe(currentItems => {
+          this.items.next(currentItems);
+        });
+    }
   }
 }

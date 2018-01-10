@@ -21,32 +21,30 @@ export class ChecklistService {
   private selectedIdsReference: AngularFirestoreDocument<{ [key: string]: firebase.firestore.FieldValue }>;
   private selectedIdsSubscription: Subscription;
 
-  constructor(
-    private firestore: AngularFirestore,
-    private accountService: AccountService
-  ) {
+  constructor(private firestore: AngularFirestore, private accountService: AccountService) {
     this.accountService.account.asObservable()
-      .subscribe((account) => {
+      .subscribe(account => {
         this.resetSelectedIds();
-        if (account != null) {
+        if (account) {
           this.observeSelectedIds(account);
         }
       });
   }
 
-  getChecklist(id: string): Observable<Checklist> {
+  observeChecklist(id: string): Observable<Checklist> {
     const checklistReference = this.firestore
       .collection(consts.CHECKLISTS_COLLECTION)
       .doc<Checklist>(id);
-    return checklistReference.valueChanges()
+
+    return checklistReference
+      .valueChanges()
       .distinctUntilChanged()
       .map(data => {
         const tags = Object.keys(data['tags']);
         const itemsReference = checklistReference
           .collection<ChecklistItem>(consts.CHECKLISTS_ITEMS_COLLECTION);
         const items = this.checklistItems(itemsReference);
-        const checklist = new Checklist(id, data['title'], data['description'], tags, items);
-        return checklist;
+        return new Checklist(id, data['title'], data['description'], tags, items);
       });
   }
 
@@ -85,7 +83,8 @@ export class ChecklistService {
   }
 
   private checklistItems(reference: AngularFirestoreCollection<ChecklistItem>): Observable<ChecklistItem[]> {
-    return reference.snapshotChanges()
+    return reference
+      .snapshotChanges()
       .map(actions => {
         return actions.map(action => {
           const data = action.payload.doc.data();
@@ -115,7 +114,7 @@ export class ChecklistService {
       .valueChanges()
       .distinctUntilChanged()
       .filter(data => data != null)
-      .subscribe((data) => {
+      .subscribe(data => {
         const selectedIdsSet = new Set(Object.keys(data));
         this.selectedIds.next(selectedIdsSet);
       });

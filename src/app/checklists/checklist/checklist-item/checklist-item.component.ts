@@ -42,8 +42,8 @@ export class ChecklistItemComponent implements OnInit, OnDestroy {
   }
 
   getClassesForLevel(level: number): string[] {
-    const columnClass = 'col-md-' + (12 - level);
-    const offsetClass = 'offset-md-' + level;
+    const columnClass = `col-md-${(12 - level)}`;
+    const offsetClass = `offset-md-${level}`;
     return [columnClass, offsetClass];
   }
 

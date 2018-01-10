@@ -24,7 +24,7 @@ export class SidebarComponent implements OnInit {
       {
         title: 'Public checklists',
         icon: 'nb-list',
-        link: '/checklists',
+        link: '/checklists/featured',
         pathMatch: 'not-full'
       },
       {

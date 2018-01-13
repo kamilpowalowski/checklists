@@ -6,7 +6,9 @@ import * as firebase from 'firebase';
 import * as consts from './firebase.consts';
 import { ChecklistService } from './checklist.service';
 import 'rxjs/add/observable/combineLatest';
+import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/catch';
 
 @Injectable()
 export class ChecklistsService {
@@ -47,9 +49,12 @@ export class ChecklistsService {
       })
       .flatMap(ids => {
         const checklistsObservables = ids.map(id => {
-          return this.checklistService.observeChecklist(id, false);
+          return this.checklistService.observeChecklist(id, false)
+            .catch(_ => Observable.of(null));
         });
-        return Observable.combineLatest(checklistsObservables);
+
+        return Observable.combineLatest(checklistsObservables)
+          .map(results => results.filter(result => result != null));
       });
 
   }

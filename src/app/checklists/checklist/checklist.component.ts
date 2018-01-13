@@ -26,7 +26,7 @@ export class ChecklistComponent implements OnInit {
     this.route.params
       .subscribe((params: Params) => {
         const id = params['id'];
-        this.checklist = this.checklistService.observeChecklist(id);
+        this.checklist = this.checklistService.observeChecklist(id, true);
         this.items = this.checklist.mergeMap(checklist => checklist.items);
       });
   }

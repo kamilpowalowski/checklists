@@ -31,7 +31,7 @@ export class ChecklistService {
       });
   }
 
-  observeChecklist(id: string): Observable<Checklist> {
+  observeChecklist(id: string, fullData: boolean): Observable<Checklist> {
     const checklistReference = this.firestore
       .collection(consts.CHECKLISTS_COLLECTION)
       .doc<Checklist>(id);
@@ -43,7 +43,7 @@ export class ChecklistService {
         const tags = Object.keys(data['tags']);
         const itemsReference = checklistReference
           .collection<ChecklistItem>(consts.CHECKLISTS_ITEMS_COLLECTION);
-        const items = this.checklistItems(itemsReference);
+        const items = fullData ? this.checklistItems(itemsReference) : null;
         return new Checklist(id, data['title'], data['description'], tags, items);
       });
   }

@@ -4,11 +4,17 @@ import { Observable } from 'rxjs/Observable';
 import { Checklist } from './checklist.model';
 import * as firebase from 'firebase';
 import * as consts from './firebase.consts';
+import { ChecklistService } from './checklist.service';
+import 'rxjs/add/observable/combineLatest';
+import 'rxjs/add/operator/distinctUntilChanged';
 
 @Injectable()
 export class ChecklistsService {
 
-  constructor(private firestore: AngularFirestore) { }
+  constructor(
+    private firestore: AngularFirestore,
+    private checklistService: ChecklistService
+  ) { }
 
   observePublicChecklists(tag: string | null): Observable<Checklist[]> {
     return this.firestore
@@ -18,6 +24,7 @@ export class ChecklistsService {
         return query;
       })
       .snapshotChanges()
+      .distinctUntilChanged()
       .map(actions => {
         return actions.map(action => {
           const id = action.payload.doc.id;
@@ -26,6 +33,25 @@ export class ChecklistsService {
           return new Checklist(id, data['title'], data['description'], tags, null);
         });
       });
+  }
+
+  observeFeaturedChecklists(): Observable<Checklist[]> {
+    return this.firestore
+      .collection(consts.FEATURED_COLLECTION)
+      .snapshotChanges()
+      .distinctUntilChanged()
+      .map(actions => {
+        return actions.map(action => {
+          return action.payload.doc.id;
+        });
+      })
+      .flatMap(ids => {
+        const checklistsObservables = ids.map(id => {
+          return this.checklistService.observeChecklist(id, false);
+        });
+        return Observable.combineLatest(checklistsObservables);
+      });
+
   }
 
 }

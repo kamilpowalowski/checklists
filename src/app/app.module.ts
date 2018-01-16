@@ -4,7 +4,8 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { environment } from '../environments/environment';
-import { NbThemeModule, NbLayoutModule, NbSidebarModule } from '@nebular/theme';
+import { NbThemeModule } from '@nebular/theme';
+import { NbEmailPassAuthProvider, NbAuthModule } from '@nebular/auth';
 import { MarkdownModule } from 'ngx-markdown';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
@@ -21,16 +22,20 @@ import { AppRoutingModule } from './app-routing.module';
     AngularFirestoreModule.enablePersistence(),
     AngularFireAuthModule,
     NbThemeModule.forRoot({ name: 'cosmic' }),
-    NbLayoutModule,
-    NbSidebarModule,
+    NbAuthModule.forRoot({
+      providers: {
+        email: {
+          service: NbEmailPassAuthProvider,
+          config: {}
+        }
+      }
+    }),
     MarkdownModule.forRoot(),
     AppRoutingModule,
     SharedModule,
     CoreModule
   ],
-  providers: [
-    ...NbSidebarModule.forRoot().providers
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

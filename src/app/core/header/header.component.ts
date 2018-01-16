@@ -1,22 +1,56 @@
-import { Component, Input, OnInit } from '@angular/core';
-
-import { NbMenuService, NbSidebarService } from '@nebular/theme';
+import { Account } from './../../shared/account.model';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { NbMenuService, NbSidebarService, NbMenuItem } from '@nebular/theme';
+import { AccountService } from '../../shared/account.service';
 
 @Component({
   selector: 'app-header',
   styleUrls: ['./header.component.scss'],
   templateUrl: './header.component.html',
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
 
-  constructor(private sidebarService: NbSidebarService) {
+  userName: string;
+  userMenu: NbMenuItem[] = [];
+
+  constructor(
+    private sidebarService: NbSidebarService,
+    private accountService: AccountService
+  ) {
   }
 
   ngOnInit() {
+    this.accountService.account
+      .subscribe(account => {
+        if (!account || account.anonymous === true) {
+          this.setAnonymousState();
+        } else {
+          this.setLoggedInState(account);
+        }
+      });
+  }
+
+  ngOnDestroy() {
 
   }
 
   toggleSidebar() {
     this.sidebarService.toggle(true, 'menu-sidebar');
+  }
+
+  private setAnonymousState() {
+    this.userName = 'Anonymous';
+    this.userMenu = [
+      { title: 'Log in', link: '/auth/login' },
+      { title: 'Register', link: '/auth/register' }
+    ];
+  }
+
+  private setLoggedInState(account: Account) {
+    this.userName = account.id;
+    this.userMenu = [
+      { title: 'Profile', link: '/profile' },
+      { title: 'Log out', link: '/auth/logout' }
+    ];
   }
 }

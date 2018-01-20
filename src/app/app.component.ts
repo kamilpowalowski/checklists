@@ -10,6 +10,6 @@ export class AppComponent implements OnInit {
 
   constructor(private accountService: AccountService) { }
   ngOnInit() {
-    this.accountService.signInAnonymously();
+
   }
 }

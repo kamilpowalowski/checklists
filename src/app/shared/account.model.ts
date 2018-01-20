@@ -2,6 +2,7 @@
 export class Account {
   constructor(
     public id: string,
-    public anonymous: boolean
+    public anonymous: boolean,
+    public displayName: string
   ) { }
 }

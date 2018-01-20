@@ -8,7 +8,7 @@ import { ChecklistService } from './checklist.service';
 import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/distinctUntilChanged';
-import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/mergeMap';
 
 @Injectable()
 export class ChecklistsService {
@@ -47,7 +47,7 @@ export class ChecklistsService {
           return action.payload.doc.id;
         });
       })
-      .flatMap(ids => {
+      .mergeMap(ids => {
         const checklistsObservables = ids.map(id => {
           return this.checklistService.observeChecklist(id, false)
             .catch(_ => Observable.of(null));

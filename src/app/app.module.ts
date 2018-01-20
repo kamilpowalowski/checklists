@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
+import { FirebaseAuthenticationProvider } from './shared/firebase-authentication.provider';
 
 @NgModule({
   declarations: [
@@ -21,12 +22,11 @@ import { AppRoutingModule } from './app-routing.module';
     AngularFireModule.initializeApp(environment.firebase, 'checklists'),
     AngularFirestoreModule.enablePersistence(),
     AngularFireAuthModule,
-    NbThemeModule.forRoot({ name: 'cosmic' }),
+    NbThemeModule.forRoot({ name: 'default' }),
     NbAuthModule.forRoot({
       providers: {
         email: {
-          service: NbEmailPassAuthProvider,
-          config: {}
+          service: FirebaseAuthenticationProvider
         }
       }
     }),

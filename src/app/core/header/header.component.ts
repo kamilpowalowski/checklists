@@ -22,10 +22,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.accountService.account
       .subscribe(account => {
-        if (!account || account.anonymous === true) {
-          this.setAnonymousState();
-        } else {
+        if (account) {
           this.setLoggedInState(account);
+        } else {
+          this.setAnonymousState();
         }
       });
   }
@@ -47,7 +47,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   private setLoggedInState(account: Account) {
-    this.userName = account.id;
+    this.userName = account.displayName ? account.displayName : 'Active user';
     this.userMenu = [
       { title: 'Profile', link: '/profile' },
       { title: 'Log out', link: '/auth/logout' }

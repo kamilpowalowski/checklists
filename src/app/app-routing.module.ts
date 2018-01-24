@@ -1,55 +1,25 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {
-  NbAuthComponent,
-  NbLoginComponent,
-  NbLogoutComponent,
-  NbRegisterComponent,
-  NbRequestPasswordComponent,
-  NbResetPasswordComponent
-} from '@nebular/auth';
 import { HomeComponent } from './core/home/home.component';
 import { LayoutComponent } from './core/layout/layout.component';
+import { NbAuthComponent } from '@nebular/auth';
 
 const appRoutes: Routes = [
   {
     path: 'auth',
     component: NbAuthComponent,
-    children: [
-      {
-        path: '',
-        component: NbLoginComponent,
-      },
-      {
-        path: 'login',
-        component: NbLoginComponent,
-      },
-      {
-        path: 'register',
-        component: NbRegisterComponent,
-      },
-      {
-        path: 'logout',
-        component: NbLogoutComponent,
-      },
-      {
-        path: 'request-password',
-        component: NbRequestPasswordComponent,
-      },
-      {
-        path: 'reset-password',
-        component: NbResetPasswordComponent,
-      },
-    ]
+    loadChildren: './authentication/authentication.module#AuthenticationModule'
   },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: '',
-  component: LayoutComponent,
-  children: [
-    { path: 'home', component: HomeComponent },
-    { path: 'checklists', loadChildren: './checklists/checklists.module#ChecklistsModule' },
-    { path: '**', redirectTo: 'home' }
-  ] },
+  {
+    path: '',
+    component: LayoutComponent,
+    children: [
+      { path: 'home', component: HomeComponent },
+      { path: 'checklists', loadChildren: './checklists/checklists.module#ChecklistsModule' },
+      { path: '**', redirectTo: 'home' }
+    ]
+  },
 ];
 
 @NgModule({

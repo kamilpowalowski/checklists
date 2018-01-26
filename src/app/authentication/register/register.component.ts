@@ -26,7 +26,7 @@ export class RegisterComponent implements OnInit {
   submitted = false;
   errors: string[] = [];
   messages: string[] = [];
-  user: any = {};
+  data: any = {};
 
   constructor(protected service: NbAuthService,
     @Inject(NB_AUTH_OPTIONS_TOKEN) protected config = {},
@@ -45,21 +45,22 @@ export class RegisterComponent implements OnInit {
     this.errors = this.messages = [];
     this.submitted = true;
 
-    this.service.register(this.provider, this.user).subscribe((result: NbAuthResult) => {
-      this.submitted = false;
-      if (result.isSuccess()) {
-        this.messages = result.getMessages();
-      } else {
-        this.errors = result.getErrors();
-      }
+    this.service.register(this.provider, this.data)
+      .subscribe((result: NbAuthResult) => {
+        this.submitted = false;
+        if (result.isSuccess()) {
+          this.messages = result.getMessages();
+        } else {
+          this.errors = result.getErrors();
+        }
 
-      const redirect = result.getRedirect();
-      if (redirect) {
-        setTimeout(() => {
-          return this.router.navigateByUrl(redirect);
-        }, this.redirectDelay);
-      }
-    });
+        const redirect = result.getRedirect();
+        if (redirect) {
+          setTimeout(() => {
+            return this.router.navigateByUrl(redirect);
+          }, this.redirectDelay);
+        }
+      });
   }
 
   getConfigValue(key: string): any {

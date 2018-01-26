@@ -8,6 +8,7 @@ import * as firebase from 'firebase/app';
 import * as consts from './firebase.consts';
 import 'rxjs/add/observable/fromPromise';
 import 'rxjs/add/operator/do';
+import { AccountPersistance } from './account-persistance.enum';
 
 @Injectable()
 export class AccountService {
@@ -24,10 +25,41 @@ export class AccountService {
       });
   }
 
+  setPersistence(persistance: AccountPersistance) {
+    switch (persistance) {
+      case AccountPersistance.On:
+        this.firebaseAuth.auth.setPersistence(firebase.auth.Auth.Persistence.SESSION);
+        break;
+      case AccountPersistance.Off:
+        this.firebaseAuth.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+        break;
+    }
+  }
+
   signInWithEmailAndPassword(email: string, password: string): Observable<any> {
     return Observable.fromPromise(
       this.firebaseAuth.auth.signInWithEmailAndPassword(email, password)
     );
+  }
+
+  signInWithGoogle(): Observable<any> {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    return Observable.fromPromise(
+      this.firebaseAuth.auth.signInWithRedirect(provider)
+    );
+  }
+
+  checkSignInRedirectResult(): Observable<any> {
+    return Observable.fromPromise(
+      this.firebaseAuth.auth.getRedirectResult()
+    )
+      .map(result => {
+        if (result.user) {
+          return result;
+        } else {
+          throw new Error('Redirect result empty');
+        }
+      });
   }
 
   signOnWithEmailAndPassword(email: string, password: string): Observable<any> {
@@ -67,7 +99,13 @@ export class AccountService {
 
   private updateAccount(user: firebase.User | null) {
     if (user) {
-      const account = new Account(user.uid, user.isAnonymous, user.displayName);
+      const account = new Account(
+        user.uid,
+        user.isAnonymous,
+        user.displayName,
+        user.photoURL
+      );
+
       this.saveAccount(account);
       this.account.next(account);
     } else {
@@ -81,7 +119,8 @@ export class AccountService {
       .doc(account.id)
       .set({
         anonymous: account.anonymous,
-        'display-name': account.displayName
+        'display-name': account.displayName,
+        'photo': account.photo
       }, { merge: true });
   }
 }

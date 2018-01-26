@@ -11,6 +11,7 @@ import { AccountService } from '../../shared/account.service';
 export class HeaderComponent implements OnInit, OnDestroy {
 
   userName: string;
+  userPhoto: string;
   userMenu: NbMenuItem[] = [];
 
   constructor(
@@ -48,6 +49,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   private setLoggedInState(account: Account) {
     this.userName = account.displayName ? account.displayName : 'Active user';
+    this.userPhoto = account.photo;
     this.userMenu = [
       { title: 'Profile', link: '/profile' },
       { title: 'Log out', link: '/auth/logout' }

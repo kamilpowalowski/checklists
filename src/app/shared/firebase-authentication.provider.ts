@@ -10,8 +10,9 @@ import { NbAbstractAuthProvider, NbAuthResult } from '@nebular/auth';
 import 'rxjs/add/observable/fromPromise';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
-import * as firebase from 'firebase';
 import { AccountService } from './account.service';
+import { AuthenticationMethod } from './authentication-method.enum';
+import { AccountPersistance } from './account-persistance.enum';
 
 @Injectable()
 export class FirebaseAuthenticationProvider extends NbAbstractAuthProvider {
@@ -49,83 +50,74 @@ export class FirebaseAuthenticationProvider extends NbAbstractAuthProvider {
     },
   };
 
-
   constructor(private accountService: AccountService) {
     super();
   }
 
-  /**
-   * Firebase authentication.
-   *
-   * @param data any
-   * @returns Observable<NbAuthResult>
-   */
   authenticate(data?: any): Observable<NbAuthResult> {
-    return this.accountService.signInWithEmailAndPassword(data.email, data.password)
-      .map(res => {
-        return this.processSuccess(res, this.getConfigValue('login.redirect.success'), [res.message]);
+    let signInStream: Observable<any>;
+
+    switch (data.method) {
+      case AuthenticationMethod.Email:
+        this.accountService.setPersistence(data.rememberMe ? AccountPersistance.On : AccountPersistance.Off);
+        signInStream = this.accountService.signInWithEmailAndPassword(data.email, data.password);
+        break;
+      case AuthenticationMethod.Google:
+        this.accountService.setPersistence(data.rememberMe ? AccountPersistance.On : AccountPersistance.Off);
+        signInStream = this.accountService.signInWithGoogle();
+        break;
+      case AuthenticationMethod.Redirect:
+        signInStream = this.accountService.checkSignInRedirectResult();
+        break;
+    }
+
+    return signInStream
+      .map(result => {
+        return this.processSuccess(result, this.getConfigValue('login.redirect.success'), [result.message]);
       })
-      .catch(res => {
+      .catch(result => {
         return Observable.of(
-          this.processFailure(res, this.getConfigValue('login.redirect.failure'), [res.message]),
+          this.processFailure(result, this.getConfigValue('login.redirect.failure'), [result.message]),
         );
       });
   }
 
-  /**
-   * Firebase registration.
-   *
-   * @param data any
-   * @returns Observable<NbAuthResult>
-   */
   register(data?: any): Observable<NbAuthResult> {
     return this.accountService.signOnWithEmailAndPassword(data.email, data.password)
-      .mergeMap(res => {
+      .mergeMap(result => {
         return this.accountService.updateProfile(data.fullName)
           .map(update => {
-            return this.processSuccess(res, this.getConfigValue('register.redirect.success'), [res.message]);
+            return this.processSuccess(result, this.getConfigValue('register.redirect.success'), [result.message]);
           });
       })
-      .catch(res => {
+      .catch(result => {
         return Observable.of(
-          this.processFailure(res, this.getConfigValue('register.redirect.failure'), [res.message]),
+          this.processFailure(result, this.getConfigValue('register.redirect.failure'), [result.message]),
         );
       });
   }
 
-  /**
-   * Firebase restore password.
-   *
-   * @param data any
-   * @returns Observable<NbAuthResult>
-   */
   requestPassword(data?: any): Observable<NbAuthResult> {
     return this.accountService.sendPasswordResetEmail(data.email)
-      .map(res => {
-        return this.processSuccess(res, this.getConfigValue('requestPass.redirect.success'), []);
+      .map(result => {
+        return this.processSuccess(result, this.getConfigValue('requestPass.redirect.success'), []);
       })
-      .catch(res => {
+      .catch(result => {
         return Observable.of(
-          this.processFailure(res, this.getConfigValue('requestPass.redirect.failure'), [res.message])
+          this.processFailure(result, this.getConfigValue('requestPass.redirect.failure'), [result.message])
         );
       });
   }
 
-  /**
-   * Firebase reset password.
-   *
-   * @param data any
-   * @returns Observable<NbAuthResult>
-   */
   resetPassword(data?: any): Observable<NbAuthResult> {
     if (this.accountService.account.value) {
       return this.accountService.updatePassword(data.password)
-        .map(res => {
-          return this.processSuccess(res, this.getConfigValue('resetPass.redirect.success'), []);
+        .map(result => {
+          return this.processSuccess(result, this.getConfigValue('resetPass.redirect.success'), []);
         })
-        .catch(res => {
+        .catch(result => {
           return Observable.of(
-            this.processFailure(res, this.getConfigValue('resetPass.redirect.failure'), [res.message])
+            this.processFailure(result, this.getConfigValue('resetPass.redirect.failure'), [result.message])
           );
         });
     }
@@ -135,20 +127,14 @@ export class FirebaseAuthenticationProvider extends NbAbstractAuthProvider {
     );
   }
 
-  /**
-   * Firebase logout.
-   *
-   * @param data any
-   * @returns Observable<NbAuthResult>
-   */
   logout(data?: any): Observable<NbAuthResult> {
     return this.accountService.signOut()
-      .map(res => {
-        return this.processSuccess(res, this.getConfigValue('logout.redirect.success'), []);
+      .map(result => {
+        return this.processSuccess(result, this.getConfigValue('logout.redirect.success'), []);
       })
-      .catch(res => {
+      .catch(result => {
         return Observable.of(
-          this.processFailure(res, this.getConfigValue('logout.redirect.failure'), [res.message])
+          this.processFailure(result, this.getConfigValue('logout.redirect.failure'), [result.message])
         );
       });
   }

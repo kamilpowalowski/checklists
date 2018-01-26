@@ -20,6 +20,8 @@ import { AuthenticationMethod } from '../../shared/authentication-method.enum';
 })
 export class LoginComponent implements OnInit {
 
+  method = AuthenticationMethod;
+
   redirectDelay = 0;
   showMessages: any = {};
   provider = '';

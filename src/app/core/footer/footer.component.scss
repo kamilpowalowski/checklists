@@ -8,6 +8,15 @@
   justify-content: space-between;
   align-items: center;
 
+  .version-number {
+    font-size: 0.75rem;
+    font-weight: nb-theme(font-weight-light);
+    color: nb-theme(color-fg);
+    bottom: 0rem;
+	  right: 0.25rem;
+	  position: absolute;
+  }
+
   .socials {
     font-size: 2rem;
 

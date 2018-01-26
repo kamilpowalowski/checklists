@@ -1,10 +1,12 @@
 {
   "name": "checklists",
-  "version": "0.0.1",
+  "version": "0.3.0",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
+    "prestart": "node ./node_modules/ng-appversion/index.js",
     "start": "ng serve",
+    "prebuild": "node ./node_modules/ng-appversion/index.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -30,6 +32,7 @@
     "font-awesome": "^4.7.0",
     "handlebars": "^4.0.11",
     "nebular-icons": "^1.0.6",
+    "ng-appversion": "^1.1.0",
     "ngx-markdown": "^1.5.0",
     "pace-js": "^1.0.2",
     "prismjs": "^1.9.0",

@@ -1,7 +1,7 @@
 <nb-auth-block>
   <h2 class="title">Log in</h2>
   <small class="form-text sub-title">Hello! Log in with your email</small>
-  <form (ngSubmit)="login('email')" #form="ngForm" autocomplete="nope">
+  <form (ngSubmit)="login(method.Email)" #form="ngForm" autocomplete="nope">
     <div *ngIf="showMessages.error && errors && errors.length > 0 && !submitted"
          class="alert alert-danger" role="alert">
       <div><strong>Oh snap!</strong></div>
@@ -58,7 +58,7 @@
   <div class="links">
     <small class="form-text">Or connect with:</small>
     <div class="socials">
-      <a target="_blank" class="socicon-google" (click)="login('google')"></a>
+      <a target="_blank" class="socicon-google" (click)="login(method.Google)"></a>
       <!-- <a href="" target="_blank" class="socicon-facebook"></a>
       <a href="" target="_blank" class="socicon-twitter"></a> -->
     </div>

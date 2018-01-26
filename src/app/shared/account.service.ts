@@ -28,10 +28,10 @@ export class AccountService {
   setPersistence(persistance: AccountPersistance) {
     switch (persistance) {
       case AccountPersistance.On:
-        this.firebaseAuth.auth.setPersistence(firebase.auth.Auth.Persistence.SESSION);
+        this.firebaseAuth.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
         break;
       case AccountPersistance.Off:
-        this.firebaseAuth.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+        this.firebaseAuth.auth.setPersistence(firebase.auth.Auth.Persistence.SESSION);
         break;
     }
   }

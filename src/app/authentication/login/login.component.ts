@@ -12,6 +12,7 @@ import { NbAuthService, NB_AUTH_OPTIONS_TOKEN, NbAuthResult } from '@nebular/aut
 import { Router } from '@angular/router';
 import { getDeepFromObject } from '@nebular/auth/helpers';
 import { AuthenticationMethod } from '../../shared/authentication-method.enum';
+import 'rxjs/add/operator/take';
 
 @Component({
   selector: 'app-login',
@@ -43,7 +44,7 @@ export class LoginComponent implements OnInit {
     this.provider = this.getConfigValue('forms.login.provider');
 
     this.submitted = true;
-    this.data.method = AuthenticationMethod.Redirect;
+    this.data.method = AuthenticationMethod.CheckState;
     this.authService
       .authenticate(this.provider, this.data)
       .subscribe((result: NbAuthResult) => {

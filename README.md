@@ -1,6 +1,6 @@
 # lizt.co
 
-[![Build Status](https://travis-ci.org/kamilpowalowski/checklists.svg?branch=master)](https://travis-ci.org/kamilpowalowski/checklists)
+[![Build Status](https://travis-ci.org/kamilpowalowski/lizt.co.svg?branch=master)](https://travis-ci.org/kamilpowalowski/lizt.co)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/fdbdb71140194a75a73bc9df36d5455c)](https://www.codacy.com/app/kamilpowalowski/lizt.co?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=kamilpowalowski/lizt.co&amp;utm_campaign=Badge_Grade)
 
 **lizt.co** will be an open source service to create and share checklists.

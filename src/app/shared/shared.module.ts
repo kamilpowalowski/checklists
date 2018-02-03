@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { ChecklistService } from './checklist.service';
 import { AccountService } from './account.service';
 import { FirebaseAuthenticationProvider } from './firebase-authentication.provider';
+import { AuthenticatedGuard } from './authenticated-guard.service';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { FirebaseAuthenticationProvider } from './firebase-authentication.provid
     ChecklistService,
     TagsService,
     AccountService,
-    FirebaseAuthenticationProvider
+    FirebaseAuthenticationProvider,
+    AuthenticatedGuard
   ]
 })
 export class SharedModule { }

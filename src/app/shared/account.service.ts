@@ -9,11 +9,13 @@ import * as consts from './firebase.consts';
 import 'rxjs/add/observable/fromPromise';
 import 'rxjs/add/operator/do';
 import { AccountPersistance } from './account-persistance.enum';
+import { AuthenticationState } from './authentication-state.enum';
 
 @Injectable()
 export class AccountService {
 
   readonly account = new BehaviorSubject<Account>(null);
+  readonly authenticationState = new BehaviorSubject<AuthenticationState>(AuthenticationState.Unknown);
 
   constructor(
     private firestore: AngularFirestore,
@@ -57,19 +59,6 @@ export class AccountService {
     return this.signInWithProvider(provider);
   }
 
-  checkSignInRedirectResult(): Observable<any> {
-    return Observable.fromPromise(
-      this.firebaseAuth.auth.getRedirectResult()
-    )
-      .map(result => {
-        if (result.user) {
-          return result;
-        } else {
-          throw new Error('Redirect result empty');
-        }
-      });
-  }
-
   signOnWithEmailAndPassword(email: string, password: string): Observable<any> {
     return Observable.fromPromise(
       this.firebaseAuth.auth.createUserWithEmailAndPassword(email, password)
@@ -77,6 +66,7 @@ export class AccountService {
   }
 
   signOut(): Observable<any> {
+    this.updateAccount(null);
     return Observable.fromPromise(
       this.firebaseAuth.auth.signOut()
     );
@@ -116,8 +106,10 @@ export class AccountService {
 
       this.saveAccount(account);
       this.account.next(account);
+      this.authenticationState.next(AuthenticationState.Authenticated);
     } else {
       this.account.next(null);
+      this.authenticationState.next(AuthenticationState.Unauthenticated);
     }
   }
 

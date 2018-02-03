@@ -1,3 +1,4 @@
+import { AuthenticationState } from './authentication-state.enum';
 /**
  * Based on MolochkoVitaly fork of nebular
  * https://github.com/MolochkoVitaly/nebular
@@ -7,12 +8,13 @@ import { OnInit } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { NbAbstractAuthProvider, NbAuthResult } from '@nebular/auth';
-import 'rxjs/add/observable/fromPromise';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/mergeMap';
 import { AccountService } from './account.service';
 import { AuthenticationMethod } from './authentication-method.enum';
 import { AccountPersistance } from './account-persistance.enum';
+import 'rxjs/add/observable/fromPromise';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/filter';
 
 @Injectable()
 export class FirebaseAuthenticationProvider extends NbAbstractAuthProvider {
@@ -57,7 +59,7 @@ export class FirebaseAuthenticationProvider extends NbAbstractAuthProvider {
   authenticate(data?: any): Observable<NbAuthResult> {
     let signInStream: Observable<any>;
 
-    if (data.method !== AuthenticationMethod.Redirect) {
+    if (data.method !== AuthenticationMethod.CheckState) {
       this.accountService.setPersistence(data.rememberMe ? AccountPersistance.On : AccountPersistance.Off);
     }
 
@@ -74,8 +76,17 @@ export class FirebaseAuthenticationProvider extends NbAbstractAuthProvider {
       case AuthenticationMethod.Twitter:
         signInStream = this.accountService.signInWithTwitter();
         break;
-      case AuthenticationMethod.Redirect:
-        signInStream = this.accountService.checkSignInRedirectResult();
+      case AuthenticationMethod.CheckState:
+        signInStream = this.accountService.authenticationState
+          .filter(state => {
+            return state !== AuthenticationState.Unknown;
+          })
+          .map(state => {
+            if (state === AuthenticationState.Authenticated) {
+              return {};
+            }
+            throw new Error('Not authenticated');
+          });
         break;
     }
 

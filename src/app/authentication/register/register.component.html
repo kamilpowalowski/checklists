@@ -97,7 +97,7 @@
 
     <button [disabled]="submitted || !form.valid" class="btn btn-block btn-hero-success"
             [class.btn-pulse]="submitted">
-      Register
+      {{ submitted ? 'Please wait...' : 'Register' }}
     </button>
   </form>
 

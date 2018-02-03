@@ -52,15 +52,15 @@
     </div>
     <button [disabled]="submitted || !form.valid" class="btn btn-block btn-hero-success"
             [class.btn-pulse]="submitted">
-      Log in
+      {{ submitted ? 'Please wait...' : 'Log in' }}
     </button>
   </form>
   <div class="links">
     <small class="form-text">Or connect with:</small>
     <div class="socials">
-      <a target="_blank" class="socicon-google" (click)="login(method.Google)"></a>
-      <!-- <a href="" target="_blank" class="socicon-facebook"></a>
-      <a href="" target="_blank" class="socicon-twitter"></a> -->
+      <a class="socicon-google" (click)="login(method.Google)"></a>
+      <a class="socicon-facebook" (click)="login(method.Facebook)"></a>
+      <a class="socicon-twitter" (click)="login(method.Twitter)"></a>
     </div>
     <small class="form-text">
       Don't have an account? <a routerLink="../register"><strong>Register</strong></a>

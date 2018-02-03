@@ -57,14 +57,22 @@ export class FirebaseAuthenticationProvider extends NbAbstractAuthProvider {
   authenticate(data?: any): Observable<NbAuthResult> {
     let signInStream: Observable<any>;
 
+    if (data.method !== AuthenticationMethod.Redirect) {
+      this.accountService.setPersistence(data.rememberMe ? AccountPersistance.On : AccountPersistance.Off);
+    }
+
     switch (data.method) {
       case AuthenticationMethod.Email:
-        this.accountService.setPersistence(data.rememberMe ? AccountPersistance.On : AccountPersistance.Off);
         signInStream = this.accountService.signInWithEmailAndPassword(data.email, data.password);
         break;
       case AuthenticationMethod.Google:
-        this.accountService.setPersistence(data.rememberMe ? AccountPersistance.On : AccountPersistance.Off);
         signInStream = this.accountService.signInWithGoogle();
+        break;
+      case AuthenticationMethod.Facebook:
+        signInStream = this.accountService.signInWithFacebook();
+        break;
+      case AuthenticationMethod.Twitter:
+        signInStream = this.accountService.signInWithTwitter();
         break;
       case AuthenticationMethod.Redirect:
         signInStream = this.accountService.checkSignInRedirectResult();

@@ -44,9 +44,17 @@ export class AccountService {
 
   signInWithGoogle(): Observable<any> {
     const provider = new firebase.auth.GoogleAuthProvider();
-    return Observable.fromPromise(
-      this.firebaseAuth.auth.signInWithRedirect(provider)
-    );
+    return this.signInWithProvider(provider);
+  }
+
+  signInWithFacebook(): Observable<any> {
+    const provider = new firebase.auth.FacebookAuthProvider();
+    return this.signInWithProvider(provider);
+  }
+
+  signInWithTwitter(): Observable<any> {
+    const provider = new firebase.auth.TwitterAuthProvider();
+    return this.signInWithProvider(provider);
   }
 
   checkSignInRedirectResult(): Observable<any> {
@@ -122,5 +130,11 @@ export class AccountService {
         'display-name': account.displayName,
         'photo': account.photo
       }, { merge: true });
+  }
+
+  private signInWithProvider(provider: firebase.auth.AuthProvider): Observable<any> {
+    return Observable.fromPromise(
+      this.firebaseAuth.auth.signInWithRedirect(provider)
+    );
   }
 }

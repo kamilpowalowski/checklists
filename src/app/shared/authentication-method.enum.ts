@@ -1,3 +1,3 @@
 export enum AuthenticationMethod {
-  Email, Google, Redirect
+  Email, Google, Facebook, Twitter, Redirect
 }

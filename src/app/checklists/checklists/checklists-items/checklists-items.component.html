@@ -1,5 +1,5 @@
 <nb-card *ngFor="let checklist of checklists">
   <nb-card-body [routerLink]="['/checklists', checklist.id]" routerLinkActive="active">
-    {{ checklist.title }}
+    <div [innerHTML]="checklist.title | emoji"></div>
   </nb-card-body>
 </nb-card>

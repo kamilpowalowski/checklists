@@ -1,11 +1,15 @@
 <div class="row">
   <div [ngClass]="getClassesForLevel(level)">
-    <nb-checkbox [value]="selected" (change)="onCheckboxValueChanged(checkbox.value)" #checkbox>{{ item.title }}</nb-checkbox>
+    <nb-checkbox [value]="selected" (change)="onCheckboxValueChanged(checkbox.value)" #checkbox>
+      <div [innerHTML]="item.title | emoji"></div>
+    </nb-checkbox>
   </div>
 </div>
 <div class="row show-grid" *ngIf="item.description.length > 0">
   <div [ngClass]="getClassesForLevel(level + 1)">
-    <div><markdown>{{ item.description }}</markdown></div>
+    <div>
+      <markdown [innerHTML]="item.description | emoji"></markdown>
+    </div>
   </div>
 </div>
 <app-checklist-item *ngFor="let subItem of (item.items | async)" [item]="subItem" [level]="level + 1"></app-checklist-item>

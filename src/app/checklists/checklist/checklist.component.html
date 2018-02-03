@@ -2,13 +2,17 @@
   <div class="row">
     <div class="col-md-12">
       <nb-card>
-        <nb-card-header>{{ (checklist | async)?.title }}</nb-card-header>
+        <nb-card-header>
+          <ng-container *ngIf="checklist | async; let checklist">
+            <div [innerHTML]="checklist.title | emoji"></div>
+          </ng-container>
+        </nb-card-header>
         <nb-card-body>
           <ng-container *ngIf="checklist | async; let checklist">
             <div class="row show-grid" *ngIf="checklist.description.length > 0">
               <div class="col-md-12">
                 <div>
-                  <markdown>{{ checklist.description }}</markdown>
+                  <markdown [innerHTML]="checklist.description | emoji"></markdown>
                 </div>
               </div>
             </div>

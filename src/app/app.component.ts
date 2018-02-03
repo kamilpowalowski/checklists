@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from './shared/account.service';
+import * as EmojiOne from 'emojione';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,8 @@ import { AccountService } from './shared/account.service';
 export class AppComponent implements OnInit {
 
   constructor(private accountService: AccountService) { }
-  ngOnInit() {
 
+  ngOnInit() {
+    EmojiOne.emojiSize = '64';
   }
 }

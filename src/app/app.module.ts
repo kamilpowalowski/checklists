@@ -7,6 +7,7 @@ import { environment } from '../environments/environment';
 import { NbThemeModule } from '@nebular/theme';
 import { NbEmailPassAuthProvider, NbAuthModule, NbAuthOptions } from '@nebular/auth';
 import { MarkdownModule } from 'ngx-markdown';
+import { EmojiModule } from 'angular-emojione';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
@@ -44,6 +45,7 @@ const authModuleSettings: NbAuthOptions = {
     NbThemeModule.forRoot({ name: 'default' }),
     NbAuthModule.forRoot(authModuleSettings),
     MarkdownModule.forRoot(),
+    EmojiModule,
     SharedModule,
     CoreModule
   ],

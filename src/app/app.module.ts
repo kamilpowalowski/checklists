@@ -38,7 +38,7 @@ const authModuleSettings: NbAuthOptions = {
   imports: [
     BrowserModule,
     AppRoutingModule,
-    AngularFireModule.initializeApp(environment.firebase, 'checklists'),
+    AngularFireModule.initializeApp(environment.firebase, 'lizt-co'),
     AngularFirestoreModule.enablePersistence(),
     AngularFireAuthModule,
     NbThemeModule.forRoot({ name: 'default' }),

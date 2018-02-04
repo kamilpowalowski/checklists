@@ -8,6 +8,7 @@ import { NbMenuService, NbMenuItem } from '@nebular/theme';
 })
 export class ChecklistsTagsComponent implements OnChanges {
   @Input() tags: string[];
+  @Input() title: string;
 
   items: NbMenuItem[] = [];
 

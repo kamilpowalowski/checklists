@@ -33,7 +33,7 @@ export class ChecklistsComponent implements OnInit, OnDestroy {
       this.route.data,
       this.route.params
     )
-      .subscribe((value) => {
+      .subscribe(value => {
         const data = value[0];
         const featured: boolean = data['featured'];
         if (featured) {

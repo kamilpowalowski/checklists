@@ -63,7 +63,7 @@
       <a class="socicon-twitter" (click)="login(method.Twitter)"></a>
     </div>
     <small class="form-text">
-      Don't have an account? <a routerLink="../register"><strong>Register</strong></a>
+      Don't have an account? <a routerLink="../register" [queryParams]="{'return-url': returnUrl}"><strong>Register</strong></a>
     </small>
   </div>
 </nb-auth-block>

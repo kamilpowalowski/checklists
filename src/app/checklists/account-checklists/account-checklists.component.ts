@@ -11,6 +11,7 @@ import { Checklist } from '../../shared/checklist.model';
 import { ChecklistsService } from '../../shared/checklists.service';
 import { TagsService } from '../../shared/tags.service';
 import { ChecklistsTagsComponent } from '../checklists/checklists-tags/checklists-tags.component';
+import { ChecklistsMenuComponent } from './../checklists/checklists-menu/checklists-menu.component';
 
 @Component({
   selector: 'app-account-checklists',
@@ -19,9 +20,20 @@ import { ChecklistsTagsComponent } from '../checklists/checklists-tags/checklist
 })
 export class AccountChecklistsComponent implements OnInit, OnDestroy {
 
+  @ViewChild('menuComponent') menuComponent: ChecklistsMenuComponent;
   @ViewChild('tagsComponent') tagsComponent: ChecklistsTagsComponent;
 
   tags: Observable<string[]>;
+  items = [
+    {
+      title: 'all',
+      link: '/checklists/me/all',
+    },
+    {
+      title: 'public',
+      link: '/checklists/me/public',
+    }
+  ];
   checklists: Observable<Checklist[]>;
 
   private routerSubscription: Subscription;

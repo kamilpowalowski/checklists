@@ -9,8 +9,14 @@ const checklistsRoutes: Routes = [
   { path: '', redirectTo: 'featured', pathMatch: 'full' },
   { path: 'featured', component: ChecklistsComponent, pathMatch: 'full', data: { featured: true } },
   { path: 'tags/:tag', component: ChecklistsComponent, pathMatch: 'full', data: { featured: false } },
-  { path: 'me', canActivate: [AuthenticatedGuard], component: AccountChecklistsComponent, pathMatch: 'full' },
-  { path: 'me/tags/:tag', canActivate: [AuthenticatedGuard], component: AccountChecklistsComponent, pathMatch: 'full' },
+  {
+    path: 'me', children: [
+      { path: '', redirectTo: 'all', pathMatch: 'full' },
+      { path: 'all', canActivate: [AuthenticatedGuard], component: AccountChecklistsComponent, pathMatch: 'full' },
+      { path: 'public', canActivate: [AuthenticatedGuard], component: AccountChecklistsComponent, pathMatch: 'full' },
+      { path: 'tags/:tag', canActivate: [AuthenticatedGuard], component: AccountChecklistsComponent, pathMatch: 'full' },
+    ]
+  },
   { path: ':id', component: ChecklistComponent }
 ];
 

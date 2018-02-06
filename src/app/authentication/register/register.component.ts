@@ -1,3 +1,8 @@
+import { Component, Inject, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NB_AUTH_OPTIONS_TOKEN, NbAuthResult, NbAuthService } from '@nebular/auth';
+import { getDeepFromObject } from '@nebular/auth/helpers';
+
 /**
  * Based on nebular NbRegisterComponent
  * https://github.com/akveo/nebular
@@ -7,10 +12,6 @@
  * Licensed under the MIT License. See License.txt in the project root for license information.
  */
 
-import { Component, OnInit, Inject } from '@angular/core';
-import { Router } from '@angular/router';
-import { NbAuthService, NB_AUTH_OPTIONS_TOKEN, NbAuthResult } from '@nebular/auth';
-import { getDeepFromObject } from '@nebular/auth/helpers';
 
 @Component({
   selector: 'app-register',
@@ -28,20 +29,21 @@ export class RegisterComponent implements OnInit {
   messages: string[] = [];
   data: any = {};
 
-  constructor(protected service: NbAuthService,
-    @Inject(NB_AUTH_OPTIONS_TOKEN) protected config = {},
-    protected router: Router) {
+  returnUrl: string;
 
+  constructor(private service: NbAuthService,
+    @Inject(NB_AUTH_OPTIONS_TOKEN) private config = {},
+    private route: ActivatedRoute,
+    private router: Router) { }
+
+  ngOnInit() {
+    this.returnUrl = this.route.snapshot.queryParams['return-url'];
     this.redirectDelay = this.getConfigValue('forms.register.redirectDelay');
     this.showMessages = this.getConfigValue('forms.register.showMessages');
     this.provider = this.getConfigValue('forms.register.provider');
   }
 
-  ngOnInit() {
-
-  }
-
-  register(): void {
+  register() {
     this.errors = this.messages = [];
     this.submitted = true;
 
@@ -57,7 +59,7 @@ export class RegisterComponent implements OnInit {
         const redirect = result.getRedirect();
         if (redirect) {
           setTimeout(() => {
-            return this.router.navigateByUrl(redirect);
+            return this.router.navigateByUrl(this.returnUrl ? this.returnUrl : redirect);
           }, this.redirectDelay);
         }
       });

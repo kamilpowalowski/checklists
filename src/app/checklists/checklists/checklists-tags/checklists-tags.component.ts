@@ -1,5 +1,5 @@
-import { Component, OnChanges, Input } from '@angular/core';
-import { NbMenuService, NbMenuItem } from '@nebular/theme';
+import { Component, Input, OnChanges } from '@angular/core';
+import { NbMenuItem, NbMenuService } from '@nebular/theme';
 
 @Component({
   selector: 'app-checklists-tags',
@@ -9,6 +9,7 @@ import { NbMenuService, NbMenuItem } from '@nebular/theme';
 export class ChecklistsTagsComponent implements OnChanges {
   @Input() tags: string[];
   @Input() title: string;
+  @Input() initialPath: string;
 
   items: NbMenuItem[] = [];
 
@@ -22,7 +23,7 @@ export class ChecklistsTagsComponent implements OnChanges {
     this.items = tags.map(tag => {
       return {
         title: `#${tag}`,
-        link: `/checklists/tags/${tag}`,
+        link: `${this.initialPath}/tags/${tag}`
       };
     });
   }

@@ -1,5 +1,5 @@
-import { NbMenuService, NbMenuItem } from '@nebular/theme';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { NbMenuItem, NbMenuService } from '@nebular/theme';
 
 @Component({
   selector: 'app-checklists-menu',
@@ -8,17 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChecklistsMenuComponent implements OnInit {
 
-  items: NbMenuItem[] = [];
+  @Input() title: string;
+  @Input() items: NbMenuItem[] = [];
 
   constructor(private menuService: NbMenuService) { }
 
   ngOnInit() {
-    this.items = [
-      {
-        title: 'featured',
-        link: '/checklists/featured',
-      }
-    ];
   }
 
 }

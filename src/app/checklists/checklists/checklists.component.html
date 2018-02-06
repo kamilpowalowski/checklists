@@ -1,8 +1,8 @@
 <div class="container">
   <div class="row">
     <div class="col-md-4">
-      <app-checklists-menu></app-checklists-menu>
-      <app-checklists-tags [tags]="tags | async" title="Popular tags" #tagsComponent></app-checklists-tags>
+      <app-checklists-menu title="Menu" [items]="items" #menuComponent></app-checklists-menu>
+      <app-checklists-tags [tags]="tags | async" title="Popular tags" initialPath="/checklists" #tagsComponent></app-checklists-tags>
     </div>
     <div class="col-md-8">
       <app-checklists-items [checklists]="checklists | async"></app-checklists-items>

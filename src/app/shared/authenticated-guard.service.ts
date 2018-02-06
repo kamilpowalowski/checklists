@@ -1,10 +1,15 @@
-import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
-import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { AccountService } from './account.service';
+import {
+  ActivatedRouteSnapshot,
+  CanActivate,
+  Router,
+  RouterStateSnapshot
+  } from '@angular/router';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/take';
+import { Observable } from 'rxjs/Observable';
+import { AccountService } from './account.service';
 import { AuthenticationState } from './authentication-state.enum';
 
 @Injectable()
@@ -22,7 +27,7 @@ export class AuthenticatedGuard implements CanActivate {
       })
       .do(authenticated => {
         if (!authenticated) {
-          this.router.navigate(['/auth', 'login']);
+          this.router.navigate(['/auth', 'login'], { queryParams: { 'return-url': state.url }});
         }
       });
   }

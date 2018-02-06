@@ -1,12 +1,18 @@
-import { Subscription } from 'rxjs/Subscription';
-import { ChecklistsService } from './../../shared/checklists.service';
-import { Observable } from 'rxjs/Observable';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild
+  } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { ChecklistsTagsComponent } from './checklists-tags/checklists-tags.component';
-import { TagsService } from './../../shared/tags.service';
-import { Checklist } from './../../shared/checklist.model';
 import 'rxjs/add/observable/combineLatest';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+import { Checklist } from './../../shared/checklist.model';
+import { ChecklistsService } from './../../shared/checklists.service';
+import { TagsService } from './../../shared/tags.service';
+import { ChecklistsMenuComponent } from './checklists-menu/checklists-menu.component';
+import { ChecklistsTagsComponent } from './checklists-tags/checklists-tags.component';
 
 @Component({
   selector: 'app-checklists',
@@ -14,9 +20,16 @@ import 'rxjs/add/observable/combineLatest';
   styleUrls: ['./checklists.component.scss']
 })
 export class ChecklistsComponent implements OnInit, OnDestroy {
+  @ViewChild('menuComponent') menuComponent: ChecklistsMenuComponent;
   @ViewChild('tagsComponent') tagsComponent: ChecklistsTagsComponent;
 
   tags: Observable<string[]>;
+  items = [
+    {
+      title: 'featured',
+      link: '/checklists/featured',
+    }
+  ];
   checklists: Observable<Checklist[]>;
 
   private routerSubscription: Subscription;

@@ -1,18 +1,18 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { AngularFireModule } from 'angularfire2';
-import { AngularFirestoreModule } from 'angularfire2/firestore';
-import { AngularFireAuthModule } from 'angularfire2/auth';
-import { environment } from '../environments/environment';
+import { BrowserModule } from '@angular/platform-browser';
+import { NbAuthModule, NbAuthOptions, NbEmailPassAuthProvider } from '@nebular/auth';
 import { NbThemeModule } from '@nebular/theme';
-import { NbEmailPassAuthProvider, NbAuthModule, NbAuthOptions } from '@nebular/auth';
-import { MarkdownModule } from 'ngx-markdown';
 import { EmojiModule } from 'angular-emojione';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { MarkdownModule } from 'ngx-markdown';
+import { environment } from '../environments/environment';
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
-import { SharedModule } from './shared/shared.module';
-import { AppRoutingModule } from './app-routing.module';
 import { FirebaseAuthenticationProvider } from './shared/firebase-authentication.provider';
+import { SharedModule } from './shared/shared.module';
 
 const authModuleSettings: NbAuthOptions = {
   providers: {
@@ -22,12 +22,8 @@ const authModuleSettings: NbAuthOptions = {
   },
   forms: {
     validation: {
-      password: {
-        minLength: 6
-      },
-      fullName: {
-        required: true
-      }
+      password: { minLength: 6 },
+      fullName: { required: true }
     }
   }
 };

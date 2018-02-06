@@ -103,7 +103,7 @@
 
   <div class="links">
     <small class="form-text">
-      Already have an account? <a routerLink="../login"><strong>Log in</strong></a>
+      Already have an account? <a routerLink="../login" [queryParams]="{'return-url': returnUrl}"><strong>Log in</strong></a>
     </small>
   </div>
 </nb-auth-block>

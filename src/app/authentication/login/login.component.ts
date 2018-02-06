@@ -1,3 +1,10 @@
+import { Component, Inject, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NB_AUTH_OPTIONS_TOKEN, NbAuthResult, NbAuthService } from '@nebular/auth';
+import { getDeepFromObject } from '@nebular/auth/helpers';
+import 'rxjs/add/operator/take';
+import { AuthenticationMethod } from '../../shared/authentication-method.enum';
+
 /**
  * Based on nebular NbLoginComponent
  * https://github.com/akveo/nebular
@@ -7,12 +14,6 @@
  * Licensed under the MIT License. See License.txt in the project root for license information.
  */
 
-import { Component, OnInit, Inject } from '@angular/core';
-import { NbAuthService, NB_AUTH_OPTIONS_TOKEN, NbAuthResult } from '@nebular/auth';
-import { Router } from '@angular/router';
-import { getDeepFromObject } from '@nebular/auth/helpers';
-import { AuthenticationMethod } from '../../shared/authentication-method.enum';
-import 'rxjs/add/operator/take';
 
 @Component({
   selector: 'app-login',
@@ -32,13 +33,18 @@ export class LoginComponent implements OnInit {
   data: any = { rememberMe: true };
   submitted = false;
 
+  returnUrl: string;
+
   constructor(
     private authService: NbAuthService,
     @Inject(NB_AUTH_OPTIONS_TOKEN) private config = {},
+    private route: ActivatedRoute,
     private router: Router
   ) { }
 
   ngOnInit() {
+    this.returnUrl = this.route.snapshot.queryParams['return-url'];
+
     this.redirectDelay = this.getConfigValue('forms.login.redirectDelay');
     this.showMessages = this.getConfigValue('forms.login.showMessages');
     this.provider = this.getConfigValue('forms.login.provider');
@@ -56,7 +62,7 @@ export class LoginComponent implements OnInit {
 
         const redirect = result.getRedirect();
         if (redirect) {
-          this.router.navigateByUrl(redirect);
+          this.router.navigateByUrl(this.returnUrl ? this.returnUrl : redirect);
         }
       });
   }
@@ -80,7 +86,7 @@ export class LoginComponent implements OnInit {
         const redirect = result.getRedirect();
         if (redirect) {
           setTimeout(() => {
-            return this.router.navigateByUrl(redirect);
+            return this.router.navigateByUrl(this.returnUrl ? this.returnUrl : redirect);
           }, this.redirectDelay);
         }
       });

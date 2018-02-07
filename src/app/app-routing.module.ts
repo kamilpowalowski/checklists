@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
+import { NbAuthComponent } from '@nebular/auth';
 import { HomeComponent } from './core/home/home.component';
 import { LayoutComponent } from './core/layout/layout.component';
-import { NbAuthComponent } from '@nebular/auth';
 
 const appRoutes: Routes = [
   {
@@ -16,7 +16,10 @@ const appRoutes: Routes = [
     component: LayoutComponent,
     children: [
       { path: 'home', component: HomeComponent },
-      { path: 'checklists', loadChildren: './checklists/checklists.module#ChecklistsModule' },
+      {
+        path: 'checklists',
+        loadChildren: './checklists/checklists.module#ChecklistsModule'
+      },
       { path: '**', redirectTo: 'home' }
     ]
   },

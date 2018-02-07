@@ -24,13 +24,13 @@ export class SidebarComponent implements OnInit {
       {
         title: 'Public checklists',
         icon: 'nb-list',
-        link: '/checklists/featured',
+        link: '/checklists/public',
         pathMatch: 'not-full'
       },
       {
         title: 'My checklists',
         icon: 'nb-person',
-        link: '/checklists/me/all',
+        link: '/checklists/me',
         pathMatch: 'not-full'
       }
     ];

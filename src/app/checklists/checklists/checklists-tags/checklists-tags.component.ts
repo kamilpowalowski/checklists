@@ -23,7 +23,8 @@ export class ChecklistsTagsComponent implements OnChanges {
     this.items = tags.map(tag => {
       return {
         title: `#${tag}`,
-        link: `${this.initialPath}/tags/${tag}`
+        link: `${this.initialPath}/tags/${tag}`,
+        pathMatch: 'full'
       };
     });
   }

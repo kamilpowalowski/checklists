@@ -6,15 +6,46 @@ import { ChecklistComponent } from './checklist/checklist.component';
 import { ChecklistsComponent } from './checklists/checklists.component';
 
 const checklistsRoutes: Routes = [
-  { path: '', redirectTo: 'featured', pathMatch: 'full' },
-  { path: 'featured', component: ChecklistsComponent, pathMatch: 'full', data: { featured: true } },
-  { path: 'tags/:tag', component: ChecklistsComponent, pathMatch: 'full', data: { featured: false } },
   {
-    path: 'me', children: [
+    path: 'public',
+    children: [
+      { path: '', redirectTo: 'featured', pathMatch: 'full' },
+      {
+        path: 'featured',
+        component: ChecklistsComponent,
+        pathMatch: 'full',
+        data: { featured: true }
+      },
+      {
+        path: 'tags/:tag',
+        component: ChecklistsComponent,
+        pathMatch: 'full',
+        data: { featured: false }
+      }
+    ]
+  },
+  {
+    path: 'me',
+    children: [
       { path: '', redirectTo: 'all', pathMatch: 'full' },
-      { path: 'all', canActivate: [AuthenticatedGuard], component: AccountChecklistsComponent, pathMatch: 'full' },
-      { path: 'public', canActivate: [AuthenticatedGuard], component: AccountChecklistsComponent, pathMatch: 'full' },
-      { path: 'tags/:tag', canActivate: [AuthenticatedGuard], component: AccountChecklistsComponent, pathMatch: 'full' },
+      {
+        path: 'all',
+        canActivate: [AuthenticatedGuard],
+        component: AccountChecklistsComponent,
+        pathMatch: 'full'
+      },
+      {
+        path: 'public',
+        canActivate: [AuthenticatedGuard],
+        component: AccountChecklistsComponent,
+        pathMatch: 'full'
+      },
+      {
+        path: 'tags/:tag',
+        canActivate: [AuthenticatedGuard],
+        component: AccountChecklistsComponent,
+        pathMatch: 'full'
+      },
     ]
   },
   { path: ':id', component: ChecklistComponent }

@@ -1,20 +1,29 @@
-import { NbActionsModule, NbMenuModule, NbMenuService, NbSidebarModule, NbUserModule, NbLayoutModule } from '@nebular/theme';
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HeaderComponent } from './header/header.component';
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import {
+  NbActionsModule,
+  NbLayoutModule,
+  NbMenuModule,
+  NbMenuService,
+  NbSidebarModule,
+  NbUserModule
+  } from '@nebular/theme';
+import { AngularSvgIconModule } from 'angular-svg-icon';
 import { FooterComponent } from './footer/footer.component';
+import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { LayoutComponent } from './layout/layout.component';
-import { SidebarComponent } from './sidebar/sidebar.component';
-import { ThemeSwitcherComponent } from './theme-switcher/theme-switcher.component';
 import { SidebarFooterComponent } from './sidebar-footer/sidebar-footer.component';
 import { SidebarHeaderComponent } from './sidebar-header/sidebar-header.component';
-import { RouterModule } from '@angular/router';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { ThemeSwitcherComponent } from './theme-switcher/theme-switcher.component';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
+    AngularSvgIconModule,
     NbActionsModule,
     NbMenuModule,
     NbLayoutModule,

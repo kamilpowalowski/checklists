@@ -45,15 +45,27 @@
     }
 
     .logo {
-      padding: 0 nb-theme(padding);
+      padding: 0rem nb-theme(padding);
       font-size: 1.75rem;
       font-weight: nb-theme(font-weight-bolder);
       border-left: 1px solid nb-theme(separator);
       white-space: nowrap;
       cursor: pointer;
       text-decoration: none;
+      margin-top: 0.25rem;
+
+      .icon {
+        width: 2rem;
+        vertical-align: middle;
+        margin-top: 0.25rem;
+
+        /deep/ .shape {
+          stroke: nb-theme(color-fg-heading);
+        }
+      }
 
       span {
+        vertical-align: middle;
         font-weight: nb-theme(font-weight-normal);
       }
     }

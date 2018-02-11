@@ -20,7 +20,7 @@
           <app-checklist-item *ngFor="let item of (items | async)" [item]="item" [level]="1"></app-checklist-item>
         </nb-card-body>
         <nb-card-footer>
-          <a *ngFor="let tag of (checklist | async)?.tags" [routerLink]="['/checklists', 'tags', tag]" routerLinkActive="active">
+          <a *ngFor="let tag of (checklist | async)?.tags" [routerLink]="['/checklists', 'public', 'tags', tag]" routerLinkActive="active">
             #{{ tag }}
           </a>
         </nb-card-footer>

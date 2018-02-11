@@ -32,19 +32,22 @@ const checklistsRoutes: Routes = [
         path: 'all',
         canActivate: [AuthenticatedGuard],
         component: AccountChecklistsComponent,
-        pathMatch: 'full'
+        pathMatch: 'full',
+        data: { onlyPublic: false }
       },
       {
         path: 'public',
         canActivate: [AuthenticatedGuard],
         component: AccountChecklistsComponent,
-        pathMatch: 'full'
+        pathMatch: 'full',
+        data: { onlyPublic: true }
       },
       {
         path: 'tags/:tag',
         canActivate: [AuthenticatedGuard],
         component: AccountChecklistsComponent,
-        pathMatch: 'full'
+        pathMatch: 'full',
+        data: { onlyPublic: false }
       },
     ]
   },

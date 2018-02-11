@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from 'angularfire2/firestore';
+import { AngularFirestore, QueryFn } from 'angularfire2/firestore';
 import * as firebase from 'firebase';
 import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/mergeMap';
 import { Observable } from 'rxjs/Observable';
+import { AccountService } from './account.service';
 import { Checklist } from './checklist.model';
 import { ChecklistService } from './checklist.service';
 import * as consts from './firebase.consts';
@@ -15,26 +16,16 @@ export class ChecklistsService {
 
   constructor(
     private firestore: AngularFirestore,
-    private checklistService: ChecklistService
+    private checklistService: ChecklistService,
+    private accountService: AccountService
   ) { }
 
   observePublicChecklists(tag: string | null): Observable<Checklist[]> {
-    return this.firestore
-      .collection(consts.CHECKLISTS_COLLECTION, ref => {
-        let query = ref.where('public', '==', true);
-        query = tag ? query.where(`tags.${tag}`, '==', true) : query;
-        return query;
-      })
-      .snapshotChanges()
-      .distinctUntilChanged()
-      .map(actions => {
-        return actions.map(action => {
-          const id = action.payload.doc.id;
-          const data = action.payload.doc.data();
-          const tags = Object.keys(data['tags']);
-          return new Checklist(id, data['title'], data['description'], tags, null);
-        });
-      });
+    return this.observeChecklists(ref => {
+      let query = ref.where('public', '==', true);
+      query = tag ? query.where(`tags.${tag}`, '==', true) : query;
+      return query;
+    });
   }
 
   observeFeaturedChecklists(): Observable<Checklist[]> {
@@ -58,13 +49,19 @@ export class ChecklistsService {
       });
   }
 
-  observeAccountChecklists(tag: string | null): Observable<Checklist[]> {
+  observeAccountChecklists(tag: string | null, onlyPublic: boolean): Observable<Checklist[]> {
+    const accountId = this.accountService.account.getValue().id;
+    return this.observeChecklists(ref => {
+      let query = ref.where('owner', '==', accountId);
+      query = onlyPublic ? query.where('public', '==', true) : query;
+      query = tag ? query.where(`tags.${tag}`, '==', true) : query;
+      return query;
+    });
+  }
+
+  private observeChecklists(queryFn?: QueryFn): Observable<Checklist[]> {
     return this.firestore
-      .collection(consts.CHECKLISTS_COLLECTION, ref => {
-        let query = ref.where('public', '==', true);
-        query = tag ? query.where(`tags.${tag}`, '==', true) : query;
-        return query;
-      })
+      .collection(consts.CHECKLISTS_COLLECTION, queryFn)
       .snapshotChanges()
       .distinctUntilChanged()
       .map(actions => {

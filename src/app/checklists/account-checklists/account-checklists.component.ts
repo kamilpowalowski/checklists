@@ -46,10 +46,18 @@ export class AccountChecklistsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.tags = this.tagsService.observeAccountTags();
 
-    this.routerSubscription = this.route.params
-      .subscribe(params => {
+    this.routerSubscription = Observable.combineLatest(
+      this.route.data,
+      this.route.params
+    )
+      .subscribe(value => {
+        const data = value[0];
+        const onlyPublic: boolean = data['onlyPublic'];
+
+        const params = value[1];
         const tag = params['tag'];
-        this.checklists = this.checklistsService.observeAccountChecklists(tag);
+
+        this.checklists = this.checklistsService.observeAccountChecklists(tag, onlyPublic);
       });
   }
 

@@ -1,7 +1,13 @@
-import { Account } from './../../shared/account.model';
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { NbMenuService, NbSidebarService, NbMenuItem } from '@nebular/theme';
+import {
+  Component,
+  Input,
+  OnDestroy,
+  OnInit
+  } from '@angular/core';
+import { Router } from '@angular/router';
+import { NbMenuItem, NbMenuService, NbSidebarService } from '@nebular/theme';
 import { AccountService } from '../../shared/account.service';
+import { Account } from './../../shared/account.model';
 
 @Component({
   selector: 'app-header',
@@ -15,6 +21,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   userMenu: NbMenuItem[] = [];
 
   constructor(
+    private router: Router,
     private sidebarService: NbSidebarService,
     private accountService: AccountService
   ) {
@@ -37,6 +44,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   toggleSidebar() {
     this.sidebarService.toggle(true, 'menu-sidebar');
+  }
+
+  createChecklist() {
+    this.router.navigate(['/checklists', 'new']);
   }
 
   private setAnonymousState() {

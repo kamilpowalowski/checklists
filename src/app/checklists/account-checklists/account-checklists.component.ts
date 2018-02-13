@@ -10,8 +10,8 @@ import { Subscription } from 'rxjs/Subscription';
 import { Checklist } from '../../shared/checklist.model';
 import { ChecklistsService } from '../../shared/checklists.service';
 import { TagsService } from '../../shared/tags.service';
+import { ChecklistsMenuComponent } from '../checklists/checklists-menu/checklists-menu.component';
 import { ChecklistsTagsComponent } from '../checklists/checklists-tags/checklists-tags.component';
-import { ChecklistsMenuComponent } from './../checklists/checklists-menu/checklists-menu.component';
 
 @Component({
   selector: 'app-account-checklists',
@@ -25,14 +25,9 @@ export class AccountChecklistsComponent implements OnInit, OnDestroy {
 
   tags: Observable<string[]>;
   items = [
-    {
-      title: 'all',
-      link: '/checklists/me/all',
-    },
-    {
-      title: 'public',
-      link: '/checklists/me/public',
-    }
+    { title: 'new checklist', link: '/checklists/new' },
+    { title: 'all', link: '/checklists/me/all' },
+    { title: 'public', link: '/checklists/me/public' }
   ];
   checklists: Observable<Checklist[]>;
 

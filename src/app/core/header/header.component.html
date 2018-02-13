@@ -9,8 +9,9 @@
     </a>
   </div>
 </div>
-<nb-actions class="header-container right medium" size="medium">
+<nb-actions class="header-container right" size="medium">
   <nb-action class="control-item">
     <nb-user [menu]="userMenu" [name]="userName" [picture]="userPhoto"></nb-user>
   </nb-action>
+  <nb-action class="control-item" icon="nb-plus" (click)="createChecklist()"></nb-action>
 </nb-actions>

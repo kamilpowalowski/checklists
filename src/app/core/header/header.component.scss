@@ -28,6 +28,12 @@
     display: block;
   }
 
+  /deep/ nb-action {
+    &:first-child {
+      border-left: 1px solid nb-theme(actions-separator) !important;
+    }
+  }
+
   .header-container {
     display: flex;
     align-items: center;
@@ -71,22 +77,7 @@
     }
   }
 
-  .toggle-layout /deep/ a {
-    display: block;
-    text-decoration: none;
-    line-height: 1;
-
-    i {
-      color: nb-theme(color-fg-highlight);
-      font-size: 2.25rem;
-    }
-  }
-
   @include media-breakpoint-down(md) {
-
-    nb-action:not(.toggle-layout) {
-      border: none;
-    }
 
     .control-item {
       display: none;
@@ -110,14 +101,6 @@
       .logo {
         font-size: 1.25rem;
       }
-    }
-
-    .toggle-layout {
-      display: none;
-    }
-
-    nb-action:not(.toggle-layout) {
-      padding: 0;
     }
   }
 

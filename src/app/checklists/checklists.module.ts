@@ -12,6 +12,7 @@ import { ChecklistsTagsComponent } from './checklists/checklists-tags/checklists
 import { ChecklistsItemsComponent } from './checklists/checklists-items/checklists-items.component';
 import { ChecklistsMenuComponent } from './checklists/checklists-menu/checklists-menu.component';
 import { AccountChecklistsComponent } from './account-checklists/account-checklists.component';
+import { EditChecklistComponent } from './edit-checklist/edit-checklist.component';
 
 @NgModule({
   imports: [
@@ -31,7 +32,8 @@ import { AccountChecklistsComponent } from './account-checklists/account-checkli
     ChecklistsTagsComponent,
     ChecklistsItemsComponent,
     ChecklistsMenuComponent,
-    AccountChecklistsComponent
+    AccountChecklistsComponent,
+    EditChecklistComponent
   ]
 })
 export class ChecklistsModule { }

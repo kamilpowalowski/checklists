@@ -4,6 +4,7 @@ import { AuthenticatedGuard } from '../shared/authenticated-guard.service';
 import { AccountChecklistsComponent } from './account-checklists/account-checklists.component';
 import { ChecklistComponent } from './checklist/checklist.component';
 import { ChecklistsComponent } from './checklists/checklists.component';
+import { EditChecklistComponent } from './edit-checklist/edit-checklist.component';
 
 const checklistsRoutes: Routes = [
   {
@@ -50,6 +51,12 @@ const checklistsRoutes: Routes = [
         data: { onlyPublic: false }
       },
     ]
+  },
+  {
+    path: 'new',
+    canActivate: [AuthenticatedGuard],
+    component: EditChecklistComponent,
+    pathMatch: 'full'
   },
   { path: ':id', component: ChecklistComponent }
 ];

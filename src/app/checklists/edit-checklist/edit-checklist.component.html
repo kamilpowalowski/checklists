@@ -1,11 +1,12 @@
 <div class="row">
   <div class="offset-md-1 col-md-10">
-    <form [formGroup]="form">
+    <form [formGroup]="form" (ngSubmit)="onSave()">
       <nb-card>
         <nb-card-header>Create/Edit Checklist</nb-card-header>
         <nb-card-body>
           <div class="input-group">
-            <input type="text" placeholder="Title" class="form-control" required formControlName="title" />
+            <input type="text" placeholder="Title" class="form-control" formControlName="title" [ngClass]="{ 'form-control-danger': showWarningForField('title') }"
+              required />
           </div>
           <div class="input-group">
             <input type="text" placeholder="Tags" class="form-control" formControlName="tags" />
@@ -20,16 +21,17 @@
           <nb-card>
             <nb-card-body>
               <div class="input-group">
-                <input type="text" placeholder="Title" class="form-control" required formControlName="title" />
+                <input type="text" placeholder="Title" class="form-control" formControlName="title" [ngClass]="{ 'form-control-danger': showWarningForField('items.' + itemIndex + '.title') }"
+                  required />
               </div>
             </nb-card-body>
             <nb-card-footer>
               <div class="row">
                 <div class="col-md-3 icon-buttons-group">
-                  <button type="button" class="btn btn-success btn-icon" [disabled]="itemIndex == 0">
+                  <button type="button" class="btn btn-success btn-icon" [disabled]="itemIndex == 0" (click)="moveItemUp(itemIndex)">
                     <i class="nb-arrow-thin-up"></i>
                   </button>
-                  <button type="button" class="btn btn-success btn-icon" [disabled]="itemIndex >= items().length - 1">
+                  <button type="button" class="btn btn-success btn-icon" [disabled]="itemIndex >= items().length - 1" (click)="moveItemDown(itemIndex)">
                     <i class="nb-arrow-thin-down"></i>
                   </button>
                 </div>
@@ -48,17 +50,18 @@
                   <nb-card>
                     <nb-card-body>
                       <div class="input-group">
-                        <input type="text" placeholder="Title" class="form-control" required formControlName="title" />
+                        <input type="text" placeholder="Title" class="form-control" formControlName="title" [ngClass]="{ 'form-control-danger': showWarningForField('items.' + itemIndex + '.subitems.' + subitemIndex + '.title') }"
+                          required />
                       </div>
                     </nb-card-body>
                     <nb-card-footer>
                       <div class="row">
                         <div class="col-md-3 icon-buttons-group">
                           <button type="button" class="btn btn-success btn-icon" [disabled]="subitemIndex == 0">
-                            <i class="nb-arrow-thin-up"></i>
+                            <i class="nb-arrow-thin-up" (click)="moveSubitemUp(subitemIndex, item)"></i>
                           </button>
                           <button type="button" class="btn btn-success btn-icon" [disabled]="subitemIndex >= subitemsForItem(item).length - 1">
-                            <i class="nb-arrow-thin-down"></i>
+                            <i class="nb-arrow-thin-down" (click)="moveSubitemDown(subitemIndex, item)"></i>
                           </button>
                         </div>
                         <div class="col-md-9">

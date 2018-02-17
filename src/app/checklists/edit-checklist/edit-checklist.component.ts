@@ -64,6 +64,42 @@ export class EditChecklistComponent implements OnInit {
     subitems.removeAt(index);
   }
 
+  showWarningForField(name: string): boolean {
+    return !this.form.get(name).valid && this.form.get(name).touched;
+  }
+
+  moveItemUp(index: number) {
+    const items = this.form.get('items') as FormArray;
+    const item = items.at(index);
+    items.removeAt(index);
+    items.insert(index - 1, item);
+  }
+
+  moveItemDown(index: number) {
+    const items = this.form.get('items') as FormArray;
+    const item = items.at(index);
+    items.removeAt(index);
+    items.insert(index + 1, item);
+  }
+
+  moveSubitemUp(index: number, item: FormArray) {
+    const subitems = item.get('subitems') as FormArray;
+    const subitem = subitems.at(index);
+    subitems.removeAt(index);
+    subitems.insert(index - 1, subitem);
+  }
+
+  moveSubitemDown(index: number, item: FormArray) {
+    const subitems = item.get('subitems') as FormArray;
+    const subitem = subitems.at(index);
+    subitems.removeAt(index);
+    subitems.insert(index + 1, subitem);
+  }
+
+  onSave() {
+
+  }
+
   private initForm() {
     this.form = new FormGroup({
       'title': new FormControl('', Validators.required),

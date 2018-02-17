@@ -47,7 +47,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   createChecklist() {
-    this.router.navigate(['/checklists', 'new']);
+    this.router.navigate(['/checklists', 'edit', 'new']);
   }
 
   private setAnonymousState() {

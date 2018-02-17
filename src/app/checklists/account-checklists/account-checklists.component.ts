@@ -25,7 +25,7 @@ export class AccountChecklistsComponent implements OnInit, OnDestroy {
 
   tags: Observable<string[]>;
   items = [
-    { title: 'new checklist', link: '/checklists/new' },
+    { title: 'new checklist', link: '/checklists/edit/new' },
     { title: 'all', link: '/checklists/me/all' },
     { title: 'public', link: '/checklists/me/public' }
   ];

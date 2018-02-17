@@ -53,10 +53,21 @@ const checklistsRoutes: Routes = [
     ]
   },
   {
-    path: 'new',
-    canActivate: [AuthenticatedGuard],
-    component: EditChecklistComponent,
-    pathMatch: 'full'
+    path: 'edit',
+    children: [
+      {
+        path: 'new',
+        canActivate: [AuthenticatedGuard],
+        component: EditChecklistComponent,
+        pathMatch: 'full'
+      },
+      {
+        path: ':id',
+        canActivate: [AuthenticatedGuard],
+        component: EditChecklistComponent,
+        pathMatch: 'full'
+      }
+    ]
   },
   { path: ':id', component: ChecklistComponent }
 ];

@@ -1,3 +1,90 @@
-<p>
-  edit-checklist works!
-</p>
+<div class="row">
+  <div class="offset-md-1 col-md-10">
+    <form [formGroup]="form">
+      <nb-card>
+        <nb-card-header>Create/Edit Checklist</nb-card-header>
+        <nb-card-body>
+          <div class="input-group">
+            <input type="text" placeholder="Title" class="form-control" required formControlName="title" />
+          </div>
+          <div class="input-group">
+            <input type="text" placeholder="Tags" class="form-control" formControlName="tags" />
+          </div>
+          <div class="input-group markdown">
+            <app-markdown-editor placeholder="Description"></app-markdown-editor>
+          </div>
+        </nb-card-body>
+      </nb-card>
+      <ng-container formArrayName="items">
+        <ng-container *ngFor="let item of items(); let itemIndex = index" [formGroupName]="itemIndex">
+          <nb-card>
+            <nb-card-body>
+              <div class="input-group">
+                <input type="text" placeholder="Title" class="form-control" required formControlName="title" />
+              </div>
+            </nb-card-body>
+            <nb-card-footer>
+              <div class="row">
+                <div class="col-md-3 icon-buttons-group">
+                  <button type="button" class="btn btn-success btn-icon" [disabled]="itemIndex == 0">
+                    <i class="nb-arrow-thin-up"></i>
+                  </button>
+                  <button type="button" class="btn btn-success btn-icon" [disabled]="itemIndex >= items().length - 1">
+                    <i class="nb-arrow-thin-down"></i>
+                  </button>
+                </div>
+                <div class="col-md-9">
+                  <button type="button" class="btn btn-danger btn-icon float-right" (click)="removeItem(itemIndex)">
+                    <i class="nb-trash"></i>
+                  </button>
+                </div>
+              </div>
+            </nb-card-footer>
+          </nb-card>
+          <div class="row">
+            <div class="offset-md-2 col-md-10">
+              <ng-container formArrayName="subitems">
+                <ng-container *ngFor="let subitem of subitemsForItem(item); let subitemIndex = index" [formGroupName]="subitemIndex">
+                  <nb-card>
+                    <nb-card-body>
+                      <div class="input-group">
+                        <input type="text" placeholder="Title" class="form-control" required formControlName="title" />
+                      </div>
+                    </nb-card-body>
+                    <nb-card-footer>
+                      <div class="row">
+                        <div class="col-md-3 icon-buttons-group">
+                          <button type="button" class="btn btn-success btn-icon" [disabled]="subitemIndex == 0">
+                            <i class="nb-arrow-thin-up"></i>
+                          </button>
+                          <button type="button" class="btn btn-success btn-icon" [disabled]="subitemIndex >= subitemsForItem(item).length - 1">
+                            <i class="nb-arrow-thin-down"></i>
+                          </button>
+                        </div>
+                        <div class="col-md-9">
+                          <button type="button" class="btn btn-danger btn-icon float-right" (click)="removeSubitem(subitemIndex, item)">
+                            <i class="nb-trash"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </nb-card-footer>
+                  </nb-card>
+                </ng-container>
+              </ng-container>
+              <nb-card>
+                <nb-card-body>
+                  <button class="btn btn-block btn-success" (click)="addNewSubitem(item)">Add subitem</button>
+                </nb-card-body>
+              </nb-card>
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
+      <nb-card>
+        <nb-card-body>
+          <button class="btn btn-block btn-success" (click)="addNewItem()">Add item</button>
+        </nb-card-body>
+      </nb-card>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+@import '../../../styles/themes';
+@import '~bootstrap/scss/mixins/breakpoints';
+@import '~@nebular/theme/styles/global/bootstrap/breakpoints';
+
+@include nb-install-component() {
+
+  /deep/ .CodeMirror {
+    min-height: 100px;
+  }
+
+  /deep/ .CodeMirror-scroll {
+    min-height: 100px;
+  }
+}

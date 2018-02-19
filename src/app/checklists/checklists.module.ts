@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CovalentTextEditorModule } from '@covalent/text-editor';
 import { NbCardModule, NbCheckboxModule, NbMenuModule } from '@nebular/theme';
 import { EmojiModule } from 'angular-emojione';
 import { MarkdownModule } from 'ngx-markdown';
@@ -26,7 +27,8 @@ import { MarkdownEditorComponent } from './edit-checklist/markdown-editor/markdo
     NbCheckboxModule,
     NbMenuModule,
     MarkdownModule.forChild(),
-    EmojiModule
+    EmojiModule,
+    CovalentTextEditorModule
   ],
   declarations: [
     ChecklistsComponent,

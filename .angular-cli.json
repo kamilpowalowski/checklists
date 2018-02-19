@@ -28,7 +28,6 @@
         "../node_modules/pace-js/templates/pace-theme-flash.tmpl.css",
         "../node_modules/prismjs/themes/prism.css",
         "../node_modules/emojione/extras/css/emojione.min.css",
-        "../node_modules/simplemde/dist/simplemde.min.css",
         "./app/styles/styles.scss"
       ],
       "scripts": [
@@ -36,8 +35,7 @@
         "../node_modules/prismjs/prism.js",
         "../node_modules/prismjs/components/prism-csharp.min.js",
         "../node_modules/prismjs/components/prism-css.min.js",
-        "../node_modules/marked/lib/marked.js",
-        "../node_modules/simplemde/dist/simplemde.min.js"
+        "../node_modules/marked/lib/marked.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

@@ -24,6 +24,9 @@
                 <input type="text" placeholder="Title" class="form-control" formControlName="title" [ngClass]="{ 'form-control-danger': showWarningForField('items.' + itemIndex + '.title') }"
                   required />
               </div>
+              <div class="input-group markdown">
+                <app-markdown-editor placeholder="Description"></app-markdown-editor>
+              </div>
             </nb-card-body>
             <nb-card-footer>
               <div class="row">
@@ -52,6 +55,9 @@
                       <div class="input-group">
                         <input type="text" placeholder="Title" class="form-control" formControlName="title" [ngClass]="{ 'form-control-danger': showWarningForField('items.' + itemIndex + '.subitems.' + subitemIndex + '.title') }"
                           required />
+                      </div>
+                      <div class="input-group markdown">
+                        <app-markdown-editor placeholder="Description"></app-markdown-editor>
                       </div>
                     </nb-card-body>
                     <nb-card-footer>

@@ -5,7 +5,7 @@ import {
   OnInit,
   ViewChild
   } from '@angular/core';
-import * as SimpleMDE from 'simplemde';
+import { TdTextEditorComponent } from '@covalent/text-editor';
 
 @Component({
   selector: 'app-markdown-editor',
@@ -16,18 +16,18 @@ export class MarkdownEditorComponent implements OnInit {
   @Input() placeholder: string;
   @Input() initialValue: string | null;
 
-  @ViewChild('textarea') textarea: ElementRef;
+  @ViewChild('textEditor') private textEditor: TdTextEditorComponent;
+
+  options: any = {
+    hideIcons: ['side-by-side', 'fullscreen'],
+    placeholder: this.placeholder,
+    status: false
+  };
 
   constructor() { }
 
   ngOnInit() {
-    const mardownEditor = new SimpleMDE({
-      element: this.textarea.nativeElement.value,
-      hideIcons: ['side-by-side', 'fullscreen'],
-      placeholder: this.placeholder,
-      initialValue: this.initialValue,
-      status: false
-    });
+    this.textEditor.textarea.nativeElement.placeholder = this.placeholder;
   }
 
 }

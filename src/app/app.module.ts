@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NbAuthModule, NbAuthOptions, NbEmailPassAuthProvider } from '@nebular/auth';
 import { NbThemeModule } from '@nebular/theme';
 import { EmojiModule } from 'angular-emojione';
+import { CookieLawModule } from 'angular2-cookie-law';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
@@ -34,6 +36,7 @@ const authModuleSettings: NbAuthOptions = {
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase, 'lizt-co'),
     AngularFirestoreModule.enablePersistence(),
@@ -42,6 +45,7 @@ const authModuleSettings: NbAuthOptions = {
     NbAuthModule.forRoot(authModuleSettings),
     MarkdownModule.forRoot(),
     EmojiModule,
+    CookieLawModule,
     SharedModule,
     CoreModule
   ],

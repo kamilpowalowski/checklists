@@ -11,6 +11,7 @@ import {
   FormGroup,
   Validators
   } from '@angular/forms';
+  import 'rxjs/add/operator/debounceTime';
 
 @Component({
   selector: 'app-edit-checklist',
@@ -24,6 +25,20 @@ export class EditChecklistComponent implements OnInit {
 
   ngOnInit() {
     this.initForm();
+
+    this.form.valueChanges
+      .debounceTime(10 * 1000)
+      .subscribe(newValues => {
+        const valuesAsJsonString = JSON.stringify(newValues);
+        window.localStorage.setItem('form-data', valuesAsJsonString);
+      });
+
+
+    const values = JSON.parse(window.localStorage.getItem('form-data'));
+    if (values) {
+      this.initItemsAndSubitems(values.items);
+      this.form.patchValue(values);
+    }
   }
 
   items(): AbstractControl[] {
@@ -34,24 +49,23 @@ export class EditChecklistComponent implements OnInit {
     return (item.get('subitems') as FormArray).controls;
   }
 
-  addNewItem() {
+  addNewItem(): FormGroup {
     const items = this.form.get('items') as FormArray;
-    items.push(
-      new FormGroup({
-        'title': new FormControl('', Validators.required),
-        'subitems': new FormArray([])
-      })
-    );
+    const newItem = new FormGroup({
+      'title': new FormControl('', Validators.required),
+      'subitems': new FormArray([])
+    });
+    items.push(newItem);
+    return newItem;
   }
 
-  addNewSubitem(item: FormArray) {
+  addNewSubitem(item: FormGroup): FormGroup {
     const subitems = item.get('subitems') as FormArray;
-
-    subitems.push(
-      new FormGroup({
-        'title': new FormControl('', Validators.required),
-      })
-    );
+    const newItem = new FormGroup({
+      'title': new FormControl('', Validators.required),
+    });
+    subitems.push(newItem);
+    return newItem;
   }
 
   removeItem(index: number) {
@@ -106,6 +120,15 @@ export class EditChecklistComponent implements OnInit {
       'tags': new FormControl(),
       'items': new FormArray([])
     });
+  }
+
+  private initItemsAndSubitems(items: any[]) {
+    for (const item of items) {
+      const formItem = this.addNewItem();
+      for (const subitems of item.subitems) {
+        this.addNewSubitem(formItem);
+      }
+    }
   }
 
 }

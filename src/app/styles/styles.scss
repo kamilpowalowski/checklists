@@ -8,6 +8,9 @@
 // loading progress bar theme
 @import './pace.theme';
 
+// loading chips theme
+@import './ngx-chips.theme';
+
 // install the framework and custom global styles
 @include nb-install() {
 
@@ -17,4 +20,7 @@
 
   // loading progress bar
   @include ngx-pace-theme();
+
+  // loading chips theme
+  @include ngx-chips-theme();
 };

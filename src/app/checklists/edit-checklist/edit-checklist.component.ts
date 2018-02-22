@@ -1,6 +1,7 @@
 import {
   Component,
   ElementRef,
+  OnDestroy,
   OnInit,
   ViewChild
   } from '@angular/core';
@@ -11,34 +12,47 @@ import {
   FormGroup,
   Validators
   } from '@angular/forms';
-  import 'rxjs/add/operator/debounceTime';
+import { ActivatedRoute } from '@angular/router';
+import { TagModel } from 'ngx-chips/core/accessor';
+import 'rxjs/add/observable/never';
+import 'rxjs/add/operator/debounceTime';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-edit-checklist',
   templateUrl: './edit-checklist.component.html',
   styleUrls: ['./edit-checklist.component.scss']
 })
-export class EditChecklistComponent implements OnInit {
+export class EditChecklistComponent implements OnInit, OnDestroy {
   form: FormGroup;
 
-  constructor() { }
+  private routerSubscription: Subscription;
+
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.initForm();
 
-    this.form.valueChanges
-      .debounceTime(10 * 1000)
-      .subscribe(newValues => {
-        const valuesAsJsonString = JSON.stringify(newValues);
-        window.localStorage.setItem('form-data', valuesAsJsonString);
+    this.routerSubscription = Observable.combineLatest(
+      this.route.data,
+      this.route.params
+    )
+      .subscribe(value => {
+        const data = value[0];
+        const isNew: boolean = data['new'];
+
+        const params = value[1];
+        const id = params['id'];
+
+        if (isNew) {
+          this.handleLocalStorage();
+        }
       });
+  }
 
-
-    const values = JSON.parse(window.localStorage.getItem('form-data'));
-    if (values) {
-      this.initItemsAndSubitems(values.items);
-      this.form.patchValue(values);
-    }
+  ngOnDestroy() {
+    this.routerSubscription.unsubscribe();
   }
 
   items(): AbstractControl[] {
@@ -110,8 +124,16 @@ export class EditChecklistComponent implements OnInit {
     subitems.insert(index + 1, subitem);
   }
 
-  onSave() {
+  transformNewTag(tag: string): Observable<string> {
+    const transformedTag = tag.replace(/[^\w\s]/gi, '').toLowerCase();
+    if (transformedTag.length === 0) {
+      return Observable.never();
+    }
+    return Observable.of(`#${transformedTag}`);
+}
 
+  onSave() {
+    window.localStorage.removeItem('form-data');
   }
 
   private initForm() {
@@ -131,4 +153,19 @@ export class EditChecklistComponent implements OnInit {
     }
   }
 
+  private handleLocalStorage() {
+    // Autosafe form data to local storage
+    this.form.valueChanges
+      .debounceTime(10 * 1000)
+      .subscribe(newValues => {
+        const valuesAsJsonString = JSON.stringify(newValues);
+        window.localStorage.setItem('form-data', valuesAsJsonString);
+      });
+
+    const values = JSON.parse(window.localStorage.getItem('form-data'));
+    if (values) {
+      this.initItemsAndSubitems(values.items);
+      this.form.patchValue(values);
+    }
+  }
 }

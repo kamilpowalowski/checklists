@@ -59,13 +59,15 @@ const checklistsRoutes: Routes = [
         path: 'new',
         canActivate: [AuthenticatedGuard],
         component: EditChecklistComponent,
-        pathMatch: 'full'
+        pathMatch: 'full',
+        data: { new: true }
       },
       {
         path: ':id',
         canActivate: [AuthenticatedGuard],
         component: EditChecklistComponent,
-        pathMatch: 'full'
+        pathMatch: 'full',
+        data: { new: false }
       }
     ]
   },

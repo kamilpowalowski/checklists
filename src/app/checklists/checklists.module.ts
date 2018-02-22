@@ -4,6 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CovalentTextEditorModule } from '@covalent/text-editor';
 import { NbCardModule, NbCheckboxModule, NbMenuModule } from '@nebular/theme';
 import { EmojiModule } from 'angular-emojione';
+import { TagInputModule } from 'ngx-chips';
 import { MarkdownModule } from 'ngx-markdown';
 import { SharedModule } from '../shared/shared.module';
 import { AccountChecklistsComponent } from './account-checklists/account-checklists.component';
@@ -28,7 +29,8 @@ import { MarkdownEditorComponent } from './edit-checklist/markdown-editor/markdo
     NbMenuModule,
     MarkdownModule.forChild(),
     EmojiModule,
-    CovalentTextEditorModule
+    CovalentTextEditorModule,
+    TagInputModule
   ],
   declarations: [
     ChecklistsComponent,

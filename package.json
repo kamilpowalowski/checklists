@@ -38,6 +38,7 @@
     "handlebars": "^4.0.11",
     "nebular-icons": "^1.0.6",
     "ng-appversion": "^1.1.0",
+    "ngx-chips": "^1.6.4",
     "ngx-markdown": "^1.5.0",
     "pace-js": "^1.0.2",
     "prismjs": "^1.10.0",

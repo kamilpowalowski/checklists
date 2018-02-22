@@ -1,0 +1,47 @@
+@import "~ngx-chips/core/styles/core/_core.scss";
+
+@mixin ngx-chips-theme() {
+  $ngx-chips-lizt-primary: nb-theme(color-success);
+  $ngx-chips-lizt-primary-lighten: lighten($ngx-chips-lizt-primary, 2%);
+
+  // this is the container's theme
+  $ngx-chips-lizt-theme: (
+      container-border-bottom: 1px solid transparent,
+      container-border-bottom-focused: 1px solid transparent,
+      container-border-bottom-invalid: 1px solid transparent
+  );
+
+  // this is the tag's theme
+  $ngx-chips-lizt-tag-theme: (
+      background: $ngx-chips-lizt-primary,
+      background-focused: $ngx-chips-lizt-primary-lighten,
+      background-active: $ngx-chips-lizt-primary-lighten,
+      background-hover: $ngx-chips-lizt-primary-lighten,
+      color: #fff,
+      color-hover: #fff,
+      border-radius: 5px
+  );
+
+  // this is the delete icon's theme
+  $ngx-chips-lizt-icon-theme: (
+      fill: #fff,
+      fill-focus: #eee,
+      transition: all 0.35s
+  );
+
+  // apply theme to the container
+  .ng2-tag-input.ngx-chips-lizt-theme {
+      @include tag-input-theme($ngx-chips-lizt-theme);
+  }
+
+  // apply theme to the tags
+  .ng2-tag-input.ngx-chips-lizt-theme tag {
+      @include tag-theme($ngx-chips-lizt-tag-theme);
+  }
+
+  // apply theme to the delete icon
+  .ng2-tag-input.ngx-chips-lizt-theme tag delete-icon {
+      @include icon-theme($ngx-chips-lizt-icon-theme);
+  }
+
+}

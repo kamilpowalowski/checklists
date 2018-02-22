@@ -9,7 +9,7 @@
               required />
           </div>
           <div class="input-group">
-            <input type="text" placeholder="Tags" class="form-control" formControlName="tags" />
+            <tag-input formControlName="tags" theme="ngx-chips-lizt-theme" [onAdding]="transformNewTag" [separatorKeyCodes]="[32]" modelAsStrings="true" [ripple]="false"></tag-input>
           </div>
           <div class="input-group markdown">
             <app-markdown-editor placeholder="Description"></app-markdown-editor>

@@ -8,7 +8,9 @@
   $ngx-chips-lizt-theme: (
       container-border-bottom: 1px solid transparent,
       container-border-bottom-focused: 1px solid transparent,
-      container-border-bottom-invalid: 1px solid transparent
+      container-border-bottom-invalid: 1px solid transparent,
+
+      font-family: nb-theme(font-main)
   );
 
   // this is the tag's theme

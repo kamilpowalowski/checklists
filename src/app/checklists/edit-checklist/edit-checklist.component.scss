@@ -12,6 +12,87 @@
     display: inherit;
   }
 
+  app-markdown-editor {
+    color: nb-theme(form-control-text-primary-color);
+    background-color: nb-theme(form-control-bg);
+
+    /deep/ .editor-toolbar {
+      border-top: nb-theme(form-control-border-width)
+                  nb-theme(form-control-border-type)
+                  nb-theme(form-control-border-color);
+      border-left: nb-theme(form-control-border-width)
+                   nb-theme(form-control-border-type)
+                   nb-theme(form-control-border-color);
+      border-right: nb-theme(form-control-border-width)
+                    nb-theme(form-control-border-type)
+                    nb-theme(form-control-border-color);
+
+      border-top-left-radius: nb-theme(form-control-border-radius);
+      border-top-right-radius: nb-theme(form-control-border-radius);
+
+      a {
+        color: black!important;
+        @include nb-for-theme(cosmic) {
+          color: white!important;
+        }
+
+        &:hover {
+          background-color: transparent;
+        }
+      }
+
+      .separator {
+        border-left: 1px solid nb-theme(actions-separator);
+        border-right: 1px solid nb-theme(actions-separator);
+      }
+    }
+
+    /deep/ .CodeMirror-wrap {
+      border: nb-theme(form-control-border-width)
+              nb-theme(form-control-border-type)
+              nb-theme(form-control-border-color);
+
+      border-bottom-left-radius: nb-theme(form-control-border-radius);
+      border-bottom-right-radius: nb-theme(form-control-border-radius);
+      background-color: nb-theme(form-control-bg);
+    }
+
+    /deep/ .CodeMirror-focused {
+      border: nb-theme(form-control-border-width)
+              nb-theme(form-control-border-type)
+              nb-theme(form-control-selected-border-color);
+      background-color: nb-theme(form-control-focus-bg);
+    }
+  }
+
+  /deep/ .tag-form-control {
+    padding: 0.75rem 1.125rem;
+    color: nb-theme(form-control-text-primary-color);
+    background-color: nb-theme(form-control-bg);
+    border: nb-theme(form-control-border-width)
+            nb-theme(form-control-border-type)
+            nb-theme(form-control-border-color);
+    font-family: nb-theme(font-main);
+    border-radius: nb-theme(form-control-border-radius);
+
+    &:focus {
+      border: nb-theme(form-control-border-width)
+              nb-theme(form-control-border-type)
+              nb-theme(form-control-selected-border-color);
+      background-color: nb-theme(form-control-focus-bg);
+    }
+
+    &:disabled {
+      border-color: nb-theme(form-control-border-color);
+
+      @include install-placeholder(rgba(nb-theme(form-control-placeholder-color), 0.5),
+                                   nb-theme(form-control-placeholder-font-size));
+    }
+
+    @include install-placeholder(nb-theme(form-control-placeholder-color),
+                                 nb-theme(form-control-placeholder-font-size));
+  }
+
   .icon-buttons-group {
     display: flex;
     justify-content: flex-start;

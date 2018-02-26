@@ -12,7 +12,7 @@ import {
   FormGroup,
   Validators
   } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TagModel } from 'ngx-chips/core/accessor';
 import 'rxjs/add/observable/never';
 import 'rxjs/add/operator/debounceTime';
@@ -29,7 +29,7 @@ export class EditChecklistComponent implements OnInit, OnDestroy {
 
   private routerSubscription: Subscription;
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
     this.initForm();
@@ -67,6 +67,7 @@ export class EditChecklistComponent implements OnInit, OnDestroy {
     const items = this.form.get('items') as FormArray;
     const newItem = new FormGroup({
       'title': new FormControl('', Validators.required),
+      'description': new FormControl(),
       'subitems': new FormArray([])
     });
     items.push(newItem);
@@ -77,6 +78,7 @@ export class EditChecklistComponent implements OnInit, OnDestroy {
     const subitems = item.get('subitems') as FormArray;
     const newItem = new FormGroup({
       'title': new FormControl('', Validators.required),
+      'description': new FormControl()
     });
     subitems.push(newItem);
     return newItem;
@@ -130,16 +132,25 @@ export class EditChecklistComponent implements OnInit, OnDestroy {
       return Observable.never();
     }
     return Observable.of(`#${transformedTag}`);
-}
+  }
 
-  onSave() {
+  onSave(quit: boolean) {
     window.localStorage.removeItem('form-data');
+    if (quit) {
+      this.router.navigate(['/checklists', 'me', 'all']);
+    }
+  }
+
+  onDiscard() {
+    window.localStorage.removeItem('form-data');
+    this.router.navigate(['/checklists', 'me', 'all']);
   }
 
   private initForm() {
     this.form = new FormGroup({
       'title': new FormControl('', Validators.required),
       'tags': new FormControl(),
+      'description': new FormControl(),
       'items': new FormArray([])
     });
   }
@@ -158,6 +169,7 @@ export class EditChecklistComponent implements OnInit, OnDestroy {
     this.form.valueChanges
       .debounceTime(10 * 1000)
       .subscribe(newValues => {
+        console.log(newValues);
         const valuesAsJsonString = JSON.stringify(newValues);
         window.localStorage.setItem('form-data', valuesAsJsonString);
       });

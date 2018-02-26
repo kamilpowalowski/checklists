@@ -1,6 +1,6 @@
 <div class="row">
   <div class="offset-md-1 col-md-10">
-    <form [formGroup]="form" (ngSubmit)="onSave()">
+    <form [formGroup]="form" (ngSubmit)="onSave(true)">
       <nb-card>
         <nb-card-header>Create/Edit Checklist</nb-card-header>
         <nb-card-body>
@@ -9,10 +9,11 @@
               required />
           </div>
           <div class="input-group">
-            <tag-input formControlName="tags" theme="ngx-chips-lizt-theme" [onAdding]="transformNewTag" [separatorKeyCodes]="[32]" modelAsStrings="true" [ripple]="false" inputClass="tag-form-control"></tag-input>
+            <tag-input formControlName="tags" theme="ngx-chips-lizt-theme" [onAdding]="transformNewTag" [separatorKeyCodes]="[32]" modelAsStrings="true"
+              [ripple]="false" inputClass="tag-form-control"></tag-input>
           </div>
           <div class="input-group markdown">
-            <app-markdown-editor placeholder="Description"></app-markdown-editor>
+            <app-markdown-editor placeholder="Description" formControlName="description"></app-markdown-editor>
           </div>
         </nb-card-body>
       </nb-card>
@@ -25,21 +26,22 @@
                   required />
               </div>
               <div class="input-group markdown">
-                <app-markdown-editor placeholder="Description"></app-markdown-editor>
+                <app-markdown-editor placeholder="Description" formControlName="description"></app-markdown-editor>
               </div>
             </nb-card-body>
             <nb-card-footer>
               <div class="row">
-                <div class="col-md-3 icon-buttons-group">
-                  <button type="button" class="btn btn-success btn-icon" [disabled]="itemIndex == 0" (click)="moveItemUp(itemIndex)">
+                <div class="col-md-3 buttons-group">
+                  <button type="button" class="btn btn-primary btn-icon" [disabled]="itemIndex == 0" (click)="moveItemUp(itemIndex)" type="button">
                     <i class="nb-arrow-thin-up"></i>
                   </button>
-                  <button type="button" class="btn btn-success btn-icon" [disabled]="itemIndex >= items().length - 1" (click)="moveItemDown(itemIndex)">
+                  <button type="button" class="btn btn-primary btn-icon" [disabled]="itemIndex >= items().length - 1" (click)="moveItemDown(itemIndex)"
+                    type="button">
                     <i class="nb-arrow-thin-down"></i>
                   </button>
                 </div>
                 <div class="col-md-9">
-                  <button type="button" class="btn btn-danger btn-icon float-right" (click)="removeItem(itemIndex)">
+                  <button type="button" class="btn btn-danger btn-icon float-right" (click)="removeItem(itemIndex)" type="button">
                     <i class="nb-trash"></i>
                   </button>
                 </div>
@@ -57,21 +59,21 @@
                           required />
                       </div>
                       <div class="input-group markdown">
-                        <app-markdown-editor placeholder="Description"></app-markdown-editor>
+                        <app-markdown-editor placeholder="Description" formControlName="description"></app-markdown-editor>
                       </div>
                     </nb-card-body>
                     <nb-card-footer>
                       <div class="row">
-                        <div class="col-md-3 icon-buttons-group">
-                          <button type="button" class="btn btn-success btn-icon" [disabled]="subitemIndex == 0">
+                        <div class="col-md-3 buttons-group">
+                          <button type="button" class="btn btn-primary btn-icon" [disabled]="subitemIndex == 0" type="button">
                             <i class="nb-arrow-thin-up" (click)="moveSubitemUp(subitemIndex, item)"></i>
                           </button>
-                          <button type="button" class="btn btn-success btn-icon" [disabled]="subitemIndex >= subitemsForItem(item).length - 1">
+                          <button type="button" class="btn btn-primary btn-icon" [disabled]="subitemIndex >= subitemsForItem(item).length - 1" type="button">
                             <i class="nb-arrow-thin-down" (click)="moveSubitemDown(subitemIndex, item)"></i>
                           </button>
                         </div>
                         <div class="col-md-9">
-                          <button type="button" class="btn btn-danger btn-icon float-right" (click)="removeSubitem(subitemIndex, item)">
+                          <button type="button" class="btn btn-danger btn-icon float-right" (click)="removeSubitem(subitemIndex, item)" type="button">
                             <i class="nb-trash"></i>
                           </button>
                         </div>
@@ -82,7 +84,7 @@
               </ng-container>
               <nb-card>
                 <nb-card-body>
-                  <button class="btn btn-block btn-success" (click)="addNewSubitem(item)">Add subitem</button>
+                  <button class="btn btn-block btn-primary" (click)="addNewSubitem(item)" type="button">Add subitem</button>
                 </nb-card-body>
               </nb-card>
             </div>
@@ -91,7 +93,14 @@
       </ng-container>
       <nb-card>
         <nb-card-body>
-          <button class="btn btn-block btn-success" (click)="addNewItem()">Add item</button>
+          <button class="btn btn-block btn-primary" (click)="addNewItem()" type="button">Add item</button>
+        </nb-card-body>
+      </nb-card>
+      <nb-card>
+        <nb-card-body>
+          <button class="btn btn-block btn-primary" (click)="onSave(false)" type="button">Save</button>
+          <button class="btn btn-block btn-success" type="submit">Save and Quit</button>
+          <button class="btn btn-block btn-danger" (click)="onDiscard()" type="button">Discard and Quit</button>
         </nb-card-body>
       </nb-card>
     </form>

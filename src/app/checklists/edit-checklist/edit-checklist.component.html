@@ -98,8 +98,8 @@
       </nb-card>
       <nb-card>
         <nb-card-body>
-          <button class="btn btn-block btn-primary" (click)="onSave(false)" type="button">Save</button>
-          <button class="btn btn-block btn-success" type="submit">Save and Quit</button>
+          <button class="btn btn-block btn-primary" (click)="onSave(false)" type="button" [disabled]="!form.valid">Save</button>
+          <button class="btn btn-block btn-success" type="submit" [disabled]="!form.valid">Save and Quit</button>
           <button class="btn btn-block btn-danger" (click)="onDiscard()" type="button">Discard and Quit</button>
         </nb-card-body>
       </nb-card>

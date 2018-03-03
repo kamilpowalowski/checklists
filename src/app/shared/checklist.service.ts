@@ -1,16 +1,16 @@
-import { Account } from './account.model';
 import { Injectable } from '@angular/core';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
+import * as firebase from 'firebase';
+import 'rxjs/add/operator/distinctUntilChanged';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
+import { Subscription } from 'rxjs/Subscription';
+import { Account } from './account.model';
 import { AccountService } from './account.service';
 import { ChecklistItem } from './checklist-item.model';
 import { Checklist } from './checklist.model';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
-import * as firebase from 'firebase';
 import * as consts from './firebase.consts';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Subscription } from 'rxjs/Subscription';
-import 'rxjs/add/operator/distinctUntilChanged';
 
 
 @Injectable()
@@ -48,24 +48,24 @@ export class ChecklistService {
       });
   }
 
-  markAsSelected(item: ChecklistItem) {
+  selectChecklistItem(item: ChecklistItem) {
     if (item.items.getValue().length === 0) {
       this.selectedIdsReference
         .set({ [item.id]: true }, { merge: true });
     } else {
       for (const subItem of item.items.getValue()) {
-        this.markAsSelected(subItem);
+        this.selectChecklistItem(subItem);
       }
     }
   }
 
-  markAsUnselected(item: ChecklistItem) {
+  unselectChecklistItem(item: ChecklistItem) {
     if (item.items.getValue().length === 0) {
       this.selectedIdsReference
         .set({ [item.id]: firebase.firestore.FieldValue.delete() }, { merge: true });
     } else {
       for (const subItem of item.items.getValue()) {
-        this.markAsUnselected(subItem);
+        this.unselectChecklistItem(subItem);
       }
     }
   }
@@ -80,6 +80,34 @@ export class ChecklistService {
       }
     }
     return true;
+  }
+
+  createNewChecklist(checklist: Checklist): Observable<string> {
+    const checklistReference = this.firestore
+      .collection(consts.CHECKLISTS_COLLECTION)
+      .doc(checklist.id);
+
+    return this.accountService.account.asObservable()
+      .flatMap(account => {
+        const addChecklistPromise = checklistReference
+          .set(this.mapChecklistToFirebaseData(checklist, account, true));
+        return Observable.fromPromise(addChecklistPromise);
+      })
+      .flatMap(_ => {
+        const items = checklist.items.getValue();
+        if (items.length === 0) { return Observable.of(checklist.id); }
+
+        const itemsReference = checklistReference
+          .collection(consts.CHECKLISTS_ITEMS_COLLECTION);
+
+        const streams = items.map(item => {
+          return this.createNewChecklistItem(itemsReference, item);
+        });
+
+        return Observable
+          .combineLatest(streams)
+          .map(_ => checklist.id);
+      });
   }
 
   private checklistItems(reference: AngularFirestoreCollection<ChecklistItem>): Observable<ChecklistItem[]> {
@@ -118,5 +146,58 @@ export class ChecklistService {
         const selectedIdsSet = new Set(Object.keys(data));
         this.selectedIds.next(selectedIdsSet);
       });
+  }
+
+  private createNewChecklistItem(
+    reference: AngularFirestoreCollection<{ [key: string]: any }>,
+    item: ChecklistItem
+  ): Observable<void> {
+
+    const addedItemReference = reference.doc(item.id);
+
+    return Observable.fromPromise(
+      addedItemReference
+        .set(this.mapChecklistItemToFirebaseData(item))
+    )
+      .flatMap(_ => {
+        const subitems = item.items.getValue();
+        if (subitems.length === 0) { return Observable.of(null); }
+
+        const subitemsReference = addedItemReference
+          .collection(consts.CHECKLISTS_ITEMS_COLLECTION);
+
+        const streams = subitems.map(subitem => {
+          return this.createNewChecklistItem(subitemsReference, subitem);
+        });
+
+        return Observable
+          .combineLatest(streams)
+          .map(_ => null);
+      });
+  }
+
+  private mapChecklistToFirebaseData(checklist: Checklist, account: Account, isNew: boolean): { [key: string]: any } {
+    const result = {
+      'title': checklist.title,
+      'description': checklist.description,
+      'owner': account.id,
+      'tags': {}
+    };
+
+    if (isNew) { result['public'] = false; }
+
+    checklist.tags.forEach(tag => {
+      result['tags'][tag] = true;
+    });
+
+    return result;
+  }
+
+  private mapChecklistItemToFirebaseData(item: ChecklistItem): { [key: string]: any } {
+    return {
+      'title': item.title,
+      'description': item.description,
+      'order': item.order
+    };
   }
 }

@@ -18,6 +18,9 @@ import 'rxjs/add/observable/never';
 import 'rxjs/add/operator/debounceTime';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
+import { ChecklistItem } from './../../shared/checklist-item.model';
+import { Checklist } from './../../shared/checklist.model';
+import { ChecklistService } from './../../shared/checklist.service';
 
 @Component({
   selector: 'app-edit-checklist',
@@ -28,8 +31,14 @@ export class EditChecklistComponent implements OnInit, OnDestroy {
   form: FormGroup;
 
   private routerSubscription: Subscription;
+  private localStorageSubscription: Subscription | null;
+  private isNew: boolean;
 
-  constructor(private route: ActivatedRoute, private router: Router) { }
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private checklistService: ChecklistService
+  ) { }
 
   ngOnInit() {
     this.initForm();
@@ -40,12 +49,12 @@ export class EditChecklistComponent implements OnInit, OnDestroy {
     )
       .subscribe(value => {
         const data = value[0];
-        const isNew: boolean = data['new'];
+        this.isNew = data['new'];
 
         const params = value[1];
         const id = params['id'];
 
-        if (isNew) {
+        if (this.isNew) {
           this.handleLocalStorage();
         }
       });
@@ -53,6 +62,9 @@ export class EditChecklistComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.routerSubscription.unsubscribe();
+    if (this.localStorageSubscription) {
+      this.localStorageSubscription.unsubscribe();
+    }
   }
 
   items(): AbstractControl[] {
@@ -135,9 +147,21 @@ export class EditChecklistComponent implements OnInit, OnDestroy {
   }
 
   onSave(quit: boolean) {
-    window.localStorage.removeItem('form-data');
-    if (quit) {
-      this.router.navigate(['/checklists', 'me', 'all']);
+    if (this.isNew) {
+      const checklist = this.mapFormDataToChecklist(this.form.value);
+      this.checklistService.createNewChecklist(checklist)
+        .subscribe(id => {
+          if (this.localStorageSubscription) {
+            this.localStorageSubscription.unsubscribe();
+          }
+
+          window.localStorage.removeItem('form-data');
+          if (quit) {
+            this.router.navigate(['/checklists', 'me', 'all']);
+          } else {
+            this.router.navigate(['/checklists', 'edit', id]);
+          }
+        });
     }
   }
 
@@ -164,12 +188,31 @@ export class EditChecklistComponent implements OnInit, OnDestroy {
     }
   }
 
+  private mapFormDataToChecklist(value: any): Checklist {
+    const items = Observable.of(
+      this.mapSubformDataToChecklistItems(value['items'])
+    );
+    const tags = value['tags'].map(tag => tag.slice(1));
+
+    return new Checklist(null, value['title'], value['description'], tags, items);
+  }
+
+  private mapSubformDataToChecklistItems(value: any): ChecklistItem[] {
+    if (!value) { return []; }
+    return value.map((item, index) => {
+      const items = Observable.of(
+        this.mapSubformDataToChecklistItems(item['subitems'])
+      );
+
+      return new ChecklistItem(null, index + 1, item['title'], item['description'], items);
+    });
+  }
+
   private handleLocalStorage() {
     // Autosafe form data to local storage
-    this.form.valueChanges
+    this.localStorageSubscription = this.form.valueChanges
       .debounceTime(10 * 1000)
       .subscribe(newValues => {
-        console.log(newValues);
         const valuesAsJsonString = JSON.stringify(newValues);
         window.localStorage.setItem('form-data', valuesAsJsonString);
       });

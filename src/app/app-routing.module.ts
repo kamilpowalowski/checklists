@@ -44,6 +44,10 @@ const appRoutes: Routes = [
         loadChildren: './account/account.module#AccountModule'
       },
       {
+        path: 'open',
+        loadChildren: './open/open.module#OpenModule'
+      },
+      {
         path: 'not-found',
         component: NotFoundComponent
       },

@@ -44,45 +44,45 @@ export class ChecklistService {
         const itemsReference = checklistReference
           .collection<ChecklistItem>(consts.CHECKLISTS_ITEMS_COLLECTION);
         const items = fullData ? this.checklistItems(itemsReference) : null;
-        return new Checklist(id, data['title'], data['description'], tags, items);
+        return new Checklist(id, data['title'], data['description'], tags, data['public'], items);
       });
   }
 
   selectChecklistItem(item: ChecklistItem) {
-    if (item.items.getValue().length === 0) {
+    if (item.subitems.length === 0) {
       this.selectedIdsReference
         .set({ [item.id]: true }, { merge: true });
     } else {
-      for (const subItem of item.items.getValue()) {
-        this.selectChecklistItem(subItem);
+      for (const subitem of item.subitems) {
+        this.selectChecklistItem(subitem);
       }
     }
   }
 
   unselectChecklistItem(item: ChecklistItem) {
-    if (item.items.getValue().length === 0) {
+    if (item.subitems.length === 0) {
       this.selectedIdsReference
         .set({ [item.id]: firebase.firestore.FieldValue.delete() }, { merge: true });
     } else {
-      for (const subItem of item.items.getValue()) {
-        this.unselectChecklistItem(subItem);
+      for (const subitem of item.subitems) {
+        this.unselectChecklistItem(subitem);
       }
     }
   }
 
   isChecklistItemSelected(item: ChecklistItem): boolean {
-    if (item.items.getValue().length === 0) {
+    if (item.subitems.length === 0) {
       return this.selectedIds.getValue().has(item.id);
     }
-    for (const subItem of item.items.getValue()) {
-      if (this.isChecklistItemSelected(subItem) === false) {
+    for (const subitem of item.subitems) {
+      if (this.isChecklistItemSelected(subitem) === false) {
         return false;
       }
     }
     return true;
   }
 
-  createNewChecklist(checklist: Checklist): Observable<string> {
+  saveChecklist(checklist: Checklist): Observable<string> {
     const checklistReference = this.firestore
       .collection(consts.CHECKLISTS_COLLECTION)
       .doc(checklist.id);
@@ -90,7 +90,7 @@ export class ChecklistService {
     return this.accountService.account.asObservable()
       .flatMap(account => {
         const addChecklistPromise = checklistReference
-          .set(this.mapChecklistToFirebaseData(checklist, account, true));
+          .set(checklist.rawValue(account), { merge: true });
         return Observable.fromPromise(addChecklistPromise);
       })
       .flatMap(_ => {
@@ -98,14 +98,18 @@ export class ChecklistService {
         if (items.length === 0) { return Observable.of(checklist.id); }
 
         const itemsReference = checklistReference
-          .collection(consts.CHECKLISTS_ITEMS_COLLECTION);
+          .collection<ChecklistItem>(consts.CHECKLISTS_ITEMS_COLLECTION);
 
-        const streams = items.map(item => {
-          return this.createNewChecklistItem(itemsReference, item);
-        });
+        return this.checklistItems(itemsReference)
+          .take(1)
+          .flatMap(oldItems => {
+            const batch = this.firestore.firestore.batch();
+            this.organizeChecklistItemsBatchOperations(
+              batch, itemsReference, oldItems, items
+            );
 
-        return Observable
-          .combineLatest(streams)
+            return Observable.fromPromise(batch.commit());
+          })
           .map(_ => checklist.id);
       });
   }
@@ -114,16 +118,36 @@ export class ChecklistService {
     return reference
       .snapshotChanges()
       .map(actions => {
-        return actions.map(action => {
-          const data = action.payload.doc.data();
-          const id = action.payload.doc.id;
-          const itemsReference = reference
-            .doc(id)
-            .collection<ChecklistItem>(consts.CHECKLISTS_ITEMS_COLLECTION);
-          const items = this.checklistItems(itemsReference);
-          return new ChecklistItem(id, data['order'], data['title'], data['description'], items);
-        });
+        return actions
+          .map(action => {
+            const data = action.payload.doc.data();
+            const id = action.payload.doc.id;
+
+            const subitems = this.checklistItemSubitems(data['subitems']);
+
+            return new ChecklistItem(
+              id, data['order'], data['title'],
+              data['description'], subitems
+            );
+          })
+          .sort(ChecklistItem.sort);
       });
+  }
+
+  private checklistItemSubitems(data: any | null): ChecklistItem[] {
+    if (!data) { return []; }
+
+    const subitems = [];
+    for (const key of Object.keys(data)) {
+      const value = data[key];
+      const subitem = new ChecklistItem(
+        key, value['order'], value['title'],
+        value['description'], []
+      );
+      subitems.push(subitem);
+    }
+
+    return subitems.sort(ChecklistItem.sort);
   }
 
   private resetSelectedIds() {
@@ -148,56 +172,22 @@ export class ChecklistService {
       });
   }
 
-  private createNewChecklistItem(
-    reference: AngularFirestoreCollection<{ [key: string]: any }>,
-    item: ChecklistItem
-  ): Observable<void> {
+  private organizeChecklistItemsBatchOperations(
+    batch: firebase.firestore.WriteBatch,
+    reference: AngularFirestoreCollection<any>,
+    oldItems: ChecklistItem[],
+    newItems: ChecklistItem[]
+  ) {
+    const oldItemIds = oldItems.map(item => item.id);
+    const newItemIds = newItems.map(item => item.id);
+    const itemIdsToRemove = oldItemIds.filter(x => !newItemIds.includes(x));
 
-    const addedItemReference = reference.doc(item.id);
+    for (const itemIdToRemove of itemIdsToRemove) {
+      batch.delete(reference.doc(itemIdToRemove).ref);
+    }
 
-    return Observable.fromPromise(
-      addedItemReference
-        .set(this.mapChecklistItemToFirebaseData(item))
-    )
-      .flatMap(_ => {
-        const subitems = item.items.getValue();
-        if (subitems.length === 0) { return Observable.of(null); }
-
-        const subitemsReference = addedItemReference
-          .collection(consts.CHECKLISTS_ITEMS_COLLECTION);
-
-        const streams = subitems.map(subitem => {
-          return this.createNewChecklistItem(subitemsReference, subitem);
-        });
-
-        return Observable
-          .combineLatest(streams)
-          .map(_ => null);
-      });
-  }
-
-  private mapChecklistToFirebaseData(checklist: Checklist, account: Account, isNew: boolean): { [key: string]: any } {
-    const result = {
-      'title': checklist.title,
-      'description': checklist.description,
-      'owner': account.id,
-      'tags': {}
-    };
-
-    if (isNew) { result['public'] = false; }
-
-    checklist.tags.forEach(tag => {
-      result['tags'][tag] = true;
-    });
-
-    return result;
-  }
-
-  private mapChecklistItemToFirebaseData(item: ChecklistItem): { [key: string]: any } {
-    return {
-      'title': item.title,
-      'description': item.description,
-      'order': item.order
-    };
+    for (const item of newItems) {
+      batch.set(reference.doc(item.id).ref, item.rawValue(), { merge: true });
+    }
   }
 }

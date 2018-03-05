@@ -18,7 +18,6 @@ export class ChecklistItemComponent implements OnInit, OnDestroy {
   selected = false;
 
   private selectedIdsSubscription: Subscription;
-  private subitemsSubscription: Subscription;
 
   constructor(private checklistService: ChecklistService) { }
 
@@ -29,16 +28,10 @@ export class ChecklistItemComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.selected = this.checklistService.isChecklistItemSelected(this.item);
       });
-
-    this.subitemsSubscription = this.item.items.asObservable()
-      .subscribe(() => {
-        this.selected = this.checklistService.isChecklistItemSelected(this.item);
-      });
   }
 
   ngOnDestroy() {
     this.selectedIdsSubscription.unsubscribe();
-    this.subitemsSubscription.unsubscribe();
   }
 
   getClassesForLevel(level: number): string[] {

@@ -12,4 +12,4 @@
     </div>
   </div>
 </div>
-<app-checklist-item *ngFor="let subItem of (item.items | async)" [item]="subItem" [level]="level + 1"></app-checklist-item>
+<app-checklist-item *ngFor="let subitem of item.subitems" [item]="subitem" [level]="level + 1"></app-checklist-item>

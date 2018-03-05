@@ -16,6 +16,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TagModel } from 'ngx-chips/core/accessor';
 import 'rxjs/add/observable/never';
 import 'rxjs/add/operator/debounceTime';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { ChecklistItem } from './../../shared/checklist-item.model';
@@ -54,7 +55,9 @@ export class EditChecklistComponent implements OnInit, OnDestroy {
         const params = value[1];
         const id = params['id'];
 
-        if (this.isNew) {
+        if (!this.isNew && id) {
+          this.loadChecklistForEdit(id);
+        } else if (this.isNew) {
           this.handleLocalStorage();
         }
       });
@@ -78,6 +81,7 @@ export class EditChecklistComponent implements OnInit, OnDestroy {
   addNewItem(): FormGroup {
     const items = this.form.get('items') as FormArray;
     const newItem = new FormGroup({
+      'id': new FormControl(),
       'title': new FormControl('', Validators.required),
       'description': new FormControl(),
       'subitems': new FormArray([])
@@ -89,6 +93,7 @@ export class EditChecklistComponent implements OnInit, OnDestroy {
   addNewSubitem(item: FormGroup): FormGroup {
     const subitems = item.get('subitems') as FormArray;
     const newItem = new FormGroup({
+      'id': new FormControl(),
       'title': new FormControl('', Validators.required),
       'description': new FormControl()
     });
@@ -147,22 +152,20 @@ export class EditChecklistComponent implements OnInit, OnDestroy {
   }
 
   onSave(quit: boolean) {
-    if (this.isNew) {
-      const checklist = this.mapFormDataToChecklist(this.form.value);
-      this.checklistService.createNewChecklist(checklist)
-        .subscribe(id => {
-          if (this.localStorageSubscription) {
-            this.localStorageSubscription.unsubscribe();
-          }
+    const checklist = this.mapFormDataToChecklist(this.form.value);
+    this.checklistService.saveChecklist(checklist)
+      .subscribe(id => {
+        if (this.localStorageSubscription) {
+          this.localStorageSubscription.unsubscribe();
+        }
 
-          window.localStorage.removeItem('form-data');
-          if (quit) {
-            this.router.navigate(['/checklists', 'me', 'all']);
-          } else {
-            this.router.navigate(['/checklists', 'edit', id]);
-          }
-        });
-    }
+        window.localStorage.removeItem('form-data');
+        if (quit) {
+          this.router.navigate(['/checklists', 'me', 'all']);
+        } else if (this.isNew) {
+          this.router.navigate(['/checklists', 'edit', id]);
+        }
+      });
   }
 
   onDiscard() {
@@ -172,6 +175,7 @@ export class EditChecklistComponent implements OnInit, OnDestroy {
 
   private initForm() {
     this.form = new FormGroup({
+      'id': new FormControl(),
       'title': new FormControl('', Validators.required),
       'tags': new FormControl(),
       'description': new FormControl(),
@@ -188,23 +192,63 @@ export class EditChecklistComponent implements OnInit, OnDestroy {
     }
   }
 
+  private loadChecklistForEdit(id: string) {
+    this.checklistService.observeChecklist(id, true)
+      .take(1)
+      .subscribe(checklist => {
+        this.loadChecklistToForm(checklist);
+        this.loadChecklistItemsForEdit(checklist.items, null, 'items');
+      });
+  }
+
+  private loadChecklistToForm(checklist: Checklist) {
+    const values = {
+      'id': checklist.id,
+      'public': checklist.isPublic,
+      'title': checklist.title,
+      'tags': checklist.tags.map(tag => `#${tag}`),
+      'description': checklist.description
+    };
+    this.form.patchValue(values);
+  }
+
+  private loadChecklistItemsForEdit(observableItems: BehaviorSubject<ChecklistItem[]>, formGroup: FormGroup | null, subpath: string) {
+    observableItems
+      .subscribe(items => {
+        const formGroups = this.loadChecklistItemsToForm(items, formGroup, subpath);
+        items.forEach((item, index) => {
+          this.loadChecklistItemsToForm(item.subitems, formGroups[index], `subitems`);
+        });
+      });
+  }
+
+  private loadChecklistItemsToForm(items: ChecklistItem[], formGroup: FormGroup | null, subpath: string): FormGroup[] {
+    const formGroups = [];
+    const values = items.map(item => {
+      formGroups.push(formGroup ? this.addNewSubitem(formGroup) : this.addNewItem());
+      return {
+        'id': item.id,
+        'title': item.title,
+        'description': item.description
+      };
+    });
+    (formGroup ? formGroup : this.form).patchValue({ [subpath]: values });
+    return formGroups;
+  }
+
   private mapFormDataToChecklist(value: any): Checklist {
     const items = Observable.of(
       this.mapSubformDataToChecklistItems(value['items'])
     );
     const tags = value['tags'].map(tag => tag.slice(1));
-
-    return new Checklist(null, value['title'], value['description'], tags, items);
+    return new Checklist(value['id'], value['title'], value['description'], tags, value['public'], items);
   }
 
   private mapSubformDataToChecklistItems(value: any): ChecklistItem[] {
     if (!value) { return []; }
     return value.map((item, index) => {
-      const items = Observable.of(
-        this.mapSubformDataToChecklistItems(item['subitems'])
-      );
-
-      return new ChecklistItem(null, index + 1, item['title'], item['description'], items);
+      const subitems = this.mapSubformDataToChecklistItems(item['subitems']);
+      return new ChecklistItem(item['id'], index + 1, item['title'], item['description'], subitems);
     });
   }
 

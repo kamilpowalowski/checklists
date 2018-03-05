@@ -14,24 +14,20 @@ export class ThemeSwitcherComponent implements OnInit {
   }
 
   ngOnInit() {
+    const currentThemeName = window.localStorage.getItem('selected-theme');
+    this.themeService.changeTheme(currentThemeName ? currentThemeName : 'default');
+
     this.themeService.getJsTheme()
       .subscribe((theme: NbJSThemeOptions) => this.theme = theme);
   }
 
-  toggleTheme(theme: boolean) {
-    const boolTheme = this.boolToTheme(theme);
-    this.themeService.changeTheme(boolTheme);
+  toggleTheme() {
+    const name = this.isCosmicTheme() ? 'default' : 'cosmic';
+    window.localStorage.setItem('selected-theme', name);
+    this.themeService.changeTheme(name);
   }
 
-  currentBoolTheme() {
-    return this.themeToBool(this.theme);
-  }
-
-  private themeToBool(theme: NbJSThemeOptions) {
-    return theme.name === 'cosmic';
-  }
-
-  private boolToTheme(theme: boolean) {
-    return theme ? 'cosmic' : 'default';
+  isCosmicTheme(): boolean {
+    return this.theme.name === 'cosmic';
   }
 }

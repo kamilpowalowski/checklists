@@ -89,9 +89,9 @@ export class ChecklistService {
 
     return this.accountService.account.asObservable()
       .flatMap(account => {
-        const addChecklistPromise = checklistReference
+        const setChecklistPromise = checklistReference
           .set(checklist.rawValue(account), { merge: true });
-        return Observable.fromPromise(addChecklistPromise);
+        return Observable.fromPromise(setChecklistPromise);
       })
       .flatMap(_ => {
         const items = checklist.items.getValue();
@@ -187,7 +187,7 @@ export class ChecklistService {
     }
 
     for (const item of newItems) {
-      batch.set(reference.doc(item.id).ref, item.rawValue(), { merge: true });
+      batch.set(reference.doc(item.id).ref, item.rawValue(), { merge: false });
     }
   }
 }

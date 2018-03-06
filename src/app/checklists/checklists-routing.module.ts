@@ -2,9 +2,10 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthenticatedGuard } from '../shared/authenticated-guard.service';
 import { AccountChecklistsComponent } from './account-checklists/account-checklists.component';
+import { ChecklistCreateComponent } from './checklist-form/checklist-create.component';
+import { ChecklistEditComponent } from './checklist-form/checklist-edit.component';
 import { ChecklistComponent } from './checklist/checklist.component';
 import { ChecklistsComponent } from './checklists/checklists.component';
-import { EditChecklistComponent } from './edit-checklist/edit-checklist.component';
 
 const checklistsRoutes: Routes = [
   {
@@ -58,16 +59,14 @@ const checklistsRoutes: Routes = [
       {
         path: 'new',
         canActivate: [AuthenticatedGuard],
-        component: EditChecklistComponent,
-        pathMatch: 'full',
-        data: { new: true }
+        component: ChecklistCreateComponent,
+        pathMatch: 'full'
       },
       {
         path: ':id',
         canActivate: [AuthenticatedGuard],
-        component: EditChecklistComponent,
-        pathMatch: 'full',
-        data: { new: false }
+        component: ChecklistEditComponent,
+        pathMatch: 'full'
       }
     ]
   },

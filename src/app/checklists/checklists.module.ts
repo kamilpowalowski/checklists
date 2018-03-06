@@ -8,6 +8,10 @@ import { TagInputModule } from 'ngx-chips';
 import { MarkdownModule } from 'ngx-markdown';
 import { SharedModule } from '../shared/shared.module';
 import { AccountChecklistsComponent } from './account-checklists/account-checklists.component';
+import { ChecklistCreateComponent } from './checklist-form/checklist-create.component';
+import { ChecklistEditComponent } from './checklist-form/checklist-edit.component';
+import { ChecklistFormComponent } from './checklist-form/checklist-form.component';
+import { MarkdownEditorComponent } from './checklist-form/markdown-editor/markdown-editor.component';
 import { ChecklistItemComponent } from './checklist/checklist-item/checklist-item.component';
 import { ChecklistComponent } from './checklist/checklist.component';
 import { ChecklistsRoutingModule } from './checklists-routing.module';
@@ -15,8 +19,6 @@ import { ChecklistsItemsComponent } from './checklists/checklists-items/checklis
 import { ChecklistsMenuComponent } from './checklists/checklists-menu/checklists-menu.component';
 import { ChecklistsTagsComponent } from './checklists/checklists-tags/checklists-tags.component';
 import { ChecklistsComponent } from './checklists/checklists.component';
-import { EditChecklistComponent } from './edit-checklist/edit-checklist.component';
-import { MarkdownEditorComponent } from './edit-checklist/markdown-editor/markdown-editor.component';
 
 @NgModule({
   imports: [
@@ -40,7 +42,9 @@ import { MarkdownEditorComponent } from './edit-checklist/markdown-editor/markdo
     ChecklistsItemsComponent,
     ChecklistsMenuComponent,
     AccountChecklistsComponent,
-    EditChecklistComponent,
+    ChecklistFormComponent,
+    ChecklistEditComponent,
+    ChecklistCreateComponent,
     MarkdownEditorComponent
   ]
 })

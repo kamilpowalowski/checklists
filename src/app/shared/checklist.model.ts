@@ -2,7 +2,7 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/take';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
-import { v4 as uuid } from 'uuid';
+import * as smartunique from 'smartunique';
 import { Account } from './account.model';
 import { ChecklistItem } from './checklist-item.model';
 
@@ -17,7 +17,7 @@ export class Checklist {
     public isPublic: boolean,
     items: Observable<ChecklistItem[]> | null
   ) {
-    this.id = id ? id : uuid();
+    this.id = id ? id : smartunique.shortId();
     this.description = description ? description : '';
     this.tags = tags ? tags : [];
     this.isPublic = isPublic ? isPublic : false;

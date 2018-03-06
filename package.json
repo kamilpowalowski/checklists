@@ -44,6 +44,7 @@
     "prismjs": "^1.10.0",
     "roboto-fontface": "^0.8.0",
     "rxjs": "^5.4.2",
+    "smartunique": "^2.0.0",
     "socicon": "^3.0.5",
     "typeface-exo": "0.0.44",
     "zone.js": "^0.8.20"

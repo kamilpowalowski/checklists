@@ -2,7 +2,7 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/take';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
-import { v4 as uuid } from 'uuid';
+import * as smartunique from 'smartunique';
 
 export class ChecklistItem {
 
@@ -13,7 +13,7 @@ export class ChecklistItem {
     public description: string,
     public subitems: ChecklistItem[]
   ) {
-    this.id = id ? id : uuid();
+    this.id = id ? id : smartunique.shortId();
     this.description = description ? description : '';
   }
 

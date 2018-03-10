@@ -11,6 +11,7 @@ export class Checklist {
 
   constructor(
     public id: string,
+    public owner: string,
     public title: string,
     public description: string,
     public tags: string[],
@@ -30,11 +31,11 @@ export class Checklist {
     }
   }
 
-  rawValue(account: Account): { [key: string]: any } {
+  rawValue(): { [key: string]: any } {
     const result = {
       'title': this.title,
       'description': this.description,
-      'owner': account.id,
+      'owner': this.owner,
       'tags': {},
       'public': this.isPublic
     };

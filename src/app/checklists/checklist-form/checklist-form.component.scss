@@ -12,59 +12,6 @@
     display: inherit;
   }
 
-  app-markdown-editor {
-    color: nb-theme(form-control-text-primary-color);
-    background-color: nb-theme(form-control-bg);
-
-    /deep/ .editor-toolbar {
-      border-top: nb-theme(form-control-border-width)
-                  nb-theme(form-control-border-type)
-                  nb-theme(form-control-border-color);
-      border-left: nb-theme(form-control-border-width)
-                   nb-theme(form-control-border-type)
-                   nb-theme(form-control-border-color);
-      border-right: nb-theme(form-control-border-width)
-                    nb-theme(form-control-border-type)
-                    nb-theme(form-control-border-color);
-
-      border-top-left-radius: nb-theme(form-control-border-radius);
-      border-top-right-radius: nb-theme(form-control-border-radius);
-
-      a {
-        color: black!important;
-        @include nb-for-theme(cosmic) {
-          color: white!important;
-        }
-
-        &:hover {
-          background-color: transparent;
-        }
-      }
-
-      .separator {
-        border-left: 1px solid nb-theme(actions-separator);
-        border-right: 1px solid nb-theme(actions-separator);
-      }
-    }
-
-    /deep/ .CodeMirror-wrap {
-      border: nb-theme(form-control-border-width)
-              nb-theme(form-control-border-type)
-              nb-theme(form-control-border-color);
-
-      border-bottom-left-radius: nb-theme(form-control-border-radius);
-      border-bottom-right-radius: nb-theme(form-control-border-radius);
-      background-color: nb-theme(form-control-bg);
-    }
-
-    /deep/ .CodeMirror-focused {
-      border: nb-theme(form-control-border-width)
-              nb-theme(form-control-border-type)
-              nb-theme(form-control-selected-border-color);
-      background-color: nb-theme(form-control-focus-bg);
-    }
-  }
-
   /deep/ .tag-form-control {
     padding: 0.75rem 1.125rem;
     color: nb-theme(form-control-text-primary-color);
@@ -116,51 +63,8 @@
     }
   }
 
-  .demo-checkboxes {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1rem;
-  }
-
-  .demo-radio {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1rem;
-  }
-
-  .demo-disabled-checkbox-radio {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1rem;
-  }
-
-  .demo-checkboxes-radio {
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .demo-rating {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-  }
-
-  .star {
-    font-size: 1.5rem;
-    color: nb-theme(color-fg);
-  }
-
   .filled {
     color: nb-theme(color-fg);
-  }
-
-  // TODO: Replace with the card header styles mixin
-  .rating-header {
-    line-height: 2rem;
-    font-size: 1.25rem;
-    font-family: nb-theme(font-secondary);
-    font-weight: nb-theme(font-weight-bolder);
-    color: nb-theme(color-fg-heading);
   }
 
   .current-rate {

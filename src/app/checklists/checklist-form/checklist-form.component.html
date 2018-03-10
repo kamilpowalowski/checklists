@@ -32,16 +32,15 @@
             <nb-card-footer>
               <div class="row">
                 <div class="col-md-3 buttons-group">
-                  <button type="button" class="btn btn-primary btn-icon" [disabled]="itemIndex == 0" (click)="moveItemUp(itemIndex)" type="button">
+                  <button type="button" class="btn btn-primary btn-icon" [disabled]="itemIndex == 0" (click)="moveItemUp(itemIndex)">
                     <i class="nb-arrow-thin-up"></i>
                   </button>
-                  <button type="button" class="btn btn-primary btn-icon" [disabled]="itemIndex >= items().length - 1" (click)="moveItemDown(itemIndex)"
-                    type="button">
+                  <button type="button" class="btn btn-primary btn-icon" [disabled]="itemIndex >= items().length - 1" (click)="moveItemDown(itemIndex)">
                     <i class="nb-arrow-thin-down"></i>
                   </button>
                 </div>
                 <div class="col-md-9">
-                  <button type="button" class="btn btn-danger btn-icon float-right" (click)="removeItem(itemIndex)" type="button">
+                  <button type="button" class="btn btn-danger btn-icon float-right" (click)="removeItem(itemIndex)">
                     <i class="nb-trash"></i>
                   </button>
                 </div>
@@ -65,15 +64,15 @@
                     <nb-card-footer>
                       <div class="row">
                         <div class="col-md-3 buttons-group">
-                          <button type="button" class="btn btn-primary btn-icon" [disabled]="subitemIndex == 0" type="button">
-                            <i class="nb-arrow-thin-up" (click)="moveSubitemUp(subitemIndex, item)"></i>
+                          <button type="button" class="btn btn-primary btn-icon" [disabled]="subitemIndex == 0" (click)="moveSubitemUp(subitemIndex, item)">
+                            <i class="nb-arrow-thin-up"></i>
                           </button>
-                          <button type="button" class="btn btn-primary btn-icon" [disabled]="subitemIndex >= subitemsForItem(item).length - 1" type="button">
-                            <i class="nb-arrow-thin-down" (click)="moveSubitemDown(subitemIndex, item)"></i>
+                          <button type="button" class="btn btn-primary btn-icon" [disabled]="subitemIndex >= subitemsForItem(item).length - 1" (click)="moveSubitemDown(subitemIndex, item)">
+                            <i class="nb-arrow-thin-down"></i>
                           </button>
                         </div>
                         <div class="col-md-9">
-                          <button type="button" class="btn btn-danger btn-icon float-right" (click)="removeSubitem(subitemIndex, item)" type="button">
+                          <button type="button" class="btn btn-danger btn-icon float-right" (click)="removeSubitem(subitemIndex, item)">
                             <i class="nb-trash"></i>
                           </button>
                         </div>

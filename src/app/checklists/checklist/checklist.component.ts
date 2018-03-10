@@ -1,11 +1,12 @@
-import { Observable } from 'rxjs/Observable';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { ChecklistService } from '../../shared/checklist.service';
-import { Checklist } from '../../shared/checklist.model';
-import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/mergeMap';
+import { Observable } from 'rxjs/Observable';
 import { ChecklistItem } from '../../shared/checklist-item.model';
+import { Checklist } from '../../shared/checklist.model';
+import { ChecklistService } from '../../shared/checklist.service';
+import { AccountService } from './../../shared/account.service';
 
 @Component({
   selector: 'app-checklist',
@@ -18,6 +19,7 @@ export class ChecklistComponent implements OnInit {
   items: Observable<ChecklistItem[]>;
 
   constructor(
+    public accountService: AccountService,
     private checklistService: ChecklistService,
     private route: ActivatedRoute
   ) { }

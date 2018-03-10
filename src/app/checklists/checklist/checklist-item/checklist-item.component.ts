@@ -25,7 +25,7 @@ export class ChecklistItemComponent implements OnInit, OnDestroy {
     this.selected = this.checklistService.isChecklistItemSelected(this.item);
 
     this.selectedIdsSubscription = this.checklistService.selectedIds
-      .subscribe(() => {
+      .subscribe(_ => {
         this.selected = this.checklistService.isChecklistItemSelected(this.item);
       });
   }

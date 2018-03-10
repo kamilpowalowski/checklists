@@ -47,6 +47,7 @@ export class ChecklistEditComponent extends ChecklistFormComponent implements On
   private loadChecklistToForm(checklist: Checklist) {
     const values = {
       'id': checklist.id,
+      'owner': checklist.owner,
       'public': checklist.isPublic,
       'title': checklist.title,
       'tags': checklist.tags.map(tag => `#${tag}`),

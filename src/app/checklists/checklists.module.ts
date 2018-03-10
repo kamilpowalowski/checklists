@@ -2,7 +2,12 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CovalentTextEditorModule } from '@covalent/text-editor';
-import { NbCardModule, NbCheckboxModule, NbMenuModule } from '@nebular/theme';
+import {
+  NbActionsModule,
+  NbCardModule,
+  NbCheckboxModule,
+  NbMenuModule
+  } from '@nebular/theme';
 import { EmojiModule } from 'angular-emojione';
 import { TagInputModule } from 'ngx-chips';
 import { MarkdownModule } from 'ngx-markdown';
@@ -13,6 +18,7 @@ import { ChecklistEditComponent } from './checklist-form/checklist-edit.componen
 import { ChecklistFormComponent } from './checklist-form/checklist-form.component';
 import { MarkdownEditorComponent } from './checklist-form/markdown-editor/markdown-editor.component';
 import { ChecklistItemComponent } from './checklist/checklist-item/checklist-item.component';
+import { ChecklistOwnerActionsComponent } from './checklist/checklist-owner-actions/checklist-owner-actions.component';
 import { ChecklistComponent } from './checklist/checklist.component';
 import { ChecklistsRoutingModule } from './checklists-routing.module';
 import { ChecklistsItemsComponent } from './checklists/checklists-items/checklists-items.component';
@@ -28,6 +34,7 @@ import { ChecklistsComponent } from './checklists/checklists.component';
     ChecklistsRoutingModule,
     NbCardModule,
     NbCheckboxModule,
+    NbActionsModule,
     NbMenuModule,
     MarkdownModule.forChild(),
     EmojiModule,
@@ -45,7 +52,8 @@ import { ChecklistsComponent } from './checklists/checklists.component';
     ChecklistFormComponent,
     ChecklistEditComponent,
     ChecklistCreateComponent,
-    MarkdownEditorComponent
+    MarkdownEditorComponent,
+    ChecklistOwnerActionsComponent
   ]
 })
 export class ChecklistsModule { }

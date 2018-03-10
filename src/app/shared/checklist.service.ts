@@ -44,7 +44,10 @@ export class ChecklistService {
         const itemsReference = checklistReference
           .collection<ChecklistItem>(consts.CHECKLISTS_ITEMS_COLLECTION);
         const items = fullData ? this.checklistItems(itemsReference) : null;
-        return new Checklist(id, data['title'], data['description'], tags, data['public'], items);
+        return new Checklist(
+          id, data['owner'], data['title'], data['description'],
+          tags, data['public'], items
+        );
       });
   }
 
@@ -87,12 +90,10 @@ export class ChecklistService {
       .collection(consts.CHECKLISTS_COLLECTION)
       .doc(checklist.id);
 
-    return this.accountService.account.asObservable()
-      .flatMap(account => {
-        const setChecklistPromise = checklistReference
-          .set(checklist.rawValue(account), { merge: true });
-        return Observable.fromPromise(setChecklistPromise);
-      })
+    const setChecklistPromise = checklistReference
+      .set(checklist.rawValue(), { merge: true });
+
+    return Observable.fromPromise(setChecklistPromise)
       .flatMap(_ => {
         const items = checklist.items.getValue();
         if (items.length === 0) { return Observable.of(checklist.id); }

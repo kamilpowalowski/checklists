@@ -19,6 +19,7 @@ import 'rxjs/add/operator/debounceTime';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
+import { AccountService } from './../../shared/account.service';
 import { ChecklistItem } from './../../shared/checklist-item.model';
 import { Checklist } from './../../shared/checklist.model';
 import { ChecklistService } from './../../shared/checklist.service';
@@ -34,6 +35,7 @@ export class ChecklistFormComponent implements OnInit {
   constructor(
     protected route: ActivatedRoute,
     protected router: Router,
+    protected accountService: AccountService,
     protected checklistService: ChecklistService
   ) { }
 
@@ -122,7 +124,7 @@ export class ChecklistFormComponent implements OnInit {
     return Observable.of(`#${transformedTag}`);
   }
 
-  onSave(quit: boolean) {}
+  onSave(quit: boolean) { }
 
   onDiscard() {
     this.router.navigate(['/checklists', 'me', 'all']);
@@ -133,12 +135,17 @@ export class ChecklistFormComponent implements OnInit {
       this.mapSubformDataToChecklistItems(value['items'])
     );
     const tags = value['tags'].map(tag => tag.slice(1));
-    return new Checklist(value['id'], value['title'], value['description'], tags, value['public'], items);
+    return new Checklist(
+      value['id'], value['owner'], value['title'],
+      value['description'], tags, value['public'], items
+    );
   }
 
   private initForm() {
     this.form = new FormGroup({
       'id': new FormControl(),
+      'owner': new FormControl(),
+      'public': new FormControl(),
       'title': new FormControl('', Validators.required),
       'tags': new FormControl(),
       'description': new FormControl(),

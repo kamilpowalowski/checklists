@@ -27,12 +27,8 @@ export class ChecklistEditComponent extends ChecklistFormComponent implements On
     this.routerSubscription.unsubscribe();
   }
 
-  onSave(quit: boolean) {
-    const checklist = this.mapFormDataToChecklist(this.form.value);
-    this.checklistService.saveChecklist(checklist)
-      .subscribe(_ => {
-        if (quit) { this.onDiscard(); }
-      });
+  onSaved(checklistId: string) {
+    this.onDiscard();
   }
 
   private loadChecklistForEdit(id: string) {

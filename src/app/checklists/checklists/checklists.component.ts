@@ -29,6 +29,11 @@ export class ChecklistsComponent implements OnInit, OnDestroy {
       title: 'featured',
       link: '/checklists/public/featured',
       pathMatch: 'full'
+    },
+    {
+      title: 'all',
+      link: '/checklists/public/all',
+      pathMatch: 'full'
     }
   ];
   checklists: Observable<Checklist[]>;

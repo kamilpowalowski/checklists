@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AccountService } from './shared/account.service';
+import { NbThemeService } from '@nebular/theme';
 import * as EmojiOne from 'emojione';
+import { AccountService } from './shared/account.service';
 
 @Component({
   selector: 'app-root',
@@ -9,9 +10,15 @@ import * as EmojiOne from 'emojione';
 })
 export class AppComponent implements OnInit {
 
-  constructor(private accountService: AccountService) { }
+  constructor(
+    private themeService: NbThemeService,
+    private accountService: AccountService
+  ) { }
 
   ngOnInit() {
     EmojiOne.emojiSize = '64';
+
+    const currentThemeName = window.localStorage.getItem('selected-theme');
+    this.themeService.changeTheme(currentThemeName ? currentThemeName : 'default');
   }
 }

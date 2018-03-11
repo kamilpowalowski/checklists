@@ -1,6 +1,6 @@
 <div class="row">
   <div class="offset-md-1 col-md-10">
-    <form [formGroup]="form" (ngSubmit)="onSave(true)">
+    <form [formGroup]="form" (ngSubmit)="onSave()">
       <nb-card>
         <nb-card-header>Create/Edit Checklist</nb-card-header>
         <nb-card-body>
@@ -97,9 +97,8 @@
       </nb-card>
       <nb-card>
         <nb-card-body>
-          <button class="btn btn-block btn-primary" (click)="onSave(false)" type="button" [disabled]="!form.valid">Save</button>
-          <button class="btn btn-block btn-success" type="submit" [disabled]="!form.valid">Save and Quit</button>
-          <button class="btn btn-block btn-danger" (click)="onDiscard()" type="button">Discard and Quit</button>
+          <button class="btn btn-block btn-hero-success" type="submit" [disabled]="!form.valid" [class.btn-pulse]="saveInProgress">{{ saveInProgress ? 'Saving...' : 'Save and Quit' }}</button>
+          <button class="btn btn-block btn-danger" (click)="onDiscard()" type="button" [disabled]="saveInProgress">Discard and Quit</button>
         </nb-card-body>
       </nb-card>
     </form>

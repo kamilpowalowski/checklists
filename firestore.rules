@@ -2,7 +2,8 @@ service cloud.firestore {
   match /databases/{database}/documents {
   	match /checklists/{checklist} {
 
-      allow read: if resource.data.public == true;
+      allow list: if resource.data.public == true;
+      allow get;
       allow create: if request.resource.data.owner == request.auth.uid;
       allow read, update, delete: if resource.data.owner == request.auth.uid;
 

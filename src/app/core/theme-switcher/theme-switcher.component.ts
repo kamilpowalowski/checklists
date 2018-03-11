@@ -10,13 +10,9 @@ import { NbJSThemeOptions } from '@nebular/theme/services/js-themes/theme.option
 export class ThemeSwitcherComponent implements OnInit {
   theme: NbJSThemeOptions;
 
-  constructor(private themeService: NbThemeService) {
-  }
+  constructor(private themeService: NbThemeService) { }
 
   ngOnInit() {
-    const currentThemeName = window.localStorage.getItem('selected-theme');
-    this.themeService.changeTheme(currentThemeName ? currentThemeName : 'default');
-
     this.themeService.getJsTheme()
       .subscribe((theme: NbJSThemeOptions) => this.theme = theme);
   }

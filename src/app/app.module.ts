@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NbAuthModule, NbAuthOptions, NbEmailPassAuthProvider } from '@nebular/auth';
 import { NbThemeModule } from '@nebular/theme';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EmojiModule } from 'angular-emojione';
 import { CookieLawModule } from 'angular2-cookie-law';
 import { AngularFireModule } from 'angularfire2';
@@ -13,6 +14,7 @@ import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
+import { ModalComponent } from './modal/modal.component';
 import { FirebaseAuthenticationProvider } from './shared/firebase-authentication.provider';
 import { SharedModule } from './shared/shared.module';
 
@@ -31,9 +33,6 @@ const authModuleSettings: NbAuthOptions = {
 };
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -43,11 +42,19 @@ const authModuleSettings: NbAuthOptions = {
     AngularFireAuthModule,
     NbThemeModule.forRoot({ name: 'default' }),
     NbAuthModule.forRoot(authModuleSettings),
+    NgbModule.forRoot(),
     MarkdownModule.forRoot(),
     EmojiModule,
     CookieLawModule,
     SharedModule,
     CoreModule
+  ],
+  declarations: [
+    AppComponent,
+    ModalComponent
+  ],
+  entryComponents: [
+    ModalComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

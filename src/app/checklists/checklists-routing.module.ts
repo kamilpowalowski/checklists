@@ -13,6 +13,12 @@ const checklistsRoutes: Routes = [
     children: [
       { path: '', redirectTo: 'featured', pathMatch: 'full' },
       {
+        path: 'all',
+        component: ChecklistsComponent,
+        pathMatch: 'full',
+        data: { featured: false }
+      },
+      {
         path: 'featured',
         component: ChecklistsComponent,
         pathMatch: 'full',

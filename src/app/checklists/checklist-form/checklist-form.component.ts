@@ -13,12 +13,14 @@ import {
   Validators
   } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TagModel } from 'ngx-chips/core/accessor';
 import 'rxjs/add/observable/never';
 import 'rxjs/add/operator/debounceTime';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
+import { ModalComponent } from '../../modal/modal.component';
 import { AccountService } from './../../shared/account.service';
 import { ChecklistItem } from './../../shared/checklist-item.model';
 import { Checklist } from './../../shared/checklist.model';
@@ -31,16 +33,21 @@ import { ChecklistService } from './../../shared/checklist.service';
 })
 export class ChecklistFormComponent implements OnInit {
   form: FormGroup;
+  saveInProgress: boolean;
+
+  returnUrl: string;
 
   constructor(
     protected route: ActivatedRoute,
     protected router: Router,
+    protected modalService: NgbModal,
     protected accountService: AccountService,
     protected checklistService: ChecklistService
   ) { }
 
   ngOnInit() {
     this.initForm();
+    this.returnUrl = this.route.snapshot.queryParams['return-url'];
   }
 
   items(): AbstractControl[] {
@@ -124,10 +131,36 @@ export class ChecklistFormComponent implements OnInit {
     return Observable.of(`#${transformedTag}`);
   }
 
-  onSave(quit: boolean) { }
+  onSave() {
+    this.saveInProgress = true;
+    const checklist = this.mapFormDataToChecklist(this.form.value);
+    this.checklistService.saveChecklist(checklist)
+      .subscribe(
+        id => {
+          this.saveInProgress = false;
+          this.onSaved(id);
+        },
+        error => {
+          this.saveInProgress = false;
+          const activeModal = this.modalService.open(ModalComponent, { size: 'lg', container: 'nb-layout' });
+          activeModal.componentInstance.title = 'Houston, we have a problem';
+          activeModal.componentInstance.body = error;
+          activeModal.componentInstance.primaryButtonTitle = 'OK';
+          activeModal.componentInstance.primaryButtonAction = () => activeModal.close();
+        }
+      );
+  }
+
+  onSaved(checklistId: string) {
+
+  }
 
   onDiscard() {
-    this.router.navigate(['/checklists', 'me', 'all']);
+    if (this.returnUrl) {
+      this.router.navigateByUrl(this.returnUrl);
+    } else {
+      this.router.navigate(['/checklists', 'me', 'all']);
+    }
   }
 
   protected mapFormDataToChecklist(value: any): Checklist {

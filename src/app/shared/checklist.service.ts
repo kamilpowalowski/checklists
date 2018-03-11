@@ -52,6 +52,8 @@ export class ChecklistService {
   }
 
   selectChecklistItem(item: ChecklistItem) {
+    if (!this.selectedIdsReference) { return; }
+
     if (item.subitems.length === 0) {
       this.selectedIdsReference
         .set({ [item.id]: true }, { merge: true });
@@ -63,6 +65,8 @@ export class ChecklistService {
   }
 
   unselectChecklistItem(item: ChecklistItem) {
+    if (!this.selectedIdsReference) { return; }
+
     if (item.subitems.length === 0) {
       this.selectedIdsReference
         .set({ [item.id]: firebase.firestore.FieldValue.delete() }, { merge: true });

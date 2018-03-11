@@ -1,15 +1,15 @@
-import { Observable } from 'rxjs/Observable';
-import { AngularFirestore } from 'angularfire2/firestore';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { Account } from './account.model';
+import { AngularFirestore } from 'angularfire2/firestore';
 import * as firebase from 'firebase/app';
-import * as consts from './firebase.consts';
 import 'rxjs/add/observable/fromPromise';
 import 'rxjs/add/operator/do';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
 import { AccountPersistance } from './account-persistance.enum';
+import { Account } from './account.model';
 import { AuthenticationState } from './authentication-state.enum';
+import * as consts from './firebase.consts';
 
 @Injectable()
 export class AccountService {

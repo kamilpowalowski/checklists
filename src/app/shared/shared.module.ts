@@ -1,11 +1,11 @@
-import { TagsService } from './tags.service';
-import { ChecklistsService } from './checklists.service';
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ChecklistService } from './checklist.service';
+import { NgModule } from '@angular/core';
 import { AccountService } from './account.service';
-import { FirebaseAuthenticationProvider } from './firebase-authentication.provider';
 import { AuthenticatedGuard } from './authenticated-guard.service';
+import { ChecklistService } from './checklist.service';
+import { ChecklistsService } from './checklists.service';
+import { FirebaseAuthenticationProvider } from './firebase-authentication.provider';
+import { TagsService } from './tags.service';
 
 @NgModule({
   imports: [

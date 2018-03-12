@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalComponent } from '../../../modal/modal.component';
 import { Checklist } from './../../../shared/checklist.model';
+import { ChecklistService } from './../../../shared/checklist.service';
 
 @Component({
   selector: 'app-checklist-owner-actions',
@@ -15,7 +16,8 @@ export class ChecklistOwnerActionsComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private checklistService: ChecklistService
   ) { }
 
   ngOnInit() {
@@ -39,14 +41,20 @@ export class ChecklistOwnerActionsComponent implements OnInit {
   delete() {
     const activeModal = this.modalService.open(ModalComponent, { size: 'lg', container: 'nb-layout' });
     activeModal.componentInstance.title = 'Delete checklist?';
-    activeModal.componentInstance.body = 'This operation can\'t be reversed. Do you realy want to delete this checklist?';
+    activeModal.componentInstance.body = 'This operation can\'t be reversed. Do you really want to delete this checklist?';
     activeModal.componentInstance.primaryButtonTitle = 'Cancel';
     activeModal.componentInstance.primaryButtonAction = () => activeModal.close();
     activeModal.componentInstance.destructiveButtonTitle = 'Delete';
     activeModal.componentInstance.destructiveButtonAction = () => {
-      // TODO: delete checklist
-      this.router.navigate(['checklists', 'me', 'all']);
-      activeModal.close();
+      this.checklistService.removeChecklist(this.checklist)
+        .subscribe(
+          _ => {
+            this.router.navigate(['checklists', 'me', 'all']);
+            activeModal.close();
+          },
+          error => {
+            ModalComponent.showModalError(this.modalService, error);
+          });
     };
   }
 

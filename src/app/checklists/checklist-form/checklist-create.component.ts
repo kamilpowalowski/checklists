@@ -19,11 +19,6 @@ export class ChecklistCreateComponent extends ChecklistFormComponent implements 
     this.localStorageSubscription.unsubscribe();
   }
 
-  onSaved(checklistId: string) {
-    window.localStorage.removeItem('form-data');
-    this.router.navigate(['/checklists', 'edit', checklistId]);
-  }
-
   onDiscard() {
     window.localStorage.removeItem('form-data');
     super.onDiscard();

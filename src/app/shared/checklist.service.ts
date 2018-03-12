@@ -39,6 +39,7 @@ export class ChecklistService {
     return checklistReference
       .valueChanges()
       .distinctUntilChanged()
+      .filter(value => value != null)
       .map(data => {
         const tags = Object.keys(data['tags']);
         const itemsReference = checklistReference
@@ -116,6 +117,26 @@ export class ChecklistService {
             return Observable.fromPromise(batch.commit());
           })
           .map(_ => checklist.id);
+      });
+  }
+
+  removeChecklist(checklist: Checklist): Observable<void> {
+    const checklistReference = this.firestore
+      .collection(consts.CHECKLISTS_COLLECTION)
+      .doc(checklist.id);
+
+    const itemsReference = checklistReference
+      .collection<ChecklistItem>(consts.CHECKLISTS_ITEMS_COLLECTION);
+
+    return this.checklistItems(itemsReference)
+      .take(1)
+      .flatMap(items => {
+        const batch = this.firestore.firestore.batch();
+        for (const itemId of items.map(item => item.id)) {
+          batch.delete(itemsReference.doc(itemId).ref);
+        }
+        batch.delete(checklistReference.ref);
+        return Observable.fromPromise(batch.commit());
       });
   }
 

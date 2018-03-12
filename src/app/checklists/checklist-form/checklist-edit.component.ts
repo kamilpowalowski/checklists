@@ -27,10 +27,6 @@ export class ChecklistEditComponent extends ChecklistFormComponent implements On
     this.routerSubscription.unsubscribe();
   }
 
-  onSaved(checklistId: string) {
-    this.onDiscard();
-  }
-
   private loadChecklistForEdit(id: string) {
     this.checklistService.observeChecklist(id, true)
       .take(1)

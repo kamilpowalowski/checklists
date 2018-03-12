@@ -138,15 +138,11 @@ export class ChecklistFormComponent implements OnInit {
       .subscribe(
         id => {
           this.saveInProgress = false;
-          this.onSaved(id);
+          this.onDiscard();
         },
         error => {
           this.saveInProgress = false;
-          const activeModal = this.modalService.open(ModalComponent, { size: 'lg', container: 'nb-layout' });
-          activeModal.componentInstance.title = 'Houston, we have a problem';
-          activeModal.componentInstance.body = error;
-          activeModal.componentInstance.primaryButtonTitle = 'OK';
-          activeModal.componentInstance.primaryButtonAction = () => activeModal.close();
+          ModalComponent.showModalError(this.modalService, error);
         }
       );
   }

@@ -6,11 +6,11 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: 'AIzaSyAOOjobvFzapuiSAqaPB7J-jEvvlZmoQTA',
-    authDomain: 'lizt.co',
-    databaseURL: 'https://checklists-75c83.firebaseio.com',
-    projectId: 'checklists-75c83',
-    storageBucket: 'checklists-75c83.appspot.com',
-    messagingSenderId: '513542089540'
+    apiKey: 'AIzaSyATHqidejoBjg0_QHsPDGKOsdGbQPjgB8w',
+    authDomain: 'dev.lizt.co',
+    databaseURL: 'https://checklists-a558f.firebaseio.com',
+    projectId: 'checklists-a558f',
+    storageBucket: 'checklists-a558f.appspot.com',
+    messagingSenderId: '929729499240'
   }
 };

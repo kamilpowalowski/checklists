@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "checklists-75c83"
+    "production": "checklists-75c83",
+    "development": "checklists-a558f"
   }
 }

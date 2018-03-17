@@ -14,7 +14,7 @@ import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
-import { ModalComponent } from './modal/modal.component';
+import { ModalsModule } from './modals/modals.module';
 import { FirebaseAuthenticationProvider } from './shared/firebase-authentication.provider';
 import { SharedModule } from './shared/shared.module';
 
@@ -47,14 +47,11 @@ const authModuleSettings: NbAuthOptions = {
     EmojiModule,
     CookieLawModule,
     SharedModule,
-    CoreModule
+    CoreModule,
+    ModalsModule
   ],
   declarations: [
-    AppComponent,
-    ModalComponent
-  ],
-  entryComponents: [
-    ModalComponent
+    AppComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

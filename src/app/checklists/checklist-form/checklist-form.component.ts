@@ -20,11 +20,11 @@ import 'rxjs/add/operator/debounceTime';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import { ModalComponent } from '../../modal/modal.component';
-import { AccountService } from './../../shared/account.service';
-import { ChecklistItem } from './../../shared/checklist-item.model';
-import { Checklist } from './../../shared/checklist.model';
-import { ChecklistService } from './../../shared/checklist.service';
+import { ModalComponent } from '../../modals/modal/modal.component';
+import { AccountService } from '../../shared/account.service';
+import { ChecklistItem } from '../../shared/checklist-item.model';
+import { Checklist } from '../../shared/checklist.model';
+import { ChecklistService } from '../../shared/checklist.service';
 
 @Component({
   selector: 'app-checklist-form',

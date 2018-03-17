@@ -3,9 +3,13 @@
     <i class="nb-edit"></i>
     <span>Edit</span>
   </nb-action>
-  <nb-action (click)="public()">
+  <nb-action (click)="unpublish()" *ngIf="checklist.isPublish">
     <i class="nb-cloudy"></i>
-    <span>Public</span>
+    <span>Unublish</span>
+  </nb-action>
+  <nb-action (click)="publish()" *ngIf="!checklist.isPublish">
+    <i class="nb-cloudy"></i>
+    <span>Publish</span>
   </nb-action>
   <nb-action (click)="share()">
     <i class="nb-paper-plane"></i>

@@ -1,9 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ModalComponent } from '../../../modal/modal.component';
-import { Checklist } from './../../../shared/checklist.model';
-import { ChecklistService } from './../../../shared/checklist.service';
+import { ModalComponent } from '../../../modals/modal/modal.component';
+import { Checklist } from '../../../shared/checklist.model';
+import { ChecklistService } from '../../../shared/checklist.service';
+import { ShareModalComponent } from './../../../modals/share-modal/share-modal.component';
 
 @Component({
   selector: 'app-checklist-owner-actions',
@@ -30,12 +31,19 @@ export class ChecklistOwnerActionsComponent implements OnInit {
     );
   }
 
-  public() {
+  publish() {
+    // TODO: Implement
+  }
+
+  unpublish() {
     // TODO: Implement
   }
 
   share() {
-    // TODO: Implement
+    const activeModal = this.modalService.open(ShareModalComponent, { size: 'lg', container: 'nb-layout' });
+    activeModal.componentInstance.additionalInfo = this.checklist.isPublic
+      ? null
+      : 'NOTE: People with URL can access this checklist even if it is not published. Please, share with discretion.';
   }
 
   delete() {

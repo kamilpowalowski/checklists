@@ -1,0 +1,22 @@
+<div class="modal-header">
+  <span>Share Checklist</span>
+  <button class="close" aria-label="Close" (click)="closeModal()">
+    <i class="nb-close"></i>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="component">
+    <div class="row">
+      <div class="col-md-12">
+        <share-buttons [theme]="'default'" [exclude]="['pinterest','tumblr','print']" [showText]="true" [showCount]="true" [size]="4"></share-buttons>
+        <span>&nbsp;</span>
+        <div class="col-md-12">
+          <span>{{ additionalInfo }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-md btn-primary" (click)="closeModal()">Cancel</button>
+</div>

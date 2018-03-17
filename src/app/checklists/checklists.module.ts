@@ -11,6 +11,7 @@ import {
 import { EmojiModule } from 'angular-emojione';
 import { TagInputModule } from 'ngx-chips';
 import { MarkdownModule } from 'ngx-markdown';
+import { ModalsModule } from '../modals/modals.module';
 import { SharedModule } from '../shared/shared.module';
 import { AccountChecklistsComponent } from './account-checklists/account-checklists.component';
 import { ChecklistCreateComponent } from './checklist-form/checklist-create.component';
@@ -39,7 +40,8 @@ import { ChecklistsComponent } from './checklists/checklists.component';
     MarkdownModule.forChild(),
     EmojiModule,
     CovalentTextEditorModule,
-    TagInputModule
+    TagInputModule,
+    ModalsModule
   ],
   declarations: [
     ChecklistsComponent,

@@ -1,21 +1,21 @@
 <nb-actions size="medium" fullWidth>
-  <nb-action (click)="edit()">
+  <nb-action (click)="edit()" nbPopover="Edit your checklist." nbPopoverMode="hover">
     <i class="nb-edit"></i>
     <span>Edit</span>
   </nb-action>
-  <nb-action (click)="unpublish()" *ngIf="checklist.isPublish">
+  <nb-action (click)="unpublish()" *ngIf="checklist.isPublic" nbPopover="Unpublish this checklist." nbPopoverMode="hint">
     <i class="nb-cloudy"></i>
     <span>Unublish</span>
   </nb-action>
-  <nb-action (click)="publish()" *ngIf="!checklist.isPublish">
+  <nb-action (click)="publish()" *ngIf="!checklist.isPublic" nbPopover="Make this checklist public." nbPopoverMode="hint">
     <i class="nb-cloudy"></i>
     <span>Publish</span>
   </nb-action>
-  <nb-action (click)="share()">
+  <nb-action (click)="share()" nbPopover="Share an URL to this checklist." nbPopoverMode="hint">
     <i class="nb-paper-plane"></i>
     <span>Share</span>
   </nb-action>
-  <nb-action (click)="delete()">
+  <nb-action (click)="delete()" nbPopover="Remove this checklist." nbPopoverMode="hint">
     <i class="nb-trash"></i>
     <span>Delete</span>
   </nb-action>

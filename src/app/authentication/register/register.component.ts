@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NB_AUTH_OPTIONS_TOKEN, NbAuthResult, NbAuthService } from '@nebular/auth';
+import { NB_AUTH_OPTIONS, NbAuthResult, NbAuthService } from '@nebular/auth';
 import { getDeepFromObject } from '@nebular/auth/helpers';
 
 /**
@@ -32,7 +32,7 @@ export class RegisterComponent implements OnInit {
   returnUrl: string;
 
   constructor(private service: NbAuthService,
-    @Inject(NB_AUTH_OPTIONS_TOKEN) private config = {},
+    @Inject(NB_AUTH_OPTIONS) private config = {},
     private route: ActivatedRoute,
     private router: Router) { }
 

@@ -1,5 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  Input,
+  OnDestroy,
+  OnInit,
+  ViewChildren
+  } from '@angular/core';
 import { Router } from '@angular/router';
+import { NbPopoverDirective } from '@nebular/theme';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalComponent } from '../../../modals/modal/modal.component';
 import { Checklist } from '../../../shared/checklist.model';
@@ -11,9 +19,10 @@ import { ShareModalComponent } from './../../../modals/share-modal/share-modal.c
   templateUrl: './checklist-owner-actions.component.html',
   styleUrls: ['./checklist-owner-actions.component.scss']
 })
-export class ChecklistOwnerActionsComponent implements OnInit {
+export class ChecklistOwnerActionsComponent implements OnInit, OnDestroy {
 
   @Input() checklist: Checklist;
+  @ViewChildren(NbPopoverDirective) popoverDirectives;
 
   constructor(
     private router: Router,
@@ -22,6 +31,12 @@ export class ChecklistOwnerActionsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+  }
+
+  ngOnDestroy() {
+    this.popoverDirectives
+      .filter(popoverDirective => popoverDirective.isShown)
+      .forEach(popoverDirective => popoverDirective.hide());
   }
 
   edit() {

@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { NbMenuItem, NbMenuService } from '@nebular/theme';
+import { NbMenuItem } from '@nebular/theme';
 
 @Component({
   selector: 'app-checklists-tags',
@@ -13,13 +13,21 @@ export class ChecklistsTagsComponent implements OnChanges {
 
   items: NbMenuItem[] = [];
 
-  constructor(private menuService: NbMenuService) { }
+  constructor() { }
 
   ngOnChanges() {
-    this.creatItems(this.tags ? this.tags : []);
+    if (this.tags) {
+      if (this.tags.length > 0) {
+        this.createItems(this.tags);
+      } else {
+        this.createEmptyMenu('Empty list');
+      }
+    } else {
+      this.createEmptyMenu('Loading...');
+    }
   }
 
-  private creatItems(tags: string[]) {
+  private createItems(tags: string[]) {
     this.items = tags.map(tag => {
       return {
         title: `#${tag}`,
@@ -27,6 +35,15 @@ export class ChecklistsTagsComponent implements OnChanges {
         pathMatch: 'full'
       };
     });
+  }
+
+  private createEmptyMenu(text: string) {
+    this.items = [
+      {
+        title: text,
+        group: true
+      }
+    ];
   }
 
 }

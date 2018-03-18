@@ -6,7 +6,8 @@ import {
   NbActionsModule,
   NbCardModule,
   NbCheckboxModule,
-  NbMenuModule
+  NbMenuModule,
+  NbPopoverModule
   } from '@nebular/theme';
 import { EmojiModule } from 'angular-emojione';
 import { TagInputModule } from 'ngx-chips';
@@ -36,6 +37,7 @@ import { ChecklistsComponent } from './checklists/checklists.component';
     NbCardModule,
     NbCheckboxModule,
     NbActionsModule,
+    NbPopoverModule,
     NbMenuModule,
     MarkdownModule.forChild(),
     EmojiModule,

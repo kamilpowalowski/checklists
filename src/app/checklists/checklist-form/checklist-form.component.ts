@@ -138,7 +138,7 @@ export class ChecklistFormComponent implements OnInit {
       .subscribe(
         id => {
           this.saveInProgress = false;
-          this.onDiscard();
+          this.closeForm();
         },
         error => {
           this.saveInProgress = false;
@@ -147,11 +147,20 @@ export class ChecklistFormComponent implements OnInit {
       );
   }
 
-  onSaved(checklistId: string) {
-
+  onDiscard() {
+    const activeModal = this.modalService.open(ModalComponent, { size: 'lg', container: 'nb-layout' });
+    activeModal.componentInstance.title = 'Discard changed data?';
+    activeModal.componentInstance.body = 'This operation can\'t be reversed. Do you really want to discard changed data?';
+    activeModal.componentInstance.primaryButtonTitle = 'Cancel';
+    activeModal.componentInstance.primaryButtonAction = () => activeModal.close();
+    activeModal.componentInstance.destructiveButtonTitle = 'Discard';
+    activeModal.componentInstance.destructiveButtonAction = () => {
+      this.closeForm();
+      activeModal.close();
+    };
   }
 
-  onDiscard() {
+  closeForm() {
     if (this.returnUrl) {
       this.router.navigateByUrl(this.returnUrl);
     } else {

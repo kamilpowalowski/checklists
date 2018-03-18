@@ -3,9 +3,11 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {
   NbActionsModule,
+  NbContextMenuModule,
   NbLayoutModule,
   NbMenuModule,
   NbMenuService,
+  NbPopoverModule,
   NbSidebarModule,
   NbUserModule
   } from '@nebular/theme';
@@ -28,7 +30,9 @@ import { ThemeSwitcherComponent } from './theme-switcher/theme-switcher.componen
     NbMenuModule,
     NbLayoutModule,
     NbSidebarModule,
-    NbUserModule
+    NbUserModule,
+    NbContextMenuModule,
+    NbPopoverModule
   ],
   declarations: [
     HeaderComponent,

@@ -1,10 +1,15 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output
+  } from '@angular/core';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import { Subscription } from 'rxjs/Subscription';
 import { ChecklistItem } from '../../../shared/checklist-item.model';
 import { Checklist } from '../../../shared/checklist.model';
 import { ChecklistService } from '../../../shared/checklist.service';
-
 
 @Component({
   selector: 'app-checklist-item',
@@ -15,11 +20,15 @@ export class ChecklistItemComponent implements OnInit, OnDestroy {
   @Input() item: ChecklistItem;
   @Input() level: number;
 
+  @Output() onChange = new EventEmitter<boolean>();
+
   selected = false;
 
   private selectedIdsSubscription: Subscription;
 
-  constructor(private checklistService: ChecklistService) { }
+  constructor(
+    private checklistService: ChecklistService
+  ) { }
 
   ngOnInit() {
     this.selected = this.checklistService.isChecklistItemSelected(this.item);
@@ -42,11 +51,14 @@ export class ChecklistItemComponent implements OnInit, OnDestroy {
 
   onCheckboxValueChanged(newValue: boolean) {
     this.selected = newValue;
+
     if (this.selected === true) {
       this.checklistService.selectChecklistItem(this.item);
     } else {
       this.checklistService.unselectChecklistItem(this.item);
     }
+
+    this.onChange.emit(this.selected);
   }
 
 }

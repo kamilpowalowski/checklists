@@ -10,6 +10,7 @@ import {
   NbPopoverModule
   } from '@nebular/theme';
 import { EmojiModule } from 'angular-emojione';
+import { ToasterModule } from 'angular2-toaster';
 import { TagInputModule } from 'ngx-chips';
 import { MarkdownModule } from 'ngx-markdown';
 import { ModalsModule } from '../modals/modals.module';
@@ -40,6 +41,7 @@ import { ChecklistsComponent } from './checklists/checklists.component';
     NbPopoverModule,
     NbMenuModule,
     MarkdownModule.forChild(),
+    ToasterModule.forChild(),
     EmojiModule,
     CovalentTextEditorModule,
     TagInputModule,

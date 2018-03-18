@@ -2,7 +2,6 @@
   <nb-layout-header fixed>
     <app-header></app-header>
   </nb-layout-header>
-
   <nb-sidebar class="menu-sidebar" tag="menu-sidebar" responsive>
     <nb-sidebar-header>
       <app-sidebar-header></app-sidebar-header>
@@ -12,11 +11,10 @@
       <app-sidebar-footer></app-sidebar-footer>
     </nb-sidebar-footer>
   </nb-sidebar>
-
   <nb-layout-column>
+    <toaster-container [toasterconfig]="toasterConfig"></toaster-container>
     <router-outlet></router-outlet>
   </nb-layout-column>
-
   <nb-layout-footer>
     <app-footer></app-footer>
   </nb-layout-footer>

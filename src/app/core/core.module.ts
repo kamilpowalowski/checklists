@@ -12,6 +12,7 @@ import {
   NbUserModule
   } from '@nebular/theme';
 import { AngularSvgIconModule } from 'angular-svg-icon';
+import { ToasterModule } from 'angular2-toaster';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
@@ -32,7 +33,8 @@ import { ThemeSwitcherComponent } from './theme-switcher/theme-switcher.componen
     NbSidebarModule,
     NbUserModule,
     NbContextMenuModule,
-    NbPopoverModule
+    NbPopoverModule,
+    ToasterModule.forChild()
   ],
   declarations: [
     HeaderComponent,

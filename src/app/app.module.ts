@@ -6,6 +6,7 @@ import { NbThemeModule } from '@nebular/theme';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EmojiModule } from 'angular-emojione';
 import { CookieLawModule } from 'angular2-cookie-law';
+import { ToasterModule } from 'angular2-toaster';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
@@ -44,6 +45,7 @@ const authModuleSettings: NbAuthOptions = {
     NbAuthModule.forRoot(authModuleSettings),
     NgbModule.forRoot(),
     MarkdownModule.forRoot(),
+    ToasterModule.forRoot(),
     EmojiModule,
     CookieLawModule,
     SharedModule,

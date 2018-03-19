@@ -91,9 +91,7 @@ export class ChecklistService {
   }
 
   saveChecklist(checklist: Checklist): Observable<string> {
-    const checklistReference = this.firestore
-      .collection(consts.CHECKLISTS_COLLECTION)
-      .doc(checklist.id);
+    const checklistReference = this.reference(checklist);
 
     const setChecklistPromise = checklistReference
       .set(checklist.rawValue(), { merge: true });
@@ -121,9 +119,7 @@ export class ChecklistService {
   }
 
   removeChecklist(checklist: Checklist): Observable<void> {
-    const checklistReference = this.firestore
-      .collection(consts.CHECKLISTS_COLLECTION)
-      .doc(checklist.id);
+    const checklistReference = this.reference(checklist);
 
     const itemsReference = checklistReference
       .collection<ChecklistItem>(consts.CHECKLISTS_ITEMS_COLLECTION);
@@ -138,6 +134,13 @@ export class ChecklistService {
         batch.delete(checklistReference.ref);
         return Observable.fromPromise(batch.commit());
       });
+  }
+
+  changeChecklistPublicState(checklist: Checklist, isPublic: boolean): Observable<void> {
+    return Observable.fromPromise(
+      this.reference(checklist)
+        .set({ 'public': isPublic }, { merge: true })
+    );
   }
 
   private checklistItems(reference: AngularFirestoreCollection<ChecklistItem>): Observable<ChecklistItem[]> {
@@ -215,5 +218,11 @@ export class ChecklistService {
     for (const item of newItems) {
       batch.set(reference.doc(item.id).ref, item.rawValue(), { merge: false });
     }
+  }
+
+  private reference(checklist: Checklist): AngularFirestoreDocument<any> {
+    return this.firestore
+      .collection(consts.CHECKLISTS_COLLECTION)
+      .doc(checklist.id);
   }
 }

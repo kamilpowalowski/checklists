@@ -11,9 +11,11 @@ export class ModalComponent implements OnInit {
   title: string;
   body: string;
   primaryButtonTitle: string;
+  successButtonTitle: string;
   destructiveButtonTitle: string;
 
   primaryButtonAction: () => void;
+  successButtonAction: () => void;
   destructiveButtonAction: () => void;
 
   constructor(private activeModal: NgbActiveModal) { }

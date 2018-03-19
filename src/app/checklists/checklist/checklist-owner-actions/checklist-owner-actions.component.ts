@@ -8,7 +8,7 @@ import {
   } from '@angular/core';
 import { Router } from '@angular/router';
 import { NbPopoverDirective } from '@nebular/theme';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ModalComponent } from '../../../modals/modal/modal.component';
 import { Checklist } from '../../../shared/checklist.model';
 import { ChecklistService } from '../../../shared/checklist.service';
@@ -47,11 +47,36 @@ export class ChecklistOwnerActionsComponent implements OnInit, OnDestroy {
   }
 
   publish() {
-    // TODO: Implement
+    const activeModal = this.modalService.open(ModalComponent, { size: 'lg', container: 'nb-layout' });
+    activeModal.componentInstance.title = 'Publish checklist?';
+    activeModal.componentInstance.body = `
+    A public checklist can be searched and viewed by other users.
+    Do you want to publish your checklist?
+    `;
+    activeModal.componentInstance.primaryButtonTitle = 'Cancel';
+    activeModal.componentInstance.primaryButtonAction = () => activeModal.close();
+    activeModal.componentInstance.successButtonTitle = 'Publish';
+    activeModal.componentInstance.successButtonAction = () => {
+      activeModal.close();
+      this.changeChecklistPublicState(true);
+    };
   }
 
   unpublish() {
-    // TODO: Implement
+    const activeModal = this.modalService.open(ModalComponent, { size: 'lg', container: 'nb-layout' });
+    activeModal.componentInstance.title = 'Unpublish checklist?';
+    activeModal.componentInstance.body = `
+    Users that already have URL or saved this checklist still be able to view it.
+    This checklist will not be visible on a search result and public lists.
+    Do you want to unpublish this checklist?
+    `;
+    activeModal.componentInstance.primaryButtonTitle = 'Cancel';
+    activeModal.componentInstance.primaryButtonAction = () => activeModal.close();
+    activeModal.componentInstance.successButtonTitle = 'Unpublish';
+    activeModal.componentInstance.successButtonAction = () => {
+      activeModal.close();
+      this.changeChecklistPublicState(false);
+    };
   }
 
   share() {
@@ -64,21 +89,35 @@ export class ChecklistOwnerActionsComponent implements OnInit, OnDestroy {
   delete() {
     const activeModal = this.modalService.open(ModalComponent, { size: 'lg', container: 'nb-layout' });
     activeModal.componentInstance.title = 'Delete checklist?';
-    activeModal.componentInstance.body = 'This operation can\'t be reversed. Do you really want to delete this checklist?';
+    activeModal.componentInstance.body = 'This operation can\'t be reversed. Do you really want to delete your checklist?';
     activeModal.componentInstance.primaryButtonTitle = 'Cancel';
     activeModal.componentInstance.primaryButtonAction = () => activeModal.close();
     activeModal.componentInstance.destructiveButtonTitle = 'Delete';
     activeModal.componentInstance.destructiveButtonAction = () => {
-      this.checklistService.removeChecklist(this.checklist)
-        .subscribe(
-          _ => {
-            this.router.navigate(['checklists', 'me', 'all']);
-            activeModal.close();
-          },
-          error => {
-            ModalComponent.showModalError(this.modalService, error);
-          });
+      this.deleteChecklist(activeModal);
     };
+  }
+
+  private deleteChecklist(activeModal: NgbModalRef) {
+    this.checklistService.removeChecklist(this.checklist)
+      .subscribe(
+        _ => {
+          this.router.navigate(['checklists', 'me', 'all']);
+          activeModal.close();
+        },
+        error => {
+          activeModal.close();
+          ModalComponent.showModalError(this.modalService, error);
+        });
+  }
+
+  private changeChecklistPublicState(state: boolean) {
+    this.checklistService.changeChecklistPublicState(this.checklist, state)
+      .subscribe(
+        null,
+        error => {
+          ModalComponent.showModalError(this.modalService, error);
+        });
   }
 
 }

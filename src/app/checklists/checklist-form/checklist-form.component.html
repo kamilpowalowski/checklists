@@ -1,7 +1,7 @@
 <div class="container">
   <form [formGroup]="form" (ngSubmit)="onSave()">
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-12">
         <nb-card>
           <nb-card-header>Create/Edit Checklist</nb-card-header>
           <nb-card-body>
@@ -23,7 +23,7 @@
     <ng-container formArrayName="items">
       <ng-container *ngFor="let item of items(); let itemIndex = index" [formGroupName]="itemIndex">
         <div class="row">
-          <div class="col-md-12">
+          <div class="col-12">
             <nb-card>
               <nb-card-body>
                 <div class="input-group">
@@ -57,7 +57,7 @@
         <ng-container formArrayName="subitems">
           <ng-container *ngFor="let subitem of subitemsForItem(item); let subitemIndex = index" [formGroupName]="subitemIndex">
             <div class="row">
-              <div class="offset-md-2 col-md-10">
+              <div class="offset-2 col-10">
                 <nb-card>
                   <nb-card-body>
                     <div class="input-group">
@@ -91,7 +91,7 @@
           </ng-container>
         </ng-container>
         <div class="row">
-          <div class="offset-md-2 col-md-10">
+          <div class="offset-2 col-md-10">
             <nb-card>
               <nb-card-body>
                 <button class="btn btn-block btn-primary" (click)="addNewSubitem(item)" type="button">Add subitem</button>
@@ -102,7 +102,7 @@
       </ng-container>
     </ng-container>
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-12">
         <nb-card>
           <nb-card-body>
             <button class="btn btn-block btn-primary" (click)="addNewItem()" type="button">Add item</button>
@@ -111,7 +111,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-12">
         <nb-card>
           <nb-card-body>
             <div class="row">

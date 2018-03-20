@@ -1,114 +1,89 @@
 @import '../../styles/themes';
 @import '~bootstrap/scss/mixins/breakpoints';
 @import '~@nebular/theme/styles/global/bootstrap/breakpoints';
-
 @include nb-install-component() {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-
-  .left {
     display: flex;
+    justify-content: space-between;
     width: 100%;
-    order: 0;
-    flex-direction: row;
-  }
-  .right {
-    order: 1;
-    flex-direction: row-reverse;
-  }
-
-  .logo-containter {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-  }
-
-  .control-item {
-    display: block;
-  }
-
-  /deep/ nb-action {
-    cursor: pointer;
-    &:first-child {
-      border-left: 1px solid nb-theme(actions-separator) !important;
+    .left {
+        display: flex;
+        width: 100%;
+        order: 0;
+        flex-direction: row;
     }
-  }
-
-  .header-container {
-    display: flex;
-    align-items: center;
-    width: 100%;
-
-    .navigation {
-      padding-right: nb-theme(padding);
-      font-size: 2.5rem;
-      text-decoration: none;
-
-      i {
-        display: block;
-      }
-
+    .right {
+        order: 1;
+        flex-direction: row-reverse;
     }
-
-    .logo {
-      padding: 0rem nb-theme(padding);
-      font-size: 1.75rem;
-      font-weight: nb-theme(font-weight-bolder);
-      border-left: 1px solid nb-theme(separator);
-      white-space: nowrap;
-      cursor: pointer;
-      text-decoration: none;
-      margin-top: 0.25rem;
-
-      .icon {
-        width: 2rem;
-        vertical-align: middle;
-        margin-top: 0.25rem;
-
-        /deep/ .shape {
-          stroke: nb-theme(color-fg-heading);
-        }
-      }
-
-      span {
-        vertical-align: middle;
-        font-weight: nb-theme(font-weight-normal);
-      }
+    .logo-containter {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
     }
-  }
-
-  @include media-breakpoint-down(md) {
-
     .control-item {
-      display: none;
+        display: block;
     }
-
-    .toggle-layout {
-      padding: 0;
+    /deep/ nb-action {
+        cursor: pointer;
+        &:first-child {
+            border-left: 1px solid nb-theme(actions-separator) !important;
+        }
     }
-  }
-
-  @include media-breakpoint-down(sm) {
-
-    nb-user /deep/ .user-name {
-      display: none;
-    }
-  }
-
-  @include media-breakpoint-down(is) {
-
     .header-container {
-      .logo {
-        font-size: 1.25rem;
-      }
+        display: flex;
+        align-items: center;
+        width: 100%;
+        .navigation {
+            padding-right: nb-theme(padding);
+            font-size: 2.5rem;
+            text-decoration: none;
+            i {
+                display: block;
+            }
+        }
+        .logo {
+            padding: 0rem nb-theme(padding);
+            font-size: 1.75rem;
+            font-weight: nb-theme(font-weight-bolder);
+            border-left: 1px solid nb-theme(separator);
+            white-space: nowrap;
+            cursor: pointer;
+            text-decoration: none;
+            margin-top: 0.25rem;
+            .icon {
+                width: 2rem;
+                vertical-align: middle;
+                margin-top: 0.25rem;
+                /deep/ .shape {
+                    stroke: nb-theme(color-fg-heading);
+                }
+            }
+            span {
+                vertical-align: middle;
+                font-weight: nb-theme(font-weight-normal);
+            }
+        }
     }
-  }
-
-  @include media-breakpoint-down(xs) {
-    .right /deep/ {
-      display: none;
+    @include media-breakpoint-down(md) {
+        .toggle-layout {
+            padding: 0;
+        }
     }
-  }
+    @include media-breakpoint-down(sm) {
+        nb-user /deep/ .user-name {
+            display: none;
+        }
+    }
+    @include media-breakpoint-down(is) {
+        .header-container {
+            .logo {
+                font-size: 1.25rem;
+            }
+        }
+    }
+    @include media-breakpoint-down(xs) {
+        .right /deep/ {
+            display: none;
+        }
+    }
 }
-

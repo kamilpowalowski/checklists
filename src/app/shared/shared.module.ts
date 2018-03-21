@@ -6,6 +6,7 @@ import { ChecklistService } from './checklist.service';
 import { ChecklistsService } from './checklists.service';
 import { FirebaseAuthenticationProvider } from './firebase-authentication.provider';
 import { TagsService } from './tags.service';
+import { UserService } from './user.service';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import { TagsService } from './tags.service';
     TagsService,
     AccountService,
     FirebaseAuthenticationProvider,
-    AuthenticatedGuard
+    AuthenticatedGuard,
+    UserService
   ]
 })
 export class SharedModule { }

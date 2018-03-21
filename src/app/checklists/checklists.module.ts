@@ -7,7 +7,8 @@ import {
   NbCardModule,
   NbCheckboxModule,
   NbMenuModule,
-  NbPopoverModule
+  NbPopoverModule,
+  NbUserModule
   } from '@nebular/theme';
 import { EmojiModule } from 'angular-emojione';
 import { ToasterModule } from 'angular2-toaster';
@@ -20,6 +21,7 @@ import { ChecklistCreateComponent } from './checklist-form/checklist-create.comp
 import { ChecklistEditComponent } from './checklist-form/checklist-edit.component';
 import { ChecklistFormComponent } from './checklist-form/checklist-form.component';
 import { MarkdownEditorComponent } from './checklist-form/markdown-editor/markdown-editor.component';
+import { ChecklistActionsComponent } from './checklist/checklist-actions/checklist-actions.component';
 import { ChecklistItemComponent } from './checklist/checklist-item/checklist-item.component';
 import { ChecklistOwnerActionsComponent } from './checklist/checklist-owner-actions/checklist-owner-actions.component';
 import { ChecklistComponent } from './checklist/checklist.component';
@@ -40,6 +42,7 @@ import { ChecklistsComponent } from './checklists/checklists.component';
     NbActionsModule,
     NbPopoverModule,
     NbMenuModule,
+    NbUserModule,
     MarkdownModule.forChild(),
     ToasterModule.forChild(),
     EmojiModule,
@@ -59,7 +62,8 @@ import { ChecklistsComponent } from './checklists/checklists.component';
     ChecklistEditComponent,
     ChecklistCreateComponent,
     MarkdownEditorComponent,
-    ChecklistOwnerActionsComponent
+    ChecklistOwnerActionsComponent,
+    ChecklistActionsComponent
   ]
 })
 export class ChecklistsModule { }

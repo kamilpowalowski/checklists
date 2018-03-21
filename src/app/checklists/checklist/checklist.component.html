@@ -26,6 +26,11 @@
         </nb-card-footer>
       </nb-card>
       <ng-container *ngIf="checklist | async; let checklist">
+        <nb-card *ngIf="checklist.owner !== accountService.account.getValue()?.id">
+          <nb-card-body>
+            <app-checklist-actions [checklist]="checklist"></app-checklist-actions>
+          </nb-card-body>
+        </nb-card>
         <nb-card *ngIf="checklist.owner === accountService.account.getValue()?.id">
           <nb-card-body>
             <app-checklist-owner-actions [checklist]="checklist"></app-checklist-owner-actions>

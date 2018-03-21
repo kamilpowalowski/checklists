@@ -5,6 +5,9 @@
     nb-actions>nb-action {
         padding: 0;
     }
+    .inactive {
+        cursor: default;
+    }
     nb-action {
         cursor: pointer;
         i {
@@ -34,6 +37,9 @@
                 font-size: 2rem;
                 margin-right: 0.5rem;
             }
+        }
+        nb-user /deep/ .user-name {
+            display: none;
         }
     }
     @include media-breakpoint-down(is) {

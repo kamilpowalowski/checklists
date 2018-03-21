@@ -118,7 +118,7 @@ export class AccountService {
       .collection(consts.USERS_COLLECTION)
       .doc(account.id)
       .set({
-        anonymous: account.anonymous,
+        'anonymous': account.anonymous,
         'display-name': account.displayName,
         'photo': account.photo
       }, { merge: true });

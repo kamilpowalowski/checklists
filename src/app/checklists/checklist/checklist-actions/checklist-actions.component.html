@@ -1,0 +1,17 @@
+<nb-actions size="medium" fullWidth>
+  <nb-action class="inactive">
+    <nb-user [name]="userName" [picture]="userPhoto"></nb-user>
+  </nb-action>
+  <nb-action (click)="save()" nbPopover="Save this checklist." nbPopoverMode="hint">
+    <i class="nb-heart"></i>
+    <span>Save</span>
+  </nb-action>
+  <nb-action (click)="share()" nbPopover="Share an URL to this checklist." nbPopoverMode="hint">
+    <i class="nb-paper-plane"></i>
+    <span>Share</span>
+  </nb-action>
+  <nb-action (click)="report()" nbPopover="Report this checklist." nbPopoverMode="hint">
+      <i class="nb-alert"></i>
+      <span>Report</span>
+    </nb-action>
+</nb-actions>

@@ -21,7 +21,10 @@ export class ChecklistService {
   private selectedIdsReference: AngularFirestoreDocument<{ [key: string]: firebase.firestore.FieldValue }>;
   private selectedIdsSubscription: Subscription;
 
-  constructor(private firestore: AngularFirestore, private accountService: AccountService) {
+  constructor(
+    private firestore: AngularFirestore,
+    private accountService: AccountService
+  ) {
     this.accountService.account.asObservable()
       .subscribe(account => {
         this.resetSelectedIds();
@@ -53,9 +56,13 @@ export class ChecklistService {
   }
 
   selectChecklistItem(item: ChecklistItem) {
-    if (!this.selectedIdsReference) { return; }
-
     if (item.subitems.length === 0) {
+
+      const set = new Set(this.selectedIds.getValue());
+      set.add(item.id);
+      this.selectedIds.next(set);
+
+      if (!this.selectedIdsReference) { return; }
       this.selectedIdsReference
         .set({ [item.id]: true }, { merge: true });
     } else {
@@ -66,9 +73,13 @@ export class ChecklistService {
   }
 
   unselectChecklistItem(item: ChecklistItem) {
-    if (!this.selectedIdsReference) { return; }
 
     if (item.subitems.length === 0) {
+      const set = new Set(this.selectedIds.getValue());
+      set.delete(item.id);
+      this.selectedIds.next(set);
+
+      if (!this.selectedIdsReference) { return; }
       this.selectedIdsReference
         .set({ [item.id]: firebase.firestore.FieldValue.delete() }, { merge: true });
     } else {
@@ -90,7 +101,7 @@ export class ChecklistService {
     return true;
   }
 
-  saveChecklist(checklist: Checklist): Observable<string> {
+  storeChecklist(checklist: Checklist): Observable<string> {
     const checklistReference = this.reference(checklist);
 
     const setChecklistPromise = checklistReference

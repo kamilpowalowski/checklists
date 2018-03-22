@@ -2,16 +2,21 @@
   <nb-action class="inactive">
     <nb-user [name]="userName" [picture]="userPhoto"></nb-user>
   </nb-action>
-  <nb-action (click)="save()" nbPopover="Save this checklist." nbPopoverMode="hint">
-    <i class="nb-heart"></i>
-    <span>Save</span>
-  </nb-action>
   <nb-action (click)="share()" nbPopover="Share an URL to this checklist." nbPopoverMode="hint">
     <i class="nb-paper-plane"></i>
     <span>Share</span>
   </nb-action>
+  <nb-action *ngIf="!isSaved" (click)="save()" [nbPopover]="isAuthenticated ? 'Save this checklist.' : 'Log in to use this feature.'"
+    nbPopoverMode="hint" [disabled]="!isAuthenticated">
+    <i class="nb-heart"></i>
+    <span>Save</span>
+  </nb-action>
+  <nb-action *ngIf="isSaved" (click)="unsave()" nbPopover="Unsave this checklist." nbPopoverMode="hint">
+    <i class="nb-heart"></i>
+    <span>Unsave</span>
+  </nb-action>
   <nb-action (click)="report()" nbPopover="Report this checklist." nbPopoverMode="hint">
-      <i class="nb-alert"></i>
-      <span>Report</span>
-    </nb-action>
+    <i class="nb-alert"></i>
+    <span>Report</span>
+  </nb-action>
 </nb-actions>

@@ -134,7 +134,7 @@ export class ChecklistFormComponent implements OnInit {
   onSave() {
     this.saveInProgress = true;
     const checklist = this.mapFormDataToChecklist(this.form.value);
-    this.checklistService.saveChecklist(checklist)
+    this.checklistService.storeChecklist(checklist)
       .subscribe(
         id => {
           this.saveInProgress = false;

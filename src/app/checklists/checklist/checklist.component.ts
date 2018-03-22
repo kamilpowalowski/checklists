@@ -44,8 +44,8 @@ export class ChecklistComponent implements OnInit, OnDestroy {
   checkAccountAndShowMessage() {
     if (!this.userNotAvailableWarningPresented && !this.accountService.account.getValue()) {
       this.showToast(
-        'Not signed in',
-        'Selected checkboxes will disappear during page reload. Please, sign in to save this data.'
+        'No account',
+        'Selected checkboxes will disappear at the end of this session. Please, log in to save this data.'
       );
     }
   }

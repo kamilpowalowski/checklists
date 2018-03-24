@@ -20,10 +20,10 @@ export class ChecklistsTagsComponent implements OnChanges {
       if (this.tags.length > 0) {
         this.createItems(this.tags);
       } else {
-        this.createEmptyMenu('Empty list');
+        this.createEmptyMenu('empty');
       }
     } else {
-      this.createEmptyMenu('Loading...');
+      this.createEmptyMenu('loading...');
     }
   }
 

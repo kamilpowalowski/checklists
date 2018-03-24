@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
     <div class="col-md-4">
-      <app-checklists-menu title="Menu" [items]="items" #menuComponent></app-checklists-menu>
+      <app-checklists-menu title="Public checklists" [items]="items" #menuComponent></app-checklists-menu>
       <app-checklists-tags [tags]="tags | async" title="Popular tags" initialPath="/checklists/public" #tagsComponent></app-checklists-tags>
     </div>
     <div class="col-md-8">

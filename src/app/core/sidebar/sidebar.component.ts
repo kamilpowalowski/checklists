@@ -23,7 +23,7 @@ export class SidebarComponent implements OnInit {
       },
       {
         title: 'Public checklists',
-        icon: 'nb-list',
+        icon: 'nb-cloudy',
         link: '/checklists/public',
         pathMatch: 'not-full'
       },

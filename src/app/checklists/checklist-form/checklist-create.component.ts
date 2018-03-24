@@ -10,7 +10,7 @@ export class ChecklistCreateComponent extends ChecklistFormComponent implements 
     super.ngOnInit();
     this.handleLocalStorage();
     this.form.patchValue({
-      'owner': this.accountService.account.getValue().id,
+      'owner': this.accountService.profile.getValue().account.id,
       'public': false
     });
   }

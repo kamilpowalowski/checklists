@@ -5,6 +5,7 @@ import { AuthenticatedGuard } from './authenticated-guard.service';
 import { ChecklistService } from './checklist.service';
 import { ChecklistsService } from './checklists.service';
 import { FirebaseAuthenticationProvider } from './firebase-authentication.provider';
+import { ReportService } from './report.service';
 import { SaveService } from './save.service';
 import { TagsService } from './tags.service';
 import { UserService } from './user.service';
@@ -22,7 +23,8 @@ import { UserService } from './user.service';
     FirebaseAuthenticationProvider,
     AuthenticatedGuard,
     UserService,
-    SaveService
+    SaveService,
+    ReportService
   ]
 })
 export class SharedModule { }

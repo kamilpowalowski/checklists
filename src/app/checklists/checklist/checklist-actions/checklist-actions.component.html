@@ -15,7 +15,7 @@
     <i class="nb-heart"></i>
     <span>Unsave</span>
   </nb-action>
-  <nb-action (click)="report()" nbPopover="Report this checklist." nbPopoverMode="hint">
+  <nb-action (click)="report()" [nbPopover]="reportPopover()" nbPopoverMode="hint" [disabled]="reportDisabled()">
     <i class="nb-alert"></i>
     <span>Report</span>
   </nb-action>

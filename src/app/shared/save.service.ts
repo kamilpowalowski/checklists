@@ -22,11 +22,11 @@ export class SaveService {
     private firestore: AngularFirestore,
     private accountService: AccountService
   ) {
-    this.accountService.account.asObservable()
-      .subscribe(account => {
+    this.accountService.profile.asObservable()
+      .subscribe(profile => {
         this.resetSavedIds();
-        if (account) {
-          this.observeSavedIds(account);
+        if (profile) {
+          this.observeSavedIds(profile.account);
         }
       });
   }

@@ -50,7 +50,7 @@ export class ChecklistsService {
   }
 
   observeAccountChecklists(tag: string | null, onlyPublic: boolean): Observable<Checklist[]> {
-    const accountId = this.accountService.account.getValue().id;
+    const accountId = this.accountService.profile.getValue().account.id;
     return this.observeChecklists(ref => {
       let query = ref.where('owner', '==', accountId);
       query = onlyPublic ? query.where('public', '==', true) : query;

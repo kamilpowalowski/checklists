@@ -1,20 +1,20 @@
+import { Injectable } from '@angular/core';
+import { OnInit } from '@angular/core';
+import { NbAbstractAuthProvider, NbAuthResult } from '@nebular/auth';
+import 'rxjs/add/observable/fromPromise';
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/mergeMap';
+import { Observable } from 'rxjs/Observable';
+import { AccountPersistance } from './account-persistance.enum';
+import { AccountService } from './account.service';
+import { AuthenticationMethod } from './authentication-method.enum';
 import { AuthenticationState } from './authentication-state.enum';
 /**
  * Based on MolochkoVitaly fork of nebular
  * https://github.com/MolochkoVitaly/nebular
  */
 
-import { OnInit } from '@angular/core';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { NbAbstractAuthProvider, NbAuthResult } from '@nebular/auth';
-import { AccountService } from './account.service';
-import { AuthenticationMethod } from './authentication-method.enum';
-import { AccountPersistance } from './account-persistance.enum';
-import 'rxjs/add/observable/fromPromise';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/mergeMap';
-import 'rxjs/add/operator/filter';
 
 @Injectable()
 export class FirebaseAuthenticationProvider extends NbAbstractAuthProvider {
@@ -104,7 +104,7 @@ export class FirebaseAuthenticationProvider extends NbAbstractAuthProvider {
   register(data?: any): Observable<NbAuthResult> {
     return this.accountService.signOnWithEmailAndPassword(data.email, data.password)
       .mergeMap(result => {
-        return this.accountService.updateProfile(data.fullName)
+        return this.accountService.updateDisplayName(data.fullName)
           .map(update => {
             return this.processSuccess(result, this.getConfigValue('register.redirect.success'), [result.message]);
           });
@@ -129,7 +129,7 @@ export class FirebaseAuthenticationProvider extends NbAbstractAuthProvider {
   }
 
   resetPassword(data?: any): Observable<NbAuthResult> {
-    if (this.accountService.account.value) {
+    if (this.accountService.profile.getValue()) {
       return this.accountService.updatePassword(data.password)
         .map(result => {
           return this.processSuccess(result, this.getConfigValue('resetPass.redirect.success'), []);

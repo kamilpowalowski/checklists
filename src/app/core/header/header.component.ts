@@ -7,7 +7,7 @@ import {
 import { Router } from '@angular/router';
 import { NbMenuItem, NbMenuService, NbSidebarService } from '@nebular/theme';
 import { AccountService } from '../../shared/account.service';
-import { Account } from './../../shared/account.model';
+import { User } from '../../shared/user.model';
 
 @Component({
   selector: 'app-header',
@@ -28,10 +28,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.accountService.account
-      .subscribe(account => {
-        if (account) {
-          this.setLoggedInState(account);
+    this.accountService.profile
+      .subscribe(profile => {
+        if (profile) {
+          this.setLoggedInState(profile.user);
         } else {
           this.setAnonymousState();
         }
@@ -58,9 +58,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     ];
   }
 
-  private setLoggedInState(account: Account) {
-    this.userName = account.displayName ? account.displayName : 'Active user';
-    this.userPhoto = account.photo;
+  private setLoggedInState(user: User) {
+    this.userName = user.displayName ? user.displayName : 'Active user';
+    this.userPhoto = user.photo;
     this.userMenu = [
       { title: 'Profile', link: '/profile' },
       { title: 'Log out', link: '/auth/logout' }

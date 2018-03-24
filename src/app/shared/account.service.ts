@@ -10,11 +10,13 @@ import { AccountPersistance } from './account-persistance.enum';
 import { Account } from './account.model';
 import { AuthenticationState } from './authentication-state.enum';
 import * as consts from './firebase.consts';
+import { Profile } from './profile.model';
+import { User } from './user.model';
 
 @Injectable()
 export class AccountService {
 
-  readonly account = new BehaviorSubject<Account>(null);
+  readonly profile = new BehaviorSubject<Profile>(null);
   readonly authenticationState = new BehaviorSubject<AuthenticationState>(AuthenticationState.Unknown);
 
   constructor(
@@ -23,7 +25,7 @@ export class AccountService {
   ) {
     this.firebaseAuth.authState
       .subscribe(user => {
-        this.updateAccount(user);
+        this.updateProfile(user);
       });
   }
 
@@ -66,7 +68,7 @@ export class AccountService {
   }
 
   signOut(): Observable<any> {
-    this.updateAccount(null);
+    this.updateProfile(null);
     return Observable.fromPromise(
       this.firebaseAuth.auth.signOut()
     );
@@ -78,14 +80,14 @@ export class AccountService {
     );
   }
 
-  updateProfile(displayName: string): Observable<any> {
+  updateDisplayName(displayName: string): Observable<any> {
     return Observable.fromPromise(
       this.firebaseAuth.auth.currentUser.updateProfile({
         displayName: displayName,
         photoURL: ''
       })
     ).do(() => {
-      this.updateAccount(this.firebaseAuth.auth.currentUser);
+      this.updateProfile(this.firebaseAuth.auth.currentUser);
     });
   }
 
@@ -95,32 +97,46 @@ export class AccountService {
     );
   }
 
-  private updateAccount(user: firebase.User | null) {
-    if (user) {
+  private updateProfile(firebaseUser: firebase.User | null) {
+    if (firebaseUser) {
       const account = new Account(
-        user.uid,
-        user.isAnonymous,
-        user.displayName,
-        user.photoURL
+        firebaseUser.uid,
+        firebaseUser.email
+      );
+
+      const user = new User(
+        firebaseUser.uid,
+        firebaseUser.displayName,
+        firebaseUser.photoURL
       );
 
       this.saveAccount(account);
-      this.account.next(account);
+      this.saveUser(user);
+
+      this.profile.next(new Profile(account, user));
       this.authenticationState.next(AuthenticationState.Authenticated);
     } else {
-      this.account.next(null);
+      this.profile.next(null);
       this.authenticationState.next(AuthenticationState.Unauthenticated);
     }
   }
 
   private saveAccount(account: Account) {
     this.firestore
-      .collection(consts.USERS_COLLECTION)
+      .collection(consts.ACCOUNTS_COLLECTION)
       .doc(account.id)
       .set({
-        'anonymous': account.anonymous,
-        'display-name': account.displayName,
-        'photo': account.photo
+        'email': account.email
+      }, { merge: true });
+  }
+
+  private saveUser(user: User) {
+    this.firestore
+      .collection(consts.USERS_COLLECTION)
+      .doc(user.id)
+      .set({
+        'display-name': user.displayName,
+        'photo': user.photo
       }, { merge: true });
   }
 

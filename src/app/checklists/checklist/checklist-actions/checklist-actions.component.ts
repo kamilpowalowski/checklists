@@ -13,8 +13,10 @@ import { ShareModalComponent } from '../../../modals/share-modal/share-modal.com
 import { AccountService } from '../../../shared/account.service';
 import { AuthenticationState } from '../../../shared/authentication-state.enum';
 import { Checklist } from '../../../shared/checklist.model';
+import { SaveService } from '../../../shared/save.service';
 import { UserService } from '../../../shared/user.service';
-import { SaveService } from './../../../shared/save.service';
+import { ModalComponent } from './../../../modals/modal/modal.component';
+import { ReportService } from './../../../shared/report.service';
 
 @Component({
   selector: 'app-checklist-actions',
@@ -41,7 +43,8 @@ export class ChecklistActionsComponent implements OnInit, OnDestroy {
     private modalService: NgbModal,
     private accountSerivce: AccountService,
     private userService: UserService,
-    private saveService: SaveService
+    private saveService: SaveService,
+    private reportService: ReportService
   ) { }
 
   ngOnInit() {
@@ -91,7 +94,43 @@ export class ChecklistActionsComponent implements OnInit, OnDestroy {
     this.saveService.unsaveChecklist(this.checklist);
   }
 
-  report() {
+  reportPopover() {
+    if (!this.checklist.isPublic) { return 'You can\'t report not public checklist'; }
+    if (!this.isAuthenticated) { return 'Log in to use this feature.'; }
+    return 'Report this checklist.';
+  }
 
+  reportDisabled() {
+    if (!this.checklist.isPublic) { return true; }
+    if (!this.isAuthenticated) { return true; }
+    return false;
+  }
+
+  report() {
+    const activeModal = this.modalService.open(ModalComponent, { size: 'lg', container: 'nb-layout' });
+    activeModal.componentInstance.title = 'Report this checklist?';
+    activeModal.componentInstance.body = `
+    This checklist will be checked and unpublish if necessary.
+    We may contact you for further information.
+    Do you want to report this checklist?
+    `;
+    activeModal.componentInstance.primaryButtonTitle = 'Cancel';
+    activeModal.componentInstance.primaryButtonAction = () => activeModal.close();
+    activeModal.componentInstance.destructiveButtonTitle = 'Report';
+    activeModal.componentInstance.destructiveButtonAction = () => {
+      activeModal.close();
+      this.reportService.reportChecklist(this.checklist);
+      this.checklistReportedConfirmation();
+    };
+  }
+
+  private checklistReportedConfirmation() {
+    const activeModal = this.modalService.open(ModalComponent, { size: 'lg', container: 'nb-layout' });
+    activeModal.componentInstance.title = 'Checklist reported';
+    activeModal.componentInstance.body = `
+    Thank you for your contribution. We'll check this checklists as soon as possible.
+    `;
+    activeModal.componentInstance.primaryButtonTitle = 'OK';
+    activeModal.componentInstance.primaryButtonAction = () => activeModal.close();
   }
 }

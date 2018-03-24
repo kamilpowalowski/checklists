@@ -25,11 +25,11 @@ export class ChecklistService {
     private firestore: AngularFirestore,
     private accountService: AccountService
   ) {
-    this.accountService.account.asObservable()
-      .subscribe(account => {
+    this.accountService.profile.asObservable()
+      .subscribe(profile => {
         this.resetSelectedIds();
-        if (account) {
-          this.observeSelectedIds(account);
+        if (profile) {
+          this.observeSelectedIds(profile.account);
         }
       });
   }

@@ -21,17 +21,21 @@ service cloud.firestore {
       }
     }
 
-    match /users/{userId} {
+    match /users/{uid} {
     	allow read;
-      allow read, write: if request.auth.uid == userId;
+      allow read, write: if request.auth.uid == uid;
     }
 
-    match /selected/{userId} {
-      allow read, write: if request.auth.uid == userId;
+    match /accounts/{uid} {
+      allow read, write: if request.auth.uid == uid;
     }
 
-    match /saved/{userId} {
-      allow read, write: if request.auth.uid == userId;
+    match /selected/{uid} {
+      allow read, write: if request.auth.uid == uid;
+    }
+
+    match /saved/{uid} {
+      allow read, write: if request.auth.uid == uid;
     }
 
     match /tags/{tag} {
@@ -40,6 +44,10 @@ service cloud.firestore {
 
 		match /featured/{checklist} {
     	allow read;
+    }
+
+    match /reported/{randomId} {
+    	allow create: if request.resource.data.reporter == request.auth.uid;
     }
 
     match /{document=**} {

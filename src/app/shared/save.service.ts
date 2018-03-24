@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { Account } from './account.model';
 import { AccountService } from './account.service';
 import { Checklist } from './checklist.model';
+import { ChecklistService } from './checklist.service';
 import { SAVED_COLLECTION } from './firebase.consts';
 import * as consts from './firebase.consts';
 
@@ -20,7 +21,8 @@ export class SaveService {
 
   constructor(
     private firestore: AngularFirestore,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private checklistService: ChecklistService
   ) {
     this.accountService.profile.asObservable()
       .subscribe(profile => {
@@ -31,9 +33,29 @@ export class SaveService {
       });
   }
 
-  savedChecklists(): Observable<[Checklist]> {
-    // TODO: implement
-    return null;
+  observeSavedChecklists(): Observable<Checklist[]> {
+    const accountId = this.accountService.profile.getValue().account.id;
+
+    return this.firestore
+      .collection(consts.SAVED_COLLECTION)
+      .doc<{ [key: string]: boolean }>(accountId)
+      .valueChanges()
+      .distinctUntilChanged()
+      .map(data => {
+        if (data === null) { return []; }
+        return Object.keys(data);
+      })
+      .mergeMap(ids => {
+        if (ids.length === 0) { return Observable.of([]); }
+
+        const checklistsObservables = ids.map(id => {
+          return this.checklistService.observeChecklist(id, false)
+            .catch(_ => Observable.of(null));
+        });
+
+        return Observable.combineLatest(checklistsObservables)
+          .map(results => results.filter(result => result != null));
+      });
   }
 
   saveChecklist(checklist: Checklist) {

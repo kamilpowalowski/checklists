@@ -12,6 +12,7 @@ import { ChecklistsService } from '../../shared/checklists.service';
 import { TagsService } from '../../shared/tags.service';
 import { ChecklistsMenuComponent } from '../checklists/checklists-menu/checklists-menu.component';
 import { ChecklistsTagsComponent } from '../checklists/checklists-tags/checklists-tags.component';
+import { SaveService } from './../../shared/save.service';
 
 @Component({
   selector: 'app-account-checklists',
@@ -36,9 +37,14 @@ export class AccountChecklistsComponent implements OnInit, OnDestroy {
       link: '/checklists/me/all'
     },
     {
-      title: 'public',
+      title: 'published',
       icon: 'nb-cloudy',
       link: '/checklists/me/public'
+    },
+    {
+      title: 'saved',
+      icon: 'nb-heart',
+      link: '/checklists/me/saved'
     }
   ];
   checklists: Observable<Checklist[]>;
@@ -48,7 +54,9 @@ export class AccountChecklistsComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private tagsService: TagsService,
-    private checklistsService: ChecklistsService) { }
+    private checklistsService: ChecklistsService,
+    private saveService: SaveService
+  ) { }
 
   ngOnInit() {
     this.tags = this.tagsService.observeAccountTags();
@@ -59,6 +67,13 @@ export class AccountChecklistsComponent implements OnInit, OnDestroy {
     )
       .subscribe(value => {
         const data = value[0];
+        const saved: boolean = data['saved'];
+
+        if (saved) {
+          this.checklists = this.saveService.observeSavedChecklists();
+          return;
+        }
+
         const onlyPublic: boolean = data['onlyPublic'];
 
         const params = value[1];

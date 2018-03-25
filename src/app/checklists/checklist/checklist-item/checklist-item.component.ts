@@ -7,9 +7,9 @@ import {
   } from '@angular/core';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import { Subscription } from 'rxjs/Subscription';
-import { ChecklistItem } from '../../../shared/checklist-item.model';
-import { Checklist } from '../../../shared/checklist.model';
-import { ChecklistService } from '../../../shared/checklist.service';
+import { ChecklistItem } from '../../../shared/models/checklist-item.model';
+import { Checklist } from '../../../shared/models/checklist.model';
+import { ChecklistService } from '../../../shared/services/checklist.service';
 
 @Component({
   selector: 'app-checklist-item',

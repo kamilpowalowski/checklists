@@ -4,10 +4,10 @@ import { Toast, ToasterService } from 'angular2-toaster';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/mergeMap';
 import { Observable } from 'rxjs/Observable';
-import { AccountService } from '../../shared/account.service';
-import { ChecklistItem } from '../../shared/checklist-item.model';
-import { Checklist } from '../../shared/checklist.model';
-import { ChecklistService } from '../../shared/checklist.service';
+import { ChecklistItem } from '../../shared/models/checklist-item.model';
+import { Checklist } from '../../shared/models/checklist.model';
+import { AccountService } from '../../shared/services/account.service';
+import { ChecklistService } from '../../shared/services/checklist.service';
 
 @Component({
   selector: 'app-checklist',

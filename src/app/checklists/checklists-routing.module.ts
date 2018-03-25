@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthenticatedGuard } from '../shared/authenticated-guard.service';
+import { AuthenticatedGuard } from '../shared/services/authenticated-guard.service';
 import { AccountChecklistsComponent } from './account-checklists/account-checklists.component';
 import { ChecklistCreateComponent } from './checklist-form/checklist-create.component';
 import { ChecklistEditComponent } from './checklist-form/checklist-edit.component';

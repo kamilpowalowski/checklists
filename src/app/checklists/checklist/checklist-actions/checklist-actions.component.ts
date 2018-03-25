@@ -9,14 +9,14 @@ import { Router } from '@angular/router';
 import { NbPopoverDirective } from '@nebular/theme';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs/Subscription';
+import { ModalComponent } from '../../../modals/modal/modal.component';
 import { ShareModalComponent } from '../../../modals/share-modal/share-modal.component';
-import { AccountService } from '../../../shared/account.service';
-import { AuthenticationState } from '../../../shared/authentication-state.enum';
-import { Checklist } from '../../../shared/checklist.model';
-import { SaveService } from '../../../shared/save.service';
-import { UserService } from '../../../shared/user.service';
-import { ModalComponent } from './../../../modals/modal/modal.component';
-import { ReportService } from './../../../shared/report.service';
+import { AuthenticationState } from '../../../shared/enums/authentication-state.enum';
+import { Checklist } from '../../../shared/models/checklist.model';
+import { AccountService } from '../../../shared/services/account.service';
+import { ReportService } from '../../../shared/services/report.service';
+import { SaveService } from '../../../shared/services/save.service';
+import { UserService } from '../../../shared/services/user.service';
 
 @Component({
   selector: 'app-checklist-actions',

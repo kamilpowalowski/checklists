@@ -6,10 +6,10 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/mergeMap';
 import { Observable } from 'rxjs/Observable';
+import * as consts from '../firebase.consts';
+import { Checklist } from '../models/checklist.model';
 import { AccountService } from './account.service';
-import { Checklist } from './checklist.model';
 import { ChecklistService } from './checklist.service';
-import * as consts from './firebase.consts';
 
 @Injectable()
 export class ChecklistsService {

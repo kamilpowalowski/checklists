@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { Observable } from 'rxjs/Observable';
-import * as consts from './firebase.consts';
-import { User } from './user.model';
+import * as consts from '../firebase.consts';
+import { User } from '../models/user.model';
 
 @Injectable()
 export class UserService {

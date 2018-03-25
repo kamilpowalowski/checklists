@@ -6,10 +6,10 @@ import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 import { Observable } from 'rxjs/Observable';
-import { AccountPersistance } from './account-persistance.enum';
+import { AccountPersistance } from '../enums/account-persistance.enum';
+import { AuthenticationMethod } from '../enums/authentication-method.enum';
+import { AuthenticationState } from '../enums/authentication-state.enum';
 import { AccountService } from './account.service';
-import { AuthenticationMethod } from './authentication-method.enum';
-import { AuthenticationState } from './authentication-state.enum';
 /**
  * Based on MolochkoVitaly fork of nebular
  * https://github.com/MolochkoVitaly/nebular

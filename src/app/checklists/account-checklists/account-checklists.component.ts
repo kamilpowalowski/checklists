@@ -7,12 +7,12 @@ import {
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import { Checklist } from '../../shared/checklist.model';
-import { ChecklistsService } from '../../shared/checklists.service';
-import { TagsService } from '../../shared/tags.service';
+import { Checklist } from '../../shared/models/checklist.model';
+import { ChecklistsService } from '../../shared/services/checklists.service';
+import { TagsService } from '../../shared/services/tags.service';
 import { ChecklistsMenuComponent } from '../checklists/checklists-menu/checklists-menu.component';
 import { ChecklistsTagsComponent } from '../checklists/checklists-tags/checklists-tags.component';
-import { SaveService } from './../../shared/save.service';
+import { SaveService } from './../../shared/services/save.service';
 
 @Component({
   selector: 'app-account-checklists',

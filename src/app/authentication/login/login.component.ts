@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NB_AUTH_OPTIONS, NbAuthResult, NbAuthService } from '@nebular/auth';
 import { getDeepFromObject } from '@nebular/auth/helpers';
 import 'rxjs/add/operator/take';
-import { AuthenticationMethod } from '../../shared/authentication-method.enum';
+import { AuthenticationMethod } from '../../shared/enums/authentication-method.enum';
 
 /**
  * Based on nebular NbLoginComponent

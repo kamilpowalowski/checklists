@@ -3,8 +3,8 @@ import { FormGroup } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import { ChecklistItem } from '../../shared/checklist-item.model';
-import { Checklist } from '../../shared/checklist.model';
+import { ChecklistItem } from '../../shared/models/checklist-item.model';
+import { Checklist } from '../../shared/models/checklist.model';
 import { ChecklistFormComponent } from './checklist-form.component';
 
 export class ChecklistEditComponent extends ChecklistFormComponent implements OnInit, OnDestroy {

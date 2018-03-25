@@ -10,9 +10,9 @@ import { Router } from '@angular/router';
 import { NbPopoverDirective } from '@nebular/theme';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ModalComponent } from '../../../modals/modal/modal.component';
-import { Checklist } from '../../../shared/checklist.model';
-import { ChecklistService } from '../../../shared/checklist.service';
-import { ShareModalComponent } from './../../../modals/share-modal/share-modal.component';
+import { ShareModalComponent } from '../../../modals/share-modal/share-modal.component';
+import { Checklist } from '../../../shared/models/checklist.model';
+import { ChecklistService } from '../../../shared/services/checklist.service';
 
 @Component({
   selector: 'app-checklist-owner-actions',

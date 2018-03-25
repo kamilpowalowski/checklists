@@ -8,9 +8,9 @@ import { ActivatedRoute, Params } from '@angular/router';
 import 'rxjs/add/observable/combineLatest';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import { Checklist } from './../../shared/checklist.model';
-import { ChecklistsService } from './../../shared/checklists.service';
-import { TagsService } from './../../shared/tags.service';
+import { Checklist } from './../../shared/models/checklist.model';
+import { ChecklistsService } from './../../shared/services/checklists.service';
+import { TagsService } from './../../shared/services/tags.service';
 import { ChecklistsMenuComponent } from './checklists-menu/checklists-menu.component';
 import { ChecklistsTagsComponent } from './checklists-tags/checklists-tags.component';
 

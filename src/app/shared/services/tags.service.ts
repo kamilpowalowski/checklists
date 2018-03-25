@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { Observable } from 'rxjs/Observable';
+import * as consts from '../firebase.consts';
 import { ChecklistsService } from './checklists.service';
-import * as consts from './firebase.consts';
 
 @Injectable()
 export class TagsService {

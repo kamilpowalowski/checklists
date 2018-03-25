@@ -21,10 +21,10 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { ModalComponent } from '../../modals/modal/modal.component';
-import { AccountService } from '../../shared/account.service';
-import { ChecklistItem } from '../../shared/checklist-item.model';
-import { Checklist } from '../../shared/checklist.model';
-import { ChecklistService } from '../../shared/checklist.service';
+import { ChecklistItem } from '../../shared/models/checklist-item.model';
+import { Checklist } from '../../shared/models/checklist.model';
+import { AccountService } from '../../shared/services/account.service';
+import { ChecklistService } from '../../shared/services/checklist.service';
 
 @Component({
   selector: 'app-checklist-form',

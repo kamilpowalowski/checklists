@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NbThemeService } from '@nebular/theme';
 import * as EmojiOne from 'emojione';
-import { AccountService } from './shared/account.service';
+import { AccountService } from './shared/services/account.service';
 
 @Component({
   selector: 'app-root',

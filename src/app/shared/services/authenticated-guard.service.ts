@@ -9,8 +9,8 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/take';
 import { Observable } from 'rxjs/Observable';
+import { AuthenticationState } from '../enums/authentication-state.enum';
 import { AccountService } from './account.service';
-import { AuthenticationState } from './authentication-state.enum';
 
 @Injectable()
 export class AuthenticatedGuard implements CanActivate {

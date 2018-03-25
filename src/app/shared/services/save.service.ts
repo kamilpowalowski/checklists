@@ -4,12 +4,12 @@ import * as firebase from 'firebase';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import { Account } from './account.model';
+import * as consts from '../firebase.consts';
+import { SAVED_COLLECTION } from '../firebase.consts';
+import { Account } from '../models/account.model';
+import { Checklist } from '../models/checklist.model';
 import { AccountService } from './account.service';
-import { Checklist } from './checklist.model';
 import { ChecklistService } from './checklist.service';
-import { SAVED_COLLECTION } from './firebase.consts';
-import * as consts from './firebase.consts';
 
 @Injectable()
 export class SaveService {

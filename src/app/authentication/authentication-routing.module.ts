@@ -1,9 +1,9 @@
-import { RegisterComponent } from './register/register.component';
-import { LoginComponent } from './login/login.component';
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { NbLogoutComponent, NbRequestPasswordComponent, NbResetPasswordComponent } from '@nebular/auth';
-import { AuthenticatedGuard } from '../shared/authenticated-guard.service';
+import { AuthenticatedGuard } from '../shared/services/authenticated-guard.service';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 const authenticationRoutes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },

@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Checklist } from './../../../shared/checklist.model';
+import { Component, Input, OnInit } from '@angular/core';
+import { Checklist } from '../../../shared/models/checklist.model';
 
 @Component({
   selector: 'app-checklists-items',

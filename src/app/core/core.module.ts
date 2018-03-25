@@ -21,6 +21,7 @@ import { SidebarFooterComponent } from './sidebar-footer/sidebar-footer.componen
 import { SidebarHeaderComponent } from './sidebar-header/sidebar-header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { ThemeSwitcherComponent } from './theme-switcher/theme-switcher.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   imports: [
@@ -44,7 +45,8 @@ import { ThemeSwitcherComponent } from './theme-switcher/theme-switcher.componen
     SidebarComponent,
     ThemeSwitcherComponent,
     SidebarFooterComponent,
-    SidebarHeaderComponent
+    SidebarHeaderComponent,
+    NotFoundComponent
   ],
   exports: [],
   providers: [

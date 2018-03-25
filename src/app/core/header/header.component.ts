@@ -6,8 +6,8 @@ import {
   } from '@angular/core';
 import { Router } from '@angular/router';
 import { NbMenuItem, NbMenuService, NbSidebarService } from '@nebular/theme';
-import { AccountService } from '../../shared/account.service';
-import { User } from '../../shared/user.model';
+import { User } from '../../shared/models/user.model';
+import { AccountService } from '../../shared/services/account.service';
 
 @Component({
   selector: 'app-header',

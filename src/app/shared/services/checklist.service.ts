@@ -6,11 +6,11 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';
-import { Account } from './account.model';
+import * as consts from '../firebase.consts';
+import { Account } from '../models/account.model';
+import { ChecklistItem } from '../models/checklist-item.model';
+import { Checklist } from '../models/checklist.model';
 import { AccountService } from './account.service';
-import { ChecklistItem } from './checklist-item.model';
-import { Checklist } from './checklist.model';
-import * as consts from './firebase.consts';
 
 
 @Injectable()

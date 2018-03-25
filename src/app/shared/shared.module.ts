@@ -1,14 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { AccountService } from './account.service';
-import { AuthenticatedGuard } from './authenticated-guard.service';
-import { ChecklistService } from './checklist.service';
-import { ChecklistsService } from './checklists.service';
-import { FirebaseAuthenticationProvider } from './firebase-authentication.provider';
-import { ReportService } from './report.service';
-import { SaveService } from './save.service';
-import { TagsService } from './tags.service';
-import { UserService } from './user.service';
+import { AccountService } from './services/account.service';
+import { AuthenticatedGuard } from './services/authenticated-guard.service';
+import { ChecklistService } from './services/checklist.service';
+import { ChecklistsService } from './services/checklists.service';
+import { FirebaseAuthenticationProvider } from './services/firebase-authentication.provider';
+import { ReportService } from './services/report.service';
+import { SaveService } from './services/save.service';
+import { TagsService } from './services/tags.service';
+import { UserService } from './services/user.service';
 
 @NgModule({
   imports: [

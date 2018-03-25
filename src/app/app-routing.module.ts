@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { NbAuthComponent } from '@nebular/auth';
 import { HomeComponent } from './core/home/home.component';
 import { LayoutComponent } from './core/layout/layout.component';
+import { NotFoundComponent } from './core/not-found/not-found.component';
 
 const appRoutes: Routes = [
   {
@@ -20,7 +21,8 @@ const appRoutes: Routes = [
         path: 'checklists',
         loadChildren: './checklists/checklists.module#ChecklistsModule'
       },
-      { path: '**', redirectTo: 'home' }
+      {path: 'not-found', component: NotFoundComponent },
+      { path: '**', redirectTo: 'not-found' }
     ]
   },
 ];

@@ -16,7 +16,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { ModalsModule } from './modals/modals.module';
-import { FirebaseAuthenticationProvider } from './shared/firebase-authentication.provider';
+import { FirebaseAuthenticationProvider } from './shared/services/firebase-authentication.provider';
 import { SharedModule } from './shared/shared.module';
 
 const authModuleSettings: NbAuthOptions = {

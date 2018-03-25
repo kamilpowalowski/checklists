@@ -6,12 +6,12 @@ import 'rxjs/add/observable/fromPromise';
 import 'rxjs/add/operator/do';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
-import { AccountPersistance } from './account-persistance.enum';
-import { Account } from './account.model';
-import { AuthenticationState } from './authentication-state.enum';
-import * as consts from './firebase.consts';
-import { Profile } from './profile.model';
-import { User } from './user.model';
+import { AccountPersistance } from '../enums/account-persistance.enum';
+import { AuthenticationState } from '../enums/authentication-state.enum';
+import * as consts from '../firebase.consts';
+import { Account } from '../models/account.model';
+import { Profile } from '../models/profile.model';
+import { User } from '../models/user.model';
 
 @Injectable()
 export class AccountService {

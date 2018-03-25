@@ -6,6 +6,7 @@ import {
   } from '@angular/core';
 import { Router } from '@angular/router';
 import { NbMenuItem, NbMenuService, NbSidebarService } from '@nebular/theme';
+import { environment } from '../../../environments/environment';
 import { User } from '../../shared/models/user.model';
 import { AccountService } from '../../shared/services/account.service';
 
@@ -16,6 +17,7 @@ import { AccountService } from '../../shared/services/account.service';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
 
+  name: string;
   userName: string;
   userPhoto: string;
   userMenu: NbMenuItem[] = [];
@@ -36,6 +38,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
           this.setAnonymousState();
         }
       });
+      this.name = environment.production ? 'lizt.co' : '[dev]lizt.co';
   }
 
   ngOnDestroy() {

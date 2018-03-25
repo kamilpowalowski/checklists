@@ -40,8 +40,8 @@
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {
-        "dev": "environments/environment.ts",
-        "prod": "environments/environment.prod.ts"
+        "dev": "environments/lizt.co/environment.dev.ts",
+        "prod": "environments/lizt.co/environment.prod.ts"
       }
     }
   ],

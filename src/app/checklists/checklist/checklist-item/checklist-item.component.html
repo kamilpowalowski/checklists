@@ -6,7 +6,7 @@
   </div>
 </div>
 <div class="row show-grid" *ngIf="item.description.length > 0">
-  <div [ngClass]="getClassesForLevel(level + 1)">
+  <div [ngClass]="getClassesForLevel(level)">
     <div>
       <markdown [innerHTML]="item.description | emoji"></markdown>
     </div>

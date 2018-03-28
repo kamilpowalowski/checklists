@@ -4,6 +4,7 @@ import { Toast, ToasterService } from 'angular2-toaster';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/mergeMap';
 import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 import { ChecklistItem } from '../../shared/models/checklist-item.model';
 import { Checklist } from '../../shared/models/checklist.model';
 import { AccountService } from '../../shared/services/account.service';
@@ -20,6 +21,7 @@ export class ChecklistComponent implements OnInit, OnDestroy {
   items: Observable<ChecklistItem[]>;
 
   private userNotAvailableWarningPresented = false;
+  private checklistSubscription: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -35,10 +37,17 @@ export class ChecklistComponent implements OnInit, OnDestroy {
         this.checklist = this.checklistService.observeChecklist(id, true);
         this.items = this.checklist.mergeMap(checklist => checklist.items);
       });
+
+    this.checklistSubscription = this.checklist
+      .distinctUntilChanged((lhs, rhs) => lhs.id === rhs.id)
+      .subscribe((checklist) => {
+        this.checklistService.observeChecklistSelectedIds(checklist);
+      });
   }
 
   ngOnDestroy() {
     this.toasterService.clear();
+    this.checklistSubscription.unsubscribe();
   }
 
   checkAccountAndShowMessage() {

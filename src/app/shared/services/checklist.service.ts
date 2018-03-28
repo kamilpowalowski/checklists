@@ -27,10 +27,7 @@ export class ChecklistService {
   ) {
     this.accountService.profile.asObservable()
       .subscribe(profile => {
-        this.resetSelectedIds();
-        if (profile) {
-          this.observeSelectedIds(profile.account);
-        }
+        if (!profile) { this.resetSelectedIds(); }
       });
   }
 
@@ -53,6 +50,14 @@ export class ChecklistService {
           tags, data['public'], items
         );
       });
+  }
+
+  observeChecklistSelectedIds(checklist: Checklist) {
+    this.resetSelectedIds();
+    const profile = this.accountService.profile.getValue();
+    if (profile) {
+      this.observeSelectedIds(profile.account, checklist);
+    }
   }
 
   selectChecklistItem(item: ChecklistItem) {
@@ -197,10 +202,12 @@ export class ChecklistService {
     this.selectedIds.next(new Set());
   }
 
-  private observeSelectedIds(account: Account) {
+  private observeSelectedIds(account: Account, checklist: Checklist) {
     this.selectedIdsReference = this.firestore
       .collection(consts.SELECTED_COLLECTION)
-      .doc<{ [key: string]: boolean }>(account.id);
+      .doc(account.id)
+      .collection(consts.CHECKLISTS_COLLECTION)
+      .doc<{ [key: string]: boolean }>(checklist.id);
 
     this.selectedIdsSubscription = this.selectedIdsReference
       .valueChanges()

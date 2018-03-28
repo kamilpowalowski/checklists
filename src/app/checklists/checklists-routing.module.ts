@@ -11,7 +11,11 @@ const checklistsRoutes: Routes = [
   {
     path: 'public',
     children: [
-      { path: '', redirectTo: 'featured', pathMatch: 'full' },
+      {
+        path: '',
+        redirectTo: 'featured',
+        pathMatch: 'full'
+      },
       {
         path: 'all',
         component: ChecklistsComponent,
@@ -35,7 +39,11 @@ const checklistsRoutes: Routes = [
   {
     path: 'me',
     children: [
-      { path: '', redirectTo: 'all', pathMatch: 'full' },
+      {
+        path: '',
+        redirectTo: 'all',
+        pathMatch: 'full'
+      },
       {
         path: 'all',
         canActivate: [AuthenticatedGuard],
@@ -83,7 +91,14 @@ const checklistsRoutes: Routes = [
       }
     ]
   },
-  { path: ':id', component: ChecklistComponent }
+  {
+    path: ':id/:name',
+    component: ChecklistComponent
+  },
+  {
+    path: ':id',
+    component: ChecklistComponent
+  }
 ];
 
 @NgModule({

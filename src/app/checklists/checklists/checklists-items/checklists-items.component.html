@@ -1,7 +1,7 @@
 <ng-container *ngIf="checklists === null">loading...</ng-container>
 <ng-container *ngIf="checklists?.length === 0">sorry, this list is empty</ng-container>
 <nb-card *ngFor="let checklist of checklists">
-  <nb-card-body [routerLink]="['/checklists', checklist.id]" routerLinkActive="active">
+  <nb-card-body [routerLink]="['/checklists', checklist.id, checklistNameUrlForm(checklist)]" routerLinkActive="active">
     <div [innerHTML]="checklist.title | emoji"></div>
   </nb-card-body>
 </nb-card>

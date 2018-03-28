@@ -63,6 +63,14 @@ export class ChecklistComponent implements OnInit, OnDestroy {
     }
   }
 
+  isOwner(checklist: Checklist): boolean {
+    const profile = this.accountService.profile.getValue();
+    if (profile) {
+      return checklist.owner === profile.account.id;
+    }
+    return false;
+  }
+
   private showToast(title: string, body: string) {
     const toast: Toast = {
       type: 'warning',

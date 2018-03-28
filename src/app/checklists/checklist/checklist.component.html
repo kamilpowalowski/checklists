@@ -20,18 +20,20 @@
           <app-checklist-item *ngFor="let item of (items | async)" [item]="item" [level]="1" (onChange)="checkAccountAndShowMessage()"></app-checklist-item>
         </nb-card-body>
         <nb-card-footer>
-          <a *ngFor="let tag of (checklist | async)?.tags" [routerLink]="['/checklists', 'public', 'tags', tag]" routerLinkActive="active">
-            #{{ tag }}
-          </a>
+          <ng-container *ngIf="checklist | async; let checklist">
+            <a *ngFor="let tag of checklist.tags" [routerLink]="['/checklists', isOwner(checklist) ? 'me' : 'public', 'tags', tag]" routerLinkActive="active">
+              #{{ tag }}
+            </a>
+          </ng-container>
         </nb-card-footer>
       </nb-card>
       <ng-container *ngIf="checklist | async; let checklist">
-        <nb-card *ngIf="checklist.owner !== accountService.profile.getValue()?.account.id">
+        <nb-card *ngIf="!isOwner(checklist)">
           <nb-card-body>
             <app-checklist-actions [checklist]="checklist"></app-checklist-actions>
           </nb-card-body>
         </nb-card>
-        <nb-card *ngIf="checklist.owner === accountService.profile.getValue()?.account.id">
+        <nb-card *ngIf="isOwner(checklist)">
           <nb-card-body>
             <app-checklist-owner-actions [checklist]="checklist"></app-checklist-owner-actions>
           </nb-card-body>

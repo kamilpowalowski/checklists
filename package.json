@@ -27,6 +27,7 @@
     "@nebular/auth": "^2.0.0-rc.6",
     "@nebular/theme": "^2.0.0-rc.6",
     "@ng-bootstrap/ng-bootstrap": "^1.0.1",
+    "@ngx-meta/core": "^5.0.0",
     "@ngx-share/button": "^5.0.1",
     "@ngx-share/buttons": "^5.0.1",
     "@ngx-share/core": "^5.0.1",

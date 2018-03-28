@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import { MetaService } from '@ngx-meta/core';
 import { Toast, ToasterService } from 'angular2-toaster';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/mergeMap';
@@ -26,6 +27,7 @@ export class ChecklistComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private toasterService: ToasterService,
+    private metaService: MetaService,
     public accountService: AccountService,
     private checklistService: ChecklistService
   ) { }
@@ -41,6 +43,8 @@ export class ChecklistComponent implements OnInit, OnDestroy {
     this.checklistSubscription = this.checklist
       .distinctUntilChanged((lhs, rhs) => lhs.id === rhs.id)
       .subscribe((checklist) => {
+        this.metaService.setTitle(`${checklist.title}`);
+        this.metaService.setTag('description', checklist.description);
         this.checklistService.observeChecklistSelectedIds(checklist);
       });
   }

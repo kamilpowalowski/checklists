@@ -5,29 +5,11 @@ import * as prerenderNode from 'prerender-node';
 
 admin.initializeApp(functions.config().firebase);
 
-function buildHtmlWithChecklist(checklist: any, url: string) {
-  const title = checklist.title + ' - lizt.co - checklists made easy';
-  const string = '<!doctype html><html lang="en">' +
-    '<meta charset="utf-8">' +
-    '<title>' + title + '</title>' +
-    '<meta property="og:title" content="' + title + '">' +
-    '<meta property="twitter:title" content="' + title + '">' +
-    '<meta property="description" content="' + checklist.description + '">' +
-    '<meta property="og:description" content="' + checklist.description + '">' +
-    '<meta property="twitter:description" content="' + checklist.description + '">' +
-    '<meta property="og:url" content="' + url + '">' +
-    '<meta property="twitter:url" content="' + url + '">' +
-    '<meta property="og:type" content="website">' +
-    '<meta property="og:locale" content="en_US">' +
-    '<link rel="icon" type="image/x-icon" href="https://lizt.co/favicon.ico">' +
-    '</head></html>';
-  return string;
-}
+const defaultTitle = 'lizt.co - checklists made easy';
+const defaultDescription = 'community driven website for creating and sharing checklists';
 
-function buildDefaultHtml(url: string) {
-  const title = 'lizt.co - checklists made easy';
-  const description = 'community driven website for creating and sharing checklists';
-  const string = '<!doctype html><html lang="en">' +
+function buildPrerenderedHtml(title: string, description: string, url: string): string {
+  return '<!doctype html><html lang="en">' +
     '<meta charset="utf-8">' +
     '<title>' + title + '</title>' +
     '<meta property="og:title" content="' + title + '">' +
@@ -41,17 +23,27 @@ function buildDefaultHtml(url: string) {
     '<meta property="og:locale" content="en_US">' +
     '<link rel="icon" type="image/x-icon" href="https://lizt.co/favicon.ico">' +
     '</head></html>';
-  return string;
 }
 
-function returnDefaultHtml(request, response) {
-  const html = buildDefaultHtml(request.path);
+function buildPrerenderedHtmlForChecklist(checklist: any, url: string) {
+  const title = checklist.title + ' - ' + defaultTitle;
+  const description = checklist.description && checklist.description.length > 0 ? checklist.description : defaultDescription;
+  return buildPrerenderedHtml(title, description, url);
+}
+
+
+function returnPrerenderedHtml(request, response) {
+  const html = buildPrerenderedHtml(defaultTitle, defaultDescription, request.url);
   response.status(200).end(html);
 }
 
+function returnPrerenderedHtmlForChecklist(request, response, checklist) {
+  const checklistHtml = buildPrerenderedHtmlForChecklist(checklist, request.url);
+  response.status(200).end(checklistHtml);
+}
 
-export const application = functions.https.onRequest((request, response) => {
-  console.log(prerenderNode);
+
+export const prerender = functions.https.onRequest((request, response) => {
   if (!prerenderNode.shouldShowPrerenderedPage(request)) {
     response.sendFile(path.join(__dirname + '/../dist/index.html'));
     return;
@@ -65,15 +57,14 @@ export const application = functions.https.onRequest((request, response) => {
       .get()
       .then((snapshot) => {
         const checklist = snapshot.data();
-        const checklistHtml = buildHtmlWithChecklist(checklist, request.path);
-        response.status(200).end(checklistHtml);
+        returnPrerenderedHtmlForChecklist(request, response, checklist);
       })
       .catch((reason) => {
-        returnDefaultHtml(request, response);
+        returnPrerenderedHtml(request, response);
       });
     return;
   }
 
-  returnDefaultHtml(request, response);
+  returnPrerenderedHtml(request, response);
 
 });

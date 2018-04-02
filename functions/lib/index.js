@@ -29,11 +29,13 @@ function buildPrerenderedHtmlForChecklist(checklist, url) {
     return buildPrerenderedHtml(title, description, url);
 }
 function returnPrerenderedHtml(request, response) {
-    const html = buildPrerenderedHtml(defaultTitle, defaultDescription, request.url);
+    const url = request.protocol + '://' + request.get('host') + request.url;
+    const html = buildPrerenderedHtml(defaultTitle, defaultDescription, url);
     response.status(200).end(html);
 }
 function returnPrerenderedHtmlForChecklist(request, response, checklist) {
-    const checklistHtml = buildPrerenderedHtmlForChecklist(checklist, request.url);
+    const url = request.protocol + '://' + request.get('host') + request.url;
+    const checklistHtml = buildPrerenderedHtmlForChecklist(checklist, url);
     response.status(200).end(checklistHtml);
 }
 exports.prerender = functions.https.onRequest((request, response) => {

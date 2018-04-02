@@ -91,7 +91,7 @@
 
     <div class="form-group accept-group col-sm-12" *ngIf="getConfigValue('forms.register.terms')">
       <nb-checkbox name="terms" [(ngModel)]="data.terms" [required]="getConfigValue('forms.register.terms')">
-        Agree to <a target="_blank" [routerLink]="['/terms']" routerLinkActive="active"><strong>Terms & Conditions</strong></a>
+        Agree to <a target="_blank" [routerLink]="['/legal', 'terms']" routerLinkActive="active"><strong>Terms of Service</strong></a>
       </nb-checkbox>
     </div>
 

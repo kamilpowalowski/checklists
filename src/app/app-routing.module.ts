@@ -32,6 +32,10 @@ const appRoutes: Routes = [
         loadChildren: './checklists/checklists.module#ChecklistsModule'
       },
       {
+        path: 'legal',
+        loadChildren: './legal/legal.module#LegalModule'
+      },
+      {
         path: 'not-found',
         component: NotFoundComponent
       },

@@ -17,11 +17,11 @@ import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { LayoutComponent } from './layout/layout.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 import { SidebarFooterComponent } from './sidebar-footer/sidebar-footer.component';
 import { SidebarHeaderComponent } from './sidebar-header/sidebar-header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { ThemeSwitcherComponent } from './theme-switcher/theme-switcher.component';
-import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   imports: [

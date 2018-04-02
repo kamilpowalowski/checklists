@@ -7,7 +7,15 @@ const prerenderNode = require("prerender-node");
 admin.initializeApp(functions.config().firebase);
 const defaultTitle = 'lizt.co - checklists made easy';
 const defaultDescription = 'community driven website for creating and sharing checklists';
-function buildPrerenderedHtml(title, description, url) {
+const defaultUrl = 'https://lizt.co';
+function websiteUrl() {
+    const domain = functions.config().domain;
+    if (!domain) {
+        return defaultUrl;
+    }
+    return domain.protocol + '://' + domain.host;
+}
+function buildPrerenderedHtml(title, description, url, imageUrl) {
     return '<!doctype html><html lang="en">' +
         '<meta charset="utf-8">' +
         '<title>' + title + '</title>' +
@@ -18,24 +26,27 @@ function buildPrerenderedHtml(title, description, url) {
         '<meta property="twitter:description" content="' + description + '">' +
         '<meta property="og:url" content="' + url + '">' +
         '<meta property="twitter:url" content="' + url + '">' +
+        '<meta property="og:image" content="' + imageUrl + '">' +
         '<meta property="og:type" content="website">' +
         '<meta property="og:locale" content="en_US">' +
         '<link rel="icon" type="image/x-icon" href="https://lizt.co/favicon.ico">' +
         '</head></html>';
 }
-function buildPrerenderedHtmlForChecklist(checklist, url) {
+function buildPrerenderedHtmlForChecklist(checklist, url, imageUrl) {
     const title = checklist.title + ' - ' + defaultTitle;
     const description = checklist.description && checklist.description.length > 0 ? checklist.description : defaultDescription;
-    return buildPrerenderedHtml(title, description, url);
+    return buildPrerenderedHtml(title, description, url, imageUrl);
 }
 function returnPrerenderedHtml(request, response) {
-    const url = request.protocol + '://' + request.get('host') + request.url;
-    const html = buildPrerenderedHtml(defaultTitle, defaultDescription, url);
+    const url = websiteUrl() + request.url;
+    const imageUrl = websiteUrl() + '/assets/liztco-banner.jpg';
+    const html = buildPrerenderedHtml(defaultTitle, defaultDescription, url, imageUrl);
     response.status(200).end(html);
 }
 function returnPrerenderedHtmlForChecklist(request, response, checklist) {
-    const url = request.protocol + '://' + request.get('host') + request.url;
-    const checklistHtml = buildPrerenderedHtmlForChecklist(checklist, url);
+    const url = websiteUrl() + request.url;
+    const imageUrl = websiteUrl() + '/assets/liztco-banner.jpg';
+    const checklistHtml = buildPrerenderedHtmlForChecklist(checklist, url, imageUrl);
     response.status(200).end(checklistHtml);
 }
 exports.prerender = functions.https.onRequest((request, response) => {

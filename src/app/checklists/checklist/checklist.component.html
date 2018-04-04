@@ -21,7 +21,7 @@
         </nb-card-body>
         <nb-card-footer>
           <ng-container *ngIf="checklist | async; let checklist">
-            <a *ngFor="let tag of checklist.tags" [routerLink]="['/checklists', isOwner(checklist) ? 'me' : 'public', 'tags', tag]" routerLinkActive="active">
+            <a *ngFor="let tag of checklist.tags" [routerLink]="['/checklists', isOwner(checklist) ? 'me' : 'public', 'tags', tag]">
               #{{ tag }}
             </a>
           </ng-container>

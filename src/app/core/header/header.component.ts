@@ -49,10 +49,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.sidebarService.toggle(true, 'menu-sidebar');
   }
 
-  createChecklist() {
-    this.router.navigate(['/checklists', 'edit', 'new']);
-  }
-
   private setAnonymousState() {
     this.userName = 'Anonymous';
     this.userMenu = [

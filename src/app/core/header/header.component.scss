@@ -25,9 +25,6 @@
     }
     /deep/ nb-action {
         cursor: pointer;
-        &:first-child {
-            border-left: 1px solid nb-theme(actions-separator) !important;
-        }
     }
     .header-container {
         display: flex;

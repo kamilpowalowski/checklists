@@ -3,7 +3,7 @@
     <a (click)="toggleSidebar()" class="navigation" nbPopover="Show/hide main menu." nbPopoverMode="hint">
       <i class="nb-menu"></i>
     </a>
-    <a class="logo" [routerLink]="['/home']" routerLinkActive="active">
+    <a class="logo" [routerLink]="['/home']">
       <svg-icon class="icon" src="/assets/logo.svg"></svg-icon>
       <span>{{ name }}</span>
     </a>
@@ -13,5 +13,4 @@
   <nb-action class="control-item">
     <nb-user [nbContextMenu]="userMenu" [name]="userName" [picture]="userPhoto"></nb-user>
   </nb-action>
-  <nb-action class="control-item" icon="nb-plus" (click)="createChecklist()" nbPopover="Create new checklist." nbPopoverMode="hint" nbPopoverPlacement="left"></nb-action>
 </nb-actions>

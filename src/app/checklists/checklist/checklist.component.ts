@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MetaService } from '@ngx-meta/core';
 import { Toast, ToasterService } from 'angular2-toaster';
 import 'rxjs/add/operator/do';
@@ -25,6 +25,7 @@ export class ChecklistComponent implements OnInit, OnDestroy {
   private checklistSubscription: Subscription;
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private toasterService: ToasterService,
     private metaService: MetaService,
@@ -46,6 +47,8 @@ export class ChecklistComponent implements OnInit, OnDestroy {
         this.metaService.setTitle(`${checklist.title}`);
         this.metaService.setTag('description', checklist.description);
         this.checklistService.observeChecklistSelectedIds(checklist);
+      }, (error) => {
+        this.router.navigate(['/not-found']);
       });
   }
 

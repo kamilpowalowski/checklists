@@ -36,6 +36,10 @@ const appRoutes: Routes = [
         loadChildren: './legal/legal.module#LegalModule'
       },
       {
+        path: 'info',
+        loadChildren: './pages/pages.module#PagesModule'
+      },
+      {
         path: 'not-found',
         component: NotFoundComponent
       },

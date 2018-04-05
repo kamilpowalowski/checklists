@@ -61,7 +61,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.userName = user.displayName ? user.displayName : 'Active user';
     this.userPhoto = user.photo;
     this.userMenu = [
-      { title: 'Profile', link: '/profile' },
+      { title: 'My account', link: '/account' },
       { title: 'Log out', link: '/auth/logout' }
     ];
   }

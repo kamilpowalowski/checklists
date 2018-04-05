@@ -82,7 +82,7 @@ export class SaveService {
   private observeSavedIds(account: Account) {
     this.savedIdsReference = this.firestore
       .collection(consts.SAVED_COLLECTION)
-      .doc<{ [key: string]: boolean }>(account.id);
+      .doc<{ [key: string]: firebase.firestore.FieldValue }>(account.id);
 
     this.savedIdsSubscription = this.savedIdsReference
       .valueChanges()

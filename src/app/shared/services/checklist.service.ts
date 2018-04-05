@@ -39,7 +39,11 @@ export class ChecklistService {
     return checklistReference
       .valueChanges()
       .distinctUntilChanged()
-      .filter(value => value != null)
+      .do((data) => {
+        if (data === null) {
+          throw new Error('Checklist not found');
+        }
+      })
       .map(data => {
         const tags = Object.keys(data['tags']);
         const itemsReference = checklistReference

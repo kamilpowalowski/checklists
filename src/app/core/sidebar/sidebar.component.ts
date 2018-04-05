@@ -29,9 +29,21 @@ export class SidebarComponent implements OnInit {
       },
       {
         title: 'My checklists',
-        icon: 'nb-person',
+        icon: 'nb-star',
         link: '/checklists/me',
         pathMatch: 'not-full'
+      },
+      {
+        title: 'My account',
+        icon: 'nb-person',
+        link: '/account',
+        pathMatch: 'full'
+      },
+      {
+        title: 'About',
+        icon: 'nb-lightbulb',
+        link: '/info/about',
+        pathMatch: 'full'
       }
     ];
   }

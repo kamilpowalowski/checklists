@@ -82,7 +82,6 @@ export class ChecklistService {
   }
 
   unselectChecklistItem(item: ChecklistItem) {
-
     if (item.subitems.length === 0) {
       const set = new Set(this.selectedIds.getValue());
       set.delete(item.id);
@@ -114,10 +113,10 @@ export class ChecklistService {
     const checklistReference = this.reference(checklist);
 
     const setChecklistPromise = checklistReference
-      .set(checklist.rawValue(), { merge: true });
+      .set(checklist.rawValue(), { merge: false });
 
     return Observable.fromPromise(setChecklistPromise)
-      .flatMap(_ => {
+      .mergeMap(_ => {
         const items = checklist.items.getValue();
         if (items.length === 0) { return Observable.of(checklist.id); }
 
@@ -126,7 +125,7 @@ export class ChecklistService {
 
         return this.checklistItems(itemsReference)
           .take(1)
-          .flatMap(oldItems => {
+          .mergeMap(oldItems => {
             const batch = this.firestore.firestore.batch();
             this.organizeChecklistItemsBatchOperations(
               batch, itemsReference, oldItems, items
@@ -146,7 +145,7 @@ export class ChecklistService {
 
     return this.checklistItems(itemsReference)
       .take(1)
-      .flatMap(items => {
+      .mergeMap(items => {
         const batch = this.firestore.firestore.batch();
         for (const itemId of items.map(item => item.id)) {
           batch.delete(itemsReference.doc(itemId).ref);

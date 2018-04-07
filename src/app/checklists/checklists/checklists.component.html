@@ -5,7 +5,7 @@
       <app-checklists-tags [tags]="tags | async" title="Popular tags" initialPath="/checklists/public" #tagsComponent></app-checklists-tags>
     </div>
     <div class="col-md-8">
-      <app-checklists-items [checklists]="checklists | async"></app-checklists-items>
+      <app-checklists-items [checklists]="checklists | async" [ownTags]="false"></app-checklists-items>
     </div>
   </div>
 </div>

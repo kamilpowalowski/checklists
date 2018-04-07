@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
+import * as firebase from 'firebase';
 import * as consts from '../firebase.consts';
 import { Checklist } from '../models/checklist.model';
 import { AccountService } from './account.service';
@@ -18,7 +19,8 @@ export class ReportService {
       .add({
         'reporter': this.accountService.profile.getValue().account.id,
         'email': this.accountService.profile.getValue().account.email,
-        'checklist': checklist.id
+        'checklist': checklist.id,
+        'date': firebase.firestore.FieldValue.serverTimestamp()
       });
   }
 

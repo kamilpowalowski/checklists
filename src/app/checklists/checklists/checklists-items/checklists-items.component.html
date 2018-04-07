@@ -4,4 +4,10 @@
   <nb-card-body [routerLink]="['/checklists', checklist.id, checklistNameUrlForm(checklist)]">
     <div [innerHTML]="checklist.title | emoji"></div>
   </nb-card-body>
+  <nb-card-footer *ngIf="checklist.tags.length !== 0">
+    <a *ngFor="let tag of checklist.tags.slice(0, 10)" [routerLink]="['/checklists', tagsPathFragment(), 'tags', tag]">
+      #{{ tag }}
+    </a>
+    <ng-container *ngIf="checklist.tags.length > 10">...</ng-container>
+  </nb-card-footer>
 </nb-card>

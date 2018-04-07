@@ -172,7 +172,9 @@ export class ChecklistFormComponent implements OnInit {
     const items = Observable.of(
       this.mapSubformDataToChecklistItems(value['items'])
     );
-    const tags = value['tags'].map(tag => tag.slice(1));
+    const tags = (value['tags'] ? value['tags'] : [])
+      .map(tag => tag.slice(1));
+
     return new Checklist(
       value['id'], value['owner'], value['title'],
       value['description'], tags, value['public'], items

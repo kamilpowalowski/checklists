@@ -1,7 +1,7 @@
 @import '../../../styles/themes';
 
 @include nb-install-component() {
-  nb-card {
+  nb-card-body {
     cursor: pointer;
   }
 }

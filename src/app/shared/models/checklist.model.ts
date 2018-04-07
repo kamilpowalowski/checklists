@@ -1,3 +1,4 @@
+import * as firebase from 'firebase';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/take';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -37,7 +38,8 @@ export class Checklist {
       'description': this.description,
       'owner': this.owner,
       'tags': {},
-      'public': this.isPublic
+      'public': this.isPublic,
+      'edited': firebase.firestore.FieldValue.serverTimestamp()
     };
 
     for (const tag of this.tags) {

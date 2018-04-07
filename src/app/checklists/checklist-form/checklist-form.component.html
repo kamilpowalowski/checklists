@@ -11,7 +11,7 @@
             </div>
             <div class="input-group">
               <tag-input formControlName="tags" theme="ngx-chips-lizt-theme" [onAdding]="transformNewTag" [separatorKeyCodes]="[32]" modelAsStrings="true"
-                [ripple]="false" inputClass="tag-form-control"></tag-input>
+                [ripple]="false" addOnBlur="true" inputClass="tag-form-control"></tag-input>
             </div>
             <div class="input-group markdown">
               <app-markdown-editor placeholder="Description" formControlName="description"></app-markdown-editor>

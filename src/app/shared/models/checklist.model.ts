@@ -48,4 +48,13 @@ export class Checklist {
 
     return result;
   }
+
+  titleInUrlForm(): string {
+    return this.title
+      .toLowerCase()
+      .replace(/\s+/g, '-')           // Replace spaces with -
+      .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+      .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+      .trim();                        // Trim - from end of text;
+  }
 }

@@ -19,13 +19,11 @@
           </ng-container>
           <app-checklist-item *ngFor="let item of (items | async)" [item]="item" [level]="1" (onChange)="checkAccountAndShowMessage()"></app-checklist-item>
         </nb-card-body>
-        <ng-container *ngIf="checklist | async; let checklist">
-          <nb-card-footer *ngIf="checklist.tags.length > 0">
-            <a *ngFor="let tag of checklist.tags" [routerLink]="['/checklists', isOwner(checklist) ? 'me' : 'public', 'tags', tag]">
-              #{{ tag }}
-            </a>
-          </nb-card-footer>
-        </ng-container>
+        <nb-card-footer *ngIf="checklist | async; let checklist" [hidden]="checklist.tags.length === 0">
+          <a *ngFor="let tag of checklist.tags" [routerLink]="['/checklists', isOwner(checklist) ? 'me' : 'public', 'tags', tag]">
+            #{{ tag }}
+          </a>
+        </nb-card-footer>
       </nb-card>
       <ng-container *ngIf="checklist | async; let checklist">
         <nb-card *ngIf="!isOwner(checklist)">

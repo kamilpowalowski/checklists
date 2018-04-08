@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { Checklist } from '../../shared/models/checklist.model';
+import { ChecklistsService } from '../../shared/services/checklists.service';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +10,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  featuredChecklists: Observable<Checklist[]>;
+
+  constructor(private checklistsService: ChecklistsService) { }
 
   ngOnInit() {
+    this.featuredChecklists = this.checklistsService.observeFeaturedChecklists();
   }
 
 }

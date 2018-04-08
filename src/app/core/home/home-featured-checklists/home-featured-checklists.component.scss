@@ -1,0 +1,24 @@
+@import '../../../styles/themes';
+@include nb-install-component() {
+    .checklist {
+        cursor: pointer;
+        border-bottom: 1px solid nb-theme(separator);
+        display: block;
+        span {
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            display: block;
+        }
+        &:last-child {
+            border-bottom: none;
+            span {
+                padding-bottom: 0rem;
+            }
+        }
+        &:first-child {
+            span {
+                padding-top: 0rem;
+            }
+        }
+    }
+}

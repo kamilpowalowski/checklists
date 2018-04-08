@@ -8,20 +8,11 @@ import { Checklist } from '../../../shared/models/checklist.model';
 })
 export class ChecklistsItemsComponent implements OnInit {
   @Input() checklists: Checklist[];
-  @Input() ownTags: boolean;
+  @Input() ownTags = false;
 
   constructor() { }
 
   ngOnInit() { }
-
-  checklistNameUrlForm(checklist: Checklist): string {
-    return checklist.title
-      .toLowerCase()
-      .replace(/\s+/g, '-')           // Replace spaces with -
-      .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
-      .replace(/\-\-+/g, '-')         // Replace multiple - with single -
-      .trim();                        // Trim - from end of text;
-  }
 
   tagsPathFragment(): string {
     return this.ownTags ? 'me' : 'public';

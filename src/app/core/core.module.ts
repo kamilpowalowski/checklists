@@ -15,6 +15,7 @@ import {
 import { EmojiModule } from 'angular-emojione';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { ToasterModule } from 'angular2-toaster';
+import { MarkdownModule } from 'ngx-markdown';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { HomeFeaturedChecklistsComponent } from './home/home-featured-checklists/home-featured-checklists.component';
@@ -40,6 +41,7 @@ import { ThemeSwitcherComponent } from './theme-switcher/theme-switcher.componen
     NbPopoverModule,
     NbCardModule,
     EmojiModule,
+    MarkdownModule.forChild(),
     ToasterModule.forChild()
   ],
   declarations: [

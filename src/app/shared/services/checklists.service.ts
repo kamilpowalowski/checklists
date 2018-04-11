@@ -72,7 +72,8 @@ export class ChecklistsService {
           const data = action.payload.doc.data();
           const tags = Object.keys(data['tags']);
           return new Checklist(
-            id, data['owner'], data['title'], data['description'],
+            id, data['owner'], data['created'],
+            data['title'], data['description'],
             tags, data['public'], null
           );
         });

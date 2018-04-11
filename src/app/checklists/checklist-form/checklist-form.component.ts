@@ -176,8 +176,9 @@ export class ChecklistFormComponent implements OnInit {
       .map(tag => tag.slice(1));
 
     return new Checklist(
-      value['id'], value['owner'], value['title'],
-      value['description'], tags, value['public'], items
+      value['id'], value['owner'], value['created'],
+      value['title'], value['description'], tags,
+      value['public'], items
     );
   }
 
@@ -185,6 +186,7 @@ export class ChecklistFormComponent implements OnInit {
     this.form = new FormGroup({
       'id': new FormControl(),
       'owner': new FormControl(),
+      'created': new FormControl(),
       'public': new FormControl(),
       'title': new FormControl('', Validators.required),
       'tags': new FormControl(),

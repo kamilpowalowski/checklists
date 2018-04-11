@@ -50,7 +50,8 @@ export class ChecklistService {
           .collection<ChecklistItem>(consts.CHECKLISTS_ITEMS_COLLECTION);
         const items = fullData ? this.checklistItems(itemsReference) : null;
         return new Checklist(
-          id, data['owner'], data['title'], data['description'],
+          id, data['owner'], data['created'],
+          data['title'], data['description'],
           tags, data['public'], items
         );
       });

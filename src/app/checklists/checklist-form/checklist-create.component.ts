@@ -11,6 +11,7 @@ export class ChecklistCreateComponent extends ChecklistFormComponent implements 
     this.handleLocalStorage();
     this.form.patchValue({
       'owner': this.accountService.profile.getValue().account.id,
+      'created': new Date(),
       'public': false
     });
   }

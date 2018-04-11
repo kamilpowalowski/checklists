@@ -13,6 +13,7 @@ export class Checklist {
   constructor(
     public id: string,
     public owner: string,
+    public created: Date,
     public title: string,
     public description: string,
     public tags: string[],
@@ -39,6 +40,7 @@ export class Checklist {
       'owner': this.owner,
       'tags': {},
       'public': this.isPublic,
+      'created': this.created,
       'edited': firebase.firestore.FieldValue.serverTimestamp()
     };
 

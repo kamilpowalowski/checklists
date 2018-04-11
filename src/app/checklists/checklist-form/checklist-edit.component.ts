@@ -40,6 +40,7 @@ export class ChecklistEditComponent extends ChecklistFormComponent implements On
     const values = {
       'id': checklist.id,
       'owner': checklist.owner,
+      'created': checklist.created,
       'public': checklist.isPublic,
       'title': checklist.title,
       'tags': checklist.tags.map(tag => `#${tag}`),

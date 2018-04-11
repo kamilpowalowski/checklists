@@ -5,7 +5,8 @@ service cloud.firestore {
       allow list: if resource.data.public == true;
       allow get;
       allow create: if request.resource.data.owner == request.auth.uid;
-      allow read, update, delete: if resource.data.owner == request.auth.uid;
+      allow update: if resource.data.owner == request.auth.uid && resource.data.created == request.resource.data.created;
+      allow read, delete: if resource.data.owner == request.auth.uid;
 
       match /{allChildren=**} {
         function canReadChecklist() {

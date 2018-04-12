@@ -20,4 +20,9 @@
             cursor: pointer;
         }
     }
+    markdown {
+        /deep/ img {
+            max-width: 100%;
+        }
+    }
 }

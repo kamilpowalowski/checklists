@@ -1,0 +1,10 @@
+<nb-actions size="medium" fullWidth>
+  <nb-action *ngIf="!isFeatured" (click)="feature()" nbPopover="Feature this checklist." nbPopoverMode="hint">
+    <i class="nb-star"></i>
+    <span>Feature</span>
+  </nb-action>
+  <nb-action *ngIf="isFeatured" (click)="unfeature()" nbPopover="Un-feature this checklist." nbPopoverMode="hint">
+    <i class="nb-star"></i>
+    <span>Un-feature</span>
+  </nb-action>
+</nb-actions>

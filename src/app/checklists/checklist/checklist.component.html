@@ -36,6 +36,11 @@
             <app-checklist-owner-actions [checklist]="checklist"></app-checklist-owner-actions>
           </nb-card-body>
         </nb-card>
+        <nb-card *ngIf="isAdmin">
+          <nb-card-body>
+            <app-checklist-admin-actions [checklist]="checklist"></app-checklist-admin-actions>
+          </nb-card-body>
+        </nb-card>
       </ng-container>
     </div>
   </div>

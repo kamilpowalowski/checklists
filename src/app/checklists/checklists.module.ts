@@ -30,6 +30,7 @@ import { ChecklistsItemsComponent } from './checklists/checklists-items/checklis
 import { ChecklistsMenuComponent } from './checklists/checklists-menu/checklists-menu.component';
 import { ChecklistsTagsComponent } from './checklists/checklists-tags/checklists-tags.component';
 import { ChecklistsComponent } from './checklists/checklists.component';
+import { ChecklistAdminActionsComponent } from './checklist/checklist-admin-actions/checklist-admin-actions.component';
 
 @NgModule({
   imports: [
@@ -63,7 +64,8 @@ import { ChecklistsComponent } from './checklists/checklists.component';
     ChecklistCreateComponent,
     MarkdownEditorComponent,
     ChecklistOwnerActionsComponent,
-    ChecklistActionsComponent
+    ChecklistActionsComponent,
+    ChecklistAdminActionsComponent
   ]
 })
 export class ChecklistsModule { }

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { AccountService } from './services/account.service';
+import { AdminService } from './services/admin.service';
 import { AuthenticatedGuard } from './services/authenticated-guard.service';
 import { ChecklistService } from './services/checklist.service';
 import { ChecklistsService } from './services/checklists.service';
@@ -24,7 +25,8 @@ import { UserService } from './services/user.service';
     AuthenticatedGuard,
     UserService,
     SaveService,
-    ReportService
+    ReportService,
+    AdminService
   ]
 })
 export class SharedModule { }

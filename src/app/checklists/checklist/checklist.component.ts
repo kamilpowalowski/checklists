@@ -10,6 +10,7 @@ import { ChecklistItem } from '../../shared/models/checklist-item.model';
 import { Checklist } from '../../shared/models/checklist.model';
 import { AccountService } from '../../shared/services/account.service';
 import { ChecklistService } from '../../shared/services/checklist.service';
+import { AdminService } from './../../shared/services/admin.service';
 
 @Component({
   selector: 'app-checklist',
@@ -20,6 +21,7 @@ export class ChecklistComponent implements OnInit, OnDestroy {
 
   checklist: Observable<Checklist>;
   items: Observable<ChecklistItem[]>;
+  isAdmin: boolean;
 
   private userNotAvailableWarningPresented = false;
   private checklistSubscription: Subscription;
@@ -30,7 +32,8 @@ export class ChecklistComponent implements OnInit, OnDestroy {
     private toasterService: ToasterService,
     private metaService: MetaService,
     public accountService: AccountService,
-    private checklistService: ChecklistService
+    private checklistService: ChecklistService,
+    private adminService: AdminService
   ) { }
 
   ngOnInit() {
@@ -50,6 +53,8 @@ export class ChecklistComponent implements OnInit, OnDestroy {
       }, (error) => {
         this.router.navigate(['/not-found']);
       });
+
+    this.isAdmin = this.adminService.isUserAnAdmin();
   }
 
   ngOnDestroy() {

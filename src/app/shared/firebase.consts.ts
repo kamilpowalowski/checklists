@@ -7,3 +7,4 @@ export const TAGS_COLLECTION = 'tags';
 export const FEATURED_COLLECTION = 'featured';
 export const SAVED_COLLECTION = 'saved';
 export const REPORTED_COLLECTION = 'reported';
+export const ADMINS_COLLECTION = 'admins';

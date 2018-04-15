@@ -50,7 +50,9 @@ service cloud.firestore {
 
 		match /featured/{checklist} {
     	allow read;
-      allow write: if exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+      allow create: if exists(/databases/$(database)/documents/admins/$(request.auth.uid))
+                      && request.resource.data.admin == request.auth.uid;
+      allow delete: if exists(/databases/$(database)/documents/admins/$(request.auth.uid));
     }
 
     match /reported/{randomId} {

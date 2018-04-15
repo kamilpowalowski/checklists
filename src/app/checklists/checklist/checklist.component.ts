@@ -21,7 +21,7 @@ export class ChecklistComponent implements OnInit, OnDestroy {
 
   checklist: Observable<Checklist>;
   items: Observable<ChecklistItem[]>;
-  isAdmin: boolean;
+  isAdmin: Observable<boolean>;
 
   private userNotAvailableWarningPresented = false;
   private checklistSubscription: Subscription;

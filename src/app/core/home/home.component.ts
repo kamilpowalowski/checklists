@@ -10,12 +10,17 @@ import { ChecklistsService } from '../../shared/services/checklists.service';
 })
 export class HomeComponent implements OnInit {
 
+  moreVisible = false;
   featuredChecklists: Observable<Checklist[]>;
 
   constructor(private checklistsService: ChecklistsService) { }
 
   ngOnInit() {
     this.featuredChecklists = this.checklistsService.observeFeaturedChecklists();
+  }
+
+  toggleMoreVisible() {
+    this.moreVisible = !this.moreVisible;
   }
 
 }

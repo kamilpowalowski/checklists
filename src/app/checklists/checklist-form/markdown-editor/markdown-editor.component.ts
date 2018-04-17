@@ -30,6 +30,7 @@ export class MarkdownEditorComponent implements ControlValueAccessor, OnInit {
   options: any = {
     hideIcons: ['side-by-side', 'fullscreen'],
     placeholder: this.placeholder,
+    spellChecker: false,
     status: false
   };
 

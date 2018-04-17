@@ -33,12 +33,14 @@ export class SidebarComponent implements OnInit {
         link: '/checklists/me',
         pathMatch: 'not-full'
       },
+      /*
       {
         title: 'My account',
         icon: 'nb-person',
         link: '/account',
         pathMatch: 'full'
       },
+      */
       {
         title: 'About',
         icon: 'nb-lightbulb',

@@ -1,80 +1,61 @@
 @import '../../styles/themes';
 @import '~bootstrap/scss/mixins/breakpoints';
 @import '~@nebular/theme/styles/global/bootstrap/breakpoints';
-
 @include nb-install-component() {
-
-  nb-card-body {
-    overflow: visible;
-  }
-
-  .markdown {
-    display: inherit;
-  }
-
-  /deep/ .tag-form-control {
-    padding: 0.75rem 1.125rem;
-    color: nb-theme(form-control-text-primary-color);
-    background-color: nb-theme(form-control-bg);
-    border: nb-theme(form-control-border-width)
-            nb-theme(form-control-border-type)
-            nb-theme(form-control-border-color);
-    font-family: nb-theme(font-main);
-    border-radius: nb-theme(form-control-border-radius);
-
-    &:focus {
-      border: nb-theme(form-control-border-width)
-              nb-theme(form-control-border-type)
-              nb-theme(form-control-selected-border-color);
-      background-color: nb-theme(form-control-focus-bg);
+    nb-card-body {
+        overflow: visible;
     }
-
-    &:disabled {
-      border-color: nb-theme(form-control-border-color);
-
-      @include install-placeholder(rgba(nb-theme(form-control-placeholder-color), 0.5),
-                                   nb-theme(form-control-placeholder-font-size));
+    .markdown {
+        display: inherit;
     }
-
-    @include install-placeholder(nb-theme(form-control-placeholder-color),
-                                 nb-theme(form-control-placeholder-font-size));
-  }
-
-  .buttons-group {
-    display: flex;
-    justify-content: flex-start;
-
-    button {
-      margin-right: 0.5rem;
-      min-width: 4rem;
+    /deep/ .tag-form-control {
+        padding: 0.75rem 1.125rem;
+        color: nb-theme(form-control-text-primary-color);
+        background-color: nb-theme(form-control-bg);
+        border: nb-theme(form-control-border-width) nb-theme(form-control-border-type) nb-theme(form-control-border-color);
+        font-family: nb-theme(font-main);
+        border-radius: nb-theme(form-control-border-radius);
+        &:focus {
+            border: nb-theme(form-control-border-width) nb-theme(form-control-border-type) nb-theme(form-control-selected-border-color);
+            background-color: nb-theme(form-control-focus-bg);
+        }
+        &:disabled {
+            border-color: nb-theme(form-control-border-color);
+            @include install-placeholder(rgba(nb-theme(form-control-placeholder-color), 0.5), nb-theme(form-control-placeholder-font-size));
+        }
+        @include install-placeholder(nb-theme(form-control-placeholder-color), nb-theme(form-control-placeholder-font-size));
     }
-  }
-
-  .input-group {
-    margin-bottom: 1rem;
-  }
-
-  .validation-checkboxes {
-    display: flex;
-    justify-content: space-between;
-
-    .custom-control {
-      margin-left: 1rem;
+    .buttons-group {
+        display: flex;
+        justify-content: flex-start;
+        button {
+            margin-right: 0.5rem;
+            min-width: 4rem;
+        }
     }
-  }
-
-  .filled {
-    color: nb-theme(color-fg);
-  }
-
-  .form-group label {
-    padding: 0 0 0.75rem;
-  }
-
-  @include media-breakpoint-down(xs) {
-    button:not(.btn-icon) {
-      padding: 0.75rem 1rem;
-      font-size: 0.75rem;
+    .input-group {
+        margin-bottom: 1rem;
     }
-  }
+    .input-group:last-child {
+        margin-bottom: 0rem;
+    }
+    .validation-checkboxes {
+        display: flex;
+        justify-content: space-between;
+        .custom-control {
+            margin-left: 1rem;
+        }
+    }
+    .filled {
+        color: nb-theme(color-fg);
+    }
+    .form-group label {
+        padding: 0 0 0.75rem;
+    }
+    @include media-breakpoint-down(xs) {
+        button:not(.btn-icon) {
+            padding: 0.75rem 1rem;
+            font-size: 0.75rem;
+        }
+    }
 }

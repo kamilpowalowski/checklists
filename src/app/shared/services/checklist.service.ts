@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import * as firebase from 'firebase';
+import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
@@ -67,10 +68,8 @@ export class ChecklistService {
 
   selectChecklistItem(item: ChecklistItem) {
     if (item.subitems.length === 0) {
-
-      const set = new Set(this.selectedIds.getValue());
-      set.add(item.id);
-      this.selectedIds.next(set);
+      this.selectedIds.getValue().add(item.id);
+      this.selectedIds.next(this.selectedIds.getValue());
 
       if (!this.selectedIdsReference) { return; }
       this.selectedIdsReference
@@ -84,9 +83,8 @@ export class ChecklistService {
 
   unselectChecklistItem(item: ChecklistItem) {
     if (item.subitems.length === 0) {
-      const set = new Set(this.selectedIds.getValue());
-      set.delete(item.id);
-      this.selectedIds.next(set);
+      this.selectedIds.getValue().delete(item.id);
+      this.selectedIds.next(this.selectedIds.getValue());
 
       if (!this.selectedIdsReference) { return; }
       this.selectedIdsReference
@@ -215,11 +213,14 @@ export class ChecklistService {
 
     this.selectedIdsSubscription = this.selectedIdsReference
       .valueChanges()
-      .distinctUntilChanged()
       .filter(data => data != null)
+      .distinctUntilChanged()
+      .debounceTime(100)
       .subscribe(data => {
         const selectedIdsSet = new Set(Object.keys(data));
-        this.selectedIds.next(selectedIdsSet);
+        if (this.selectedIds.getValue() !== selectedIdsSet) {
+          this.selectedIds.next(selectedIdsSet);
+        }
       });
   }
 

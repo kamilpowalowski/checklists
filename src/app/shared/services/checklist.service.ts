@@ -214,13 +214,10 @@ export class ChecklistService {
     this.selectedIdsSubscription = this.selectedIdsReference
       .valueChanges()
       .filter(data => data != null)
-      .distinctUntilChanged()
-      .debounceTime(100)
+      .take(1)
       .subscribe(data => {
         const selectedIdsSet = new Set(Object.keys(data));
-        if (this.selectedIds.getValue() !== selectedIdsSet) {
-          this.selectedIds.next(selectedIdsSet);
-        }
+        this.selectedIds.next(selectedIdsSet);
       });
   }
 

@@ -9,16 +9,12 @@ service cloud.firestore {
                       && resource.data.created == request.resource.data.created;
       allow read, delete: if resource.data.owner == request.auth.uid;
 
-      match /{allChildren=**} {
-        function canReadChecklist() {
-      		return get(/databases/$(database)/documents/checklists/$(checklist)).data.public == true;
-      	}
-
+      match /items/{item} {
         function canReadAndWriteChecklist() {
       		return get(/databases/$(database)/documents/checklists/$(checklist)).data.owner == request.auth.uid;
       	}
 
-        allow read: if canReadChecklist();
+        allow read;
       	allow read, write: if canReadAndWriteChecklist();
       }
     }

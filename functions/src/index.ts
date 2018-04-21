@@ -2,16 +2,19 @@ import * as admin from 'firebase-admin';
 import * as functions from 'firebase-functions';
 import * as path from 'path';
 import * as prerenderNode from 'prerender-node';
+import * as telegraf from 'telegraf';
+
+// Read README before deploying this functions
+
+// Prerendering
 
 admin.initializeApp(functions.config().firebase);
 
 const defaultTitle = 'lizt.co - checklists made easy';
 const defaultDescription = 'community driven website for creating and sharing checklists';
-const defaultUrl = 'https://lizt.co';
 
 function websiteUrl(): string {
   const domain = functions.config().domain;
-  if (!domain) { return defaultUrl; }
   return domain.protocol + '://' + domain.host;
 }
 
@@ -53,7 +56,6 @@ function returnPrerenderedHtmlForChecklist(request, response, checklist) {
   response.status(200).end(checklistHtml);
 }
 
-
 export const prerender = functions.https.onRequest((request, response) => {
   if (!prerenderNode.shouldShowPrerenderedPage(request)) {
     response.sendFile(path.join(__dirname + '/../dist/index.html'));
@@ -78,4 +80,15 @@ export const prerender = functions.https.onRequest((request, response) => {
 
   returnPrerenderedHtml(request, response);
 
+});
+
+// New user notification
+
+const bot = new telegraf.Telegram(functions.config().bot.token);
+
+export const newUser = functions.auth.user().onCreate(_ => {
+  return bot.sendMessage(
+    functions.config().bot.chat,
+    'New user joined ' + functions.config().domain.host + ' 🎉'
+  );
 });

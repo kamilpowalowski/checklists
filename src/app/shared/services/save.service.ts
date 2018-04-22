@@ -5,7 +5,6 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import * as consts from '../firebase.consts';
-import { SAVED_COLLECTION } from '../firebase.consts';
 import { Account } from '../models/account.model';
 import { Checklist } from '../models/checklist.model';
 import { AccountService } from './account.service';

@@ -40,6 +40,10 @@ const appRoutes: Routes = [
         loadChildren: './pages/pages.module#PagesModule'
       },
       {
+        path: 'account',
+        loadChildren: './account/account.module#AccountModule'
+      },
+      {
         path: 'not-found',
         component: NotFoundComponent
       },

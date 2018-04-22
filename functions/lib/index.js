@@ -73,6 +73,9 @@ exports.prerender = functions.https.onRequest((request, response) => {
 // New user notification
 const bot = new telegraf.Telegram(functions.config().bot.token);
 exports.newUser = functions.auth.user().onCreate(_ => {
-    return bot.sendMessage(functions.config().bot.chat, 'New user joined ' + functions.config().domain.host + ' 🎉');
+    return bot.sendMessage(functions.config().bot.chat, `New user joined ${functions.config().domain.host} 🎉`);
+});
+exports.removeUser = functions.auth.user().onDelete(event => {
+    return bot.sendMessage(functions.config().bot.chat, `User with uid '${event.data.uid}' removed account ${functions.config().domain.host} 😭`);
 });
 //# sourceMappingURL=index.js.map

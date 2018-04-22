@@ -89,6 +89,13 @@ const bot = new telegraf.Telegram(functions.config().bot.token);
 export const newUser = functions.auth.user().onCreate(_ => {
   return bot.sendMessage(
     functions.config().bot.chat,
-    'New user joined ' + functions.config().domain.host + ' 🎉'
+    `New user joined ${functions.config().domain.host} 🎉`
+  );
+});
+
+export const removeUser = functions.auth.user().onDelete(event => {
+  return bot.sendMessage(
+    functions.config().bot.chat,
+    `User with uid '${event.data.uid}' removed account ${functions.config().domain.host} 😭`
   );
 });

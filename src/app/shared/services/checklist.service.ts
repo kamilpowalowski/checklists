@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import * as firebase from 'firebase';
+import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -144,9 +145,10 @@ export class ChecklistService {
 
     return this.checklistItems(itemsReference)
       .take(1)
-      .mergeMap(items => {
+      .map(items => items.map(item => item.id))
+      .mergeMap(itemIds => {
         const batch = this.firestore.firestore.batch();
-        for (const itemId of items.map(item => item.id)) {
+        for (const itemId of itemIds) {
           batch.delete(itemsReference.doc(itemId).ref);
         }
         batch.delete(checklistReference.ref);

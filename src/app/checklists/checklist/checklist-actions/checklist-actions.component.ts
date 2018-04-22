@@ -110,8 +110,8 @@ export class ChecklistActionsComponent implements OnInit, OnDestroy {
     const activeModal = this.modalService.open(ModalComponent, { size: 'lg', container: 'nb-layout' });
     activeModal.componentInstance.title = 'Report this checklist?';
     activeModal.componentInstance.body = `
-    This checklist will be checked and unpublish if necessary.
-    We may contact you for further information.
+    This checklist will be verifed and unpublish if necessary.
+    We may contact you for further information.<br/>
     Do you want to report this checklist?
     `;
     activeModal.componentInstance.primaryButtonTitle = 'Cancel';

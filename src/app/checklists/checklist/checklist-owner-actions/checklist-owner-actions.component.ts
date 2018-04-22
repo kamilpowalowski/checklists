@@ -67,7 +67,7 @@ export class ChecklistOwnerActionsComponent implements OnInit, OnDestroy {
     activeModal.componentInstance.title = 'Unpublish checklist?';
     activeModal.componentInstance.body = `
     Users that already have URL or saved this checklist still be able to view it.
-    This checklist will not be visible on a search result and public lists.
+    This checklist will not be visible on a search result and public lists.<br/>
     Do you want to unpublish this checklist?
     `;
     activeModal.componentInstance.primaryButtonTitle = 'Cancel';

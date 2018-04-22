@@ -2,8 +2,10 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFirestore } from 'angularfire2/firestore';
 import * as firebase from 'firebase';
+import 'rxjs/add/observable/concat';
 import 'rxjs/add/observable/fromPromise';
 import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/mapTo';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { AccountPersistance } from '../enums/account-persistance.enum';
@@ -95,6 +97,17 @@ export class AccountService {
     return Observable.fromPromise(
       this.firebaseAuth.auth.currentUser.updatePassword(newPassword)
     );
+  }
+
+  removeAccount(): Observable<void> {
+    const profile = this.profile.getValue();
+    if (!profile) {
+      return Observable.throw(new Error('Account not found'));
+    }
+
+    return Observable.fromPromise(this.firebaseAuth.auth.currentUser.delete())
+      .mapTo(null)
+      .do(_ => this.updateProfile(null));
   }
 
   private updateProfile(firebaseUser: firebase.User | null) {

@@ -38,7 +38,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
           this.setAnonymousState();
         }
       });
-      this.name = environment.production ? 'lizt.co' : '[dev]lizt.co';
+    this.name = environment.production ? 'lizt.co' : '[dev]lizt.co';
   }
 
   ngOnDestroy() {
@@ -51,6 +51,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   private setAnonymousState() {
     this.userName = 'Anonymous';
+    this.userPhoto = null;
     this.userMenu = [
       { title: 'Log in', link: '/auth/login' },
       { title: 'Register', link: '/auth/register' }
@@ -61,7 +62,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.userName = user.displayName ? user.displayName : 'Active user';
     this.userPhoto = user.photo;
     this.userMenu = [
-      // { title: 'My account', link: '/account' },
+      { title: 'My account', link: '/account' },
       { title: 'Log out', link: '/auth/logout' }
     ];
   }

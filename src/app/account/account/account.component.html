@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <nb-card>
+        <nb-card-body>
+          <button class="btn btn-primary btn-block" routerLink="/auth/logout">Log out</button>
+        </nb-card-body>
+      </nb-card>
+      <nb-flip-card>
+        <nb-card-front>
+          <nb-card>
+            <nb-card-header>Danger zone</nb-card-header>
+            <nb-card-body>Flip this card to show destructive actions</nb-card-body>
+            <nb-card-footer>
+              <span [innerHTML]="'Use the arrow on the right 👉' | emoji"></span>
+            </nb-card-footer>
+          </nb-card>
+        </nb-card-front>
+        <nb-card-back>
+          <nb-card>
+            <nb-card-header>Danger zone</nb-card-header>
+            <nb-card-body>
+              <button class="btn btn-danger btn-block" (click)="delete()">Delete my account</button>
+            </nb-card-body>
+            <nb-card-footer>
+              <span [innerHTML]="'You still can go back 👉' | emoji"></span>
+            </nb-card-footer>
+          </nb-card>
+        </nb-card-back>
+      </nb-flip-card>
+    </div>
+    <div class="col-md-8">
+      there will be something here, somewhen...
+    </div>
+  </div>
+</div>

@@ -5,11 +5,10 @@
 @import '~@nebular/theme/styles/globals';
 @import '~@nebular/auth/styles/all';
 
-// loading progress bar theme
-@import './pace.theme';
-
 // loading chips theme
 @import './ngx-chips.theme';
+
+@import './code-style';
 
 // Loading share component styles
 @import '~font-awesome/css/font-awesome.min.css';
@@ -23,9 +22,9 @@
   @include nb-theme-global();
   @include nb-auth-global();
 
-  // loading progress bar
-  @include ngx-pace-theme();
-
   // loading chips theme
   @include ngx-chips-theme();
+
+  // loading code style
+  @include code-style();
 };

@@ -1,0 +1,10 @@
+@mixin code-style() {
+    pre {
+        border-radius: 0.25rem;
+        background-color: #f8f9fa;
+    }
+    code {
+        border-radius: 0.25rem;
+        background-color: #f8f9fa;
+    }
+}

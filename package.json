@@ -1,6 +1,6 @@
 {
   "name": "lizt.co",
-  "version": "0.6.8",
+  "version": "0.6.9",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -46,7 +46,7 @@
     "ng-appversion": "^1.1.0",
     "ngx-chips": "^1.6.4",
     "ngx-markdown": "^1.5.0",
-    "prismjs": "^1.10.0",
+    "prismjs": "^1.14.0",
     "roboto-fontface": "^0.9.0",
     "rxjs": "^5.4.2",
     "smartunique": "^2.0.0",

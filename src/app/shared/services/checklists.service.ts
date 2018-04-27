@@ -22,7 +22,9 @@ export class ChecklistsService {
 
   observePublicChecklists(tag: string | null): Observable<Checklist[]> {
     return this.observeChecklists(ref => {
-      let query = ref.where('public', '==', true);
+      let query = ref
+        .orderBy('created', 'desc')
+        .where('public', '==', true);
       query = tag ? query.where(`tags.${tag}`, '==', true) : query;
       return query;
     });
@@ -30,21 +32,24 @@ export class ChecklistsService {
 
   observeFeaturedChecklists(): Observable<Checklist[]> {
     return this.firestore
-      .collection(consts.FEATURED_COLLECTION)
+      .collection(
+        consts.FEATURED_COLLECTION,
+        ref => ref.orderBy('date', 'desc')
+      )
       .snapshotChanges()
       .distinctUntilChanged()
       .map(actions => {
-        return actions.map(action => {
-          return action.payload.doc.id;
-        });
+        return actions
+          .map(action => action.payload.doc.id);
       })
       .mergeMap(ids => {
         if (ids.length === 0) { return Observable.of([]); }
 
-        const checklistsObservables = ids.map(id => {
-          return this.checklistService.observeChecklist(id, false)
-            .catch(_ => Observable.of(null));
-        });
+        const checklistsObservables = ids
+          .map(id => {
+            return this.checklistService.observeChecklist(id, false)
+              .catch(_ => Observable.of(null));
+          });
 
         return Observable.combineLatest(checklistsObservables)
           .map(results => results.filter(result => result != null));
@@ -54,7 +59,9 @@ export class ChecklistsService {
   observeAccountChecklists(tag: string | null, onlyPublic: boolean): Observable<Checklist[]> {
     const accountId = this.accountService.profile.getValue().account.id;
     return this.observeChecklists(ref => {
-      let query = ref.where('owner', '==', accountId);
+      let query = ref
+        .orderBy('created', 'desc')
+        .where('owner', '==', accountId);
       query = onlyPublic ? query.where('public', '==', true) : query;
       query = tag ? query.where(`tags.${tag}`, '==', true) : query;
       return query;

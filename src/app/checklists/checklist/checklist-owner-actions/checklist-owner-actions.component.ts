@@ -9,6 +9,7 @@ import {
 import { Router } from '@angular/router';
 import { NbPopoverDirective } from '@nebular/theme';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { Subscription } from 'rxjs/Subscription';
 import { ModalComponent } from '../../../modals/modal/modal.component';
 import { ShareModalComponent } from '../../../modals/share-modal/share-modal.component';
 import { Checklist } from '../../../shared/models/checklist.model';
@@ -24,6 +25,10 @@ export class ChecklistOwnerActionsComponent implements OnInit, OnDestroy {
   @Input() checklist: Checklist;
   @ViewChildren(NbPopoverDirective) popoverDirectives;
 
+  canPublish = false;
+
+  private checklistSubscribtion: Subscription;
+
   constructor(
     private router: Router,
     private modalService: NgbModal,
@@ -31,12 +36,15 @@ export class ChecklistOwnerActionsComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.checklistSubscribtion = this.checklist.items
+      .subscribe(items => this.canPublish = items.length > 2);
   }
 
   ngOnDestroy() {
     this.popoverDirectives
       .filter(popoverDirective => popoverDirective.isShown)
       .forEach(popoverDirective => popoverDirective.hide());
+    this.checklistSubscribtion.unsubscribe();
   }
 
   edit() {

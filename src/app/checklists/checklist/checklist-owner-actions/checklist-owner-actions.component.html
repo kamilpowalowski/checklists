@@ -7,7 +7,7 @@
     <i class="nb-cloudy"></i>
     <span>Unublish</span>
   </nb-action>
-  <nb-action (click)="publish()" *ngIf="!checklist.isPublic" nbPopover="Make this checklist public." nbPopoverMode="hint">
+  <nb-action (click)="publish()" *ngIf="!checklist.isPublic" [nbPopover]="canPublish ? 'Make this checklist public.' : 'Checklist must have more than two items.'" nbPopoverMode="hint" [disabled]="!canPublish">
     <i class="nb-cloudy"></i>
     <span>Publish</span>
   </nb-action>

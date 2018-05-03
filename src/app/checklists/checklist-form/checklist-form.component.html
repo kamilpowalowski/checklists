@@ -29,8 +29,12 @@
                 <div class="input-group">
                   <input type="text" placeholder="Title" class="form-control" formControlName="title" [ngClass]="{ 'form-control-danger': showWarningForField('items.' + itemIndex + '.title') }"
                     required />
+                  <button type="button" *ngIf="!isDescriptionVisible(item)" (click)="showDescription(item)" style="margin-left: 1rem"
+                    class="btn btn-primary btn-icon" nbPopover="Add description." nbPopoverMode="hint">
+                    <i class="nb-compose"></i>
+                  </button>
                 </div>
-                <div class="input-group markdown">
+                <div class="input-group markdown" *ngIf="isDescriptionVisible(item)">
                   <app-markdown-editor placeholder="Description" formControlName="description"></app-markdown-editor>
                 </div>
               </nb-card-body>
@@ -63,8 +67,12 @@
                     <div class="input-group">
                       <input type="text" placeholder="Title" class="form-control" formControlName="title" [ngClass]="{ 'form-control-danger': showWarningForField('items.' + itemIndex + '.subitems.' + subitemIndex + '.title') }"
                         required />
+                      <button type="button" *ngIf="!isDescriptionVisible(subitem)" (click)="showDescription(subitem)"
+                        style="margin-left: 1rem" class="btn btn-primary btn-icon" nbPopover="Add description." nbPopoverMode="hint">
+                        <i class="nb-compose"></i>
+                      </button>
                     </div>
-                    <div class="input-group markdown">
+                    <div class="input-group markdown" *ngIf="isDescriptionVisible(subitem)">
                       <app-markdown-editor placeholder="Description" formControlName="description"></app-markdown-editor>
                     </div>
                   </nb-card-body>

@@ -3,7 +3,8 @@ import {
   ElementRef,
   OnDestroy,
   OnInit,
-  ViewChild
+  ViewChild,
+  ViewChildren
   } from '@angular/core';
 import {
   AbstractControl,
@@ -13,6 +14,7 @@ import {
   Validators
   } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NbPopoverDirective } from '@nebular/theme';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TagModel } from 'ngx-chips/core/accessor';
 import 'rxjs/add/observable/never';
@@ -34,6 +36,7 @@ import { ChecklistService } from '../../shared/services/checklist.service';
 export class ChecklistFormComponent implements OnInit {
   form: FormGroup;
   saveInProgress: boolean;
+  @ViewChildren(NbPopoverDirective) popoverDirectives;
 
   returnUrl: string;
 
@@ -63,6 +66,7 @@ export class ChecklistFormComponent implements OnInit {
     const newItem = new FormGroup({
       'id': new FormControl(),
       'title': new FormControl('', Validators.required),
+      'description-visible': new FormControl(),
       'description': new FormControl(),
       'subitems': new FormArray([])
     });
@@ -75,6 +79,7 @@ export class ChecklistFormComponent implements OnInit {
     const newItem = new FormGroup({
       'id': new FormControl(),
       'title': new FormControl('', Validators.required),
+      'description-visible': new FormControl(),
       'description': new FormControl()
     });
     subitems.push(newItem);
@@ -89,6 +94,18 @@ export class ChecklistFormComponent implements OnInit {
   removeSubitem(index: number, item: FormArray) {
     const subitems = item.get('subitems') as FormArray;
     subitems.removeAt(index);
+  }
+
+  isDescriptionVisible(item: FormArray): boolean {
+    return item.get('description-visible').value as boolean;
+  }
+
+  showDescription(item: FormArray) {
+    this.popoverDirectives
+      .filter(popoverDirective => popoverDirective.isShown)
+      .forEach(popoverDirective => popoverDirective.hide());
+
+    item.get('description-visible').setValue(true);
   }
 
   showWarningForField(name: string): boolean {

@@ -66,6 +66,7 @@ export class ChecklistEditComponent extends ChecklistFormComponent implements On
       return {
         'id': item.id,
         'title': item.title,
+        'description-visible': item.description.length > 0,
         'description': item.description
       };
     });

@@ -7,7 +7,7 @@ env:
   global:
     - GET_ENV_VAR=./.travis/get_env_specific_value.sh
     - FIREBASE_PROJECT=$($GET_ENV_VAR development production)
-    - ANGULAR_ENV=$($GET_ENV_VAR dev prod)
+    - ANGULAR_CONF=$($GET_ENV_VAR development production)
 
 branches:
    only:
@@ -20,7 +20,7 @@ before_script:
    - npm --prefix functions install
 
 script:
-   - npm run-script build -- --prod --env=$ANGULAR_ENV --aot
+   - npm run-script build -- --configuration=$ANGULAR_CONF
 
 after_success:
    - firebase use $FIREBASE_PROJECT --token $FIREBASE_TOKEN

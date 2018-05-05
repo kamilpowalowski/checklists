@@ -15,7 +15,7 @@ export class SaveService {
 
   readonly savedIds = new BehaviorSubject<Set<string>>(new Set());
 
-  private savedIdsReference: AngularFirestoreDocument<{ [key: string]: firebase.firestore.FieldValue }>;
+  private savedIdsReference: AngularFirestoreDocument<{}>;
   private savedIdsSubscription: Subscription;
 
   constructor(

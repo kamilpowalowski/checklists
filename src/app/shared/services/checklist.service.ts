@@ -20,7 +20,7 @@ export class ChecklistService {
 
   readonly selectedIds = new BehaviorSubject<Set<string>>(new Set());
 
-  private selectedIdsReference: AngularFirestoreDocument<{ [key: string]: firebase.firestore.FieldValue }>;
+  private selectedIdsReference: AngularFirestoreDocument<{}>;
   private selectedIdsSubscription: Subscription;
 
   constructor(

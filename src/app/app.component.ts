@@ -1,7 +1,14 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild
+  } from '@angular/core';
 import { NbThemeService } from '@nebular/theme';
-import { CookieLawService } from 'angular2-cookie-law';
 import * as EmojiOne from 'emojione';
+import { NgcInitializeEvent, NgcStatusChangeEvent } from 'ngx-cookieconsent/event';
+import { NgcCookieConsentService } from 'ngx-cookieconsent/service';
+import { Subscription } from 'rxjs/Subscription';
 import { AccountService } from './shared/services/account.service';
 
 @Component({
@@ -9,21 +16,33 @@ import { AccountService } from './shared/services/account.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
 
-  showCookieLaw: boolean;
+  private statusChangeSubscription: Subscription;
 
   constructor(
     private themeService: NbThemeService,
-    private cookieLawService: CookieLawService,
-    private accountService: AccountService
+    private cookieConsentService: NgcCookieConsentService,
+    private accountService: AccountService,
   ) { }
 
   ngOnInit() {
     EmojiOne.emojiSize = '64';
-    this.showCookieLaw = !this.cookieLawService.seen();
 
     const currentThemeName = window.localStorage.getItem('selected-theme');
     this.themeService.changeTheme(currentThemeName ? currentThemeName : 'default');
+
+    if (!window.localStorage.getItem('cookie-consent-presented')) {
+      this.cookieConsentService.open();
+    }
+
+    this.statusChangeSubscription = this.cookieConsentService.statusChange$
+      .subscribe((event: NgcStatusChangeEvent) => {
+        window.localStorage.setItem('cookie-consent-presented', 'true');
+      });
+  }
+
+  ngOnDestroy() {
+    this.statusChangeSubscription.unsubscribe();
   }
 }

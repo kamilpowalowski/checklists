@@ -1,11 +1,12 @@
-import { AuthenticationRoutingModule } from './authentication-routing.module';
-import { NbCheckboxModule } from '@nebular/theme';
-import { NbAuthModule } from '@nebular/auth';
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LoginComponent } from './login/login.component';
-import { SharedModule } from '../shared/shared.module';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NbAuthModule } from '@nebular/auth';
+import { NbCheckboxModule } from '@nebular/theme';
+import { SharedModule } from '../shared/shared.module';
+import { AuthenticationRoutingModule } from './authentication-routing.module';
+import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 
 @NgModule({
@@ -15,6 +16,7 @@ import { RegisterComponent } from './register/register.component';
     FormsModule,
     NbCheckboxModule,
     NbAuthModule,
+    FontAwesomeModule,
     AuthenticationRoutingModule
   ],
   declarations: [LoginComponent, RegisterComponent]

@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { faFacebook, faGoogle, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { NB_AUTH_OPTIONS, NbAuthResult, NbAuthService } from '@nebular/auth';
 import { getDeepFromObject } from '@nebular/auth/helpers';
 import 'rxjs/add/operator/take';
@@ -32,6 +33,10 @@ export class LoginComponent implements OnInit {
   messages: string[] = [];
   data: any = { rememberMe: true };
   submitted = false;
+
+  googleIcon = faGoogle;
+  facebookIcon = faFacebook;
+  twitterIcon = faTwitter;
 
   returnUrl: string;
 

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
   NbActionsModule,
   NbCardModule,
@@ -41,6 +42,7 @@ import { ThemeSwitcherComponent } from './theme-switcher/theme-switcher.componen
     NbPopoverModule,
     NbCardModule,
     EmojiModule,
+    FontAwesomeModule,
     MarkdownModule.forChild(),
     ToasterModule.forChild()
   ],

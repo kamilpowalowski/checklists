@@ -58,9 +58,15 @@
   <div class="links">
     <small class="form-text">Or connect with:</small>
     <div class="socials">
-      <a class="socicon-google" (click)="login(method.Google)"></a>
-      <a class="socicon-facebook" (click)="login(method.Facebook)"></a>
-      <a class="socicon-twitter" (click)="login(method.Twitter)"></a>
+      <a (click)="login(method.Google)">
+        <fa-icon [icon]="googleIcon"></fa-icon>
+      </a>
+      <a (click)="login(method.Facebook)">
+        <fa-icon [icon]="facebookIcon"></fa-icon>
+      </a>
+      <a (click)="login(method.Twitter)">
+        <fa-icon [icon]="twitterIcon"></fa-icon>
+      </a>
     </div>
     <small class="form-text">
       Don't have an account? <a routerLink="../register" [queryParams]="{'return-url': returnUrl}"><strong>Register</strong></a>

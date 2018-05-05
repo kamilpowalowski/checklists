@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { versionLong } from '../../../_versions';
 
 @Component({
@@ -9,6 +10,7 @@ import { versionLong } from '../../../_versions';
 export class FooterComponent implements OnInit {
 
   versionCode = versionLong;
+  githubIcon = faGithub;
 
   constructor() { }
 

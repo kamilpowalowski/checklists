@@ -56,7 +56,8 @@ const cookieSettings: NgcCookieConsentConfig = {
     }
   },
   content: {
-    link: 'Privacy Policy',
+    message: 'By continuing to browse the site, you\'re agreeing to our use of cookies.',
+    link: 'Learn more in our Privacy Policy',
     href: '/legal/policy'
   },
   enabled: false

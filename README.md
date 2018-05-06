@@ -9,7 +9,7 @@
 The project is written in Angular (more information about project deployment-> [ANGULAR.md](ANGULAR.md)) and hosted on Firebase with help of Travis CI.
 
 ## Project status
-Follow project [current development status](https://trello.com/b/pa48oery) on Trello Project Managment board.
+Follow project [Roadmap](https://lizt.rikko.io) on Rikko.
 
 ## Contributions
 All contributors are welcome.

@@ -5,6 +5,7 @@ import {
   ViewChild
   } from '@angular/core';
 import { NbThemeService } from '@nebular/theme';
+import { Angulartics2GoogleAnalytics } from 'angulartics2/ga';
 import * as EmojiOne from 'emojione';
 import { NgcInitializeEvent, NgcStatusChangeEvent } from 'ngx-cookieconsent/event';
 import { NgcCookieConsentService } from 'ngx-cookieconsent/service';
@@ -21,6 +22,7 @@ export class AppComponent implements OnInit, OnDestroy {
   private statusChangeSubscription: Subscription;
 
   constructor(
+    private angulartics2GoogleAnalytics: Angulartics2GoogleAnalytics,
     private themeService: NbThemeService,
     private cookieConsentService: NgcCookieConsentService,
     private accountService: AccountService,

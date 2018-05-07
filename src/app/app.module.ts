@@ -15,53 +15,20 @@ import { ToasterModule } from 'angular2-toaster';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFirestore, AngularFirestoreModule } from 'angularfire2/firestore';
-import { NgcCookieConsentConfig, NgcCookieConsentModule } from 'ngx-cookieconsent';
+import { Angulartics2Module } from 'angulartics2';
+import { Angulartics2GoogleAnalytics } from 'angulartics2/ga';
+import { NgcCookieConsentModule } from 'ngx-cookieconsent';
 import { MarkdownModule } from 'ngx-markdown';
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { ModalsModule } from './modals/modals.module';
+import { angularticsSettings } from './settings/angulartics.settings';
+import { authModuleSettings } from './settings/auth-module.settings';
+import { cookieSettings } from './settings/cookie.settings';
 import { FirebaseAuthenticationProvider } from './shared/services/firebase-authentication.provider';
 import { SharedModule } from './shared/shared.module';
-
-const authModuleSettings: NbAuthOptions = {
-  providers: {
-    email: {
-      service: FirebaseAuthenticationProvider
-    },
-  },
-  forms: {
-    validation: {
-      password: { minLength: 6 },
-      fullName: { required: true }
-    }
-  }
-};
-
-const cookieSettings: NgcCookieConsentConfig = {
-  cookie: {
-    domain: 'lizt.co'
-  },
-  position: 'bottom-left',
-  theme: 'classic',
-  type: 'info',
-  palette: {
-    popup: {
-      background: '#000'
-    },
-    button: {
-      background: '#40dc7e',
-      text: '#000'
-    }
-  },
-  content: {
-    message: 'By continuing to browse the site, you\'re agreeing to our use of cookies.',
-    link: 'Learn more in our Privacy Policy',
-    href: '/legal/policy'
-  },
-  enabled: false
-};
 
 export function metaFactory(): MetaLoader {
   return new MetaStaticLoader({
@@ -82,6 +49,7 @@ export function metaFactory(): MetaLoader {
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
+    Angulartics2Module.forRoot([Angulartics2GoogleAnalytics], angularticsSettings),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,

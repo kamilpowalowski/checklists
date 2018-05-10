@@ -3,6 +3,6 @@
 @import '~@nebular/theme/styles/global/bootstrap/breakpoints';
 @include nb-install-component() {
   /deep/ .front-container>.flip-button {
-    margin-bottom: 2rem;
+    margin-bottom: 3.25rem;
   }
 }

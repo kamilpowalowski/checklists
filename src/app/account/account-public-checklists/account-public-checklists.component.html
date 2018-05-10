@@ -1,0 +1,16 @@
+<nb-card>
+    <nb-card-header>
+      {{ userDisplayName }}'s public checklists
+    </nb-card-header>
+    <nb-card-body>
+      <ng-container *ngIf="checklists === null">loading...</ng-container>
+      <ng-container *ngIf="checklists?.length === 0">
+        create and publish your checklists using <a routerLink="/checklists/me">My checklists</a> menu
+      </ng-container>
+      <ng-container *ngFor="let checklist of checklists">
+        <div [routerLink]="['/checklists', checklist.id, checklist.titleInUrlForm()]" class="checklist">
+          <span [innerHTML]="checklist.title | emoji"></span>
+        </div>
+      </ng-container>
+    </nb-card-body>
+  </nb-card>

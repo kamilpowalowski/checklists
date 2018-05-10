@@ -11,7 +11,7 @@ import * as telegraf from 'telegraf';
 admin.initializeApp(functions.config().firebase);
 
 const defaultTitle = 'lizt.co - checklists made easy';
-const defaultDescription = 'community driven website for creating and sharing checklists';
+const defaultDescription = 'community-driven website for creating and sharing checklists';
 
 function websiteUrl(): string {
   const domain = functions.config().domain;

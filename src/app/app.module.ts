@@ -37,7 +37,7 @@ export function metaFactory(): MetaLoader {
     applicationName: 'lizt.co - checklists made easy',
     defaults: {
       title: 'lizt.co - checklists made easy',
-      description: 'community driven website for creating and sharing checklists',
+      description: 'community-driven website for creating and sharing checklists',
       'og:type': 'website',
       'og:locale': 'en_US'
     }

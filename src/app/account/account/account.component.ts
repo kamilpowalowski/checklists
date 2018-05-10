@@ -5,9 +5,9 @@ import 'rxjs/add/observable/concat';
 import 'rxjs/add/operator/mergeMapTo';
 import { Observable } from 'rxjs/Observable';
 import { ModalComponent } from '../../modals/modal/modal.component';
+import { Checklist } from '../../shared/models/checklist.model';
 import { AccountService } from '../../shared/services/account.service';
 import { ChecklistsService } from '../../shared/services/checklists.service';
-import { SaveService } from '../../shared/services/save.service';
 
 @Component({
   selector: 'app-account',
@@ -16,15 +16,19 @@ import { SaveService } from '../../shared/services/save.service';
 })
 export class AccountComponent implements OnInit {
 
+  publicChecklists: Observable<Checklist[]>;
+  userDisplayName: string;
+
   constructor(
     private router: Router,
     private modalService: NgbModal,
     private accountService: AccountService,
-    private checklistsService: ChecklistsService,
-    private saveService: SaveService
+    private checklistsService: ChecklistsService
   ) { }
 
   ngOnInit() {
+    this.publicChecklists = this.checklistsService.observeAccountChecklists(null, true);
+    this.userDisplayName = this.accountService.profile.getValue().user.displayName;
   }
 
   delete() {

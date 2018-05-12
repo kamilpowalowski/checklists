@@ -53,7 +53,7 @@ export class SaveService {
         });
 
         return Observable.combineLatest(checklistsObservables)
-          .map(results => results.filter(result => result != null));
+          .map(results => results.filter(result => result !== null));
       });
   }
 
@@ -86,7 +86,7 @@ export class SaveService {
     this.savedIdsSubscription = this.savedIdsReference
       .valueChanges()
       .distinctUntilChanged()
-      .filter(data => data != null)
+      .filter(data => data !== null)
       .subscribe(data => {
         const savedIdsSet = new Set(Object.keys(data));
         this.savedIds.next(savedIdsSet);

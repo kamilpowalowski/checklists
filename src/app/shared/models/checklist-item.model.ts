@@ -7,10 +7,10 @@ import * as smartunique from 'smartunique';
 export class ChecklistItem {
 
   constructor(
-    public id: string,
+    public id: string | null,
     public order: number,
     public title: string,
-    public description: string,
+    public description: string | null,
     public subitems: ChecklistItem[]
   ) {
     this.id = id ? id : smartunique.shortId();

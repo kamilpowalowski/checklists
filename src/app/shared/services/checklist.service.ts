@@ -215,7 +215,7 @@ export class ChecklistService {
 
     this.selectedIdsSubscription = this.selectedIdsReference
       .valueChanges()
-      .filter(data => data != null)
+      .filter(data => data !== null)
       .take(1)
       .subscribe(data => {
         const selectedIdsSet = new Set(Object.keys(data));

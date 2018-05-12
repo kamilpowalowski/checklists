@@ -11,6 +11,10 @@
         <nb-card-header>What's new?</nb-card-header>
         <nb-card-body>
           <div>
+            <b>version 0.7.0</b>
+            <ul>
+              <li>tutorialized checklist for new accounts</li>
+            </ul>
             <b>version 0.6.13</b>
             <ul>
               <li>public checklists on account page</li>
@@ -20,13 +24,13 @@
               <li>updated Angular to version 6.0.0</li>
               <li>changed Cookie Law component</li>
             </ul>
+          </div>
+          <div [hidden]="!moreVisible">
             <b>version 0.6.11</b>
             <ul>
               <li>empty checklist can't be published</li>
               <li>links to blogposts on home screen</li>
             </ul>
-          </div>
-          <div [hidden]="!moreVisible">
             <b>version 0.6.10</b>
             <ul>
               <li>ccount page, logout and delete account functions</li>

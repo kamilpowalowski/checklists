@@ -9,6 +9,7 @@ import { FirebaseAuthenticationProvider } from './services/firebase-authenticati
 import { ReportService } from './services/report.service';
 import { SaveService } from './services/save.service';
 import { TagsService } from './services/tags.service';
+import { TutorialChecklistService } from './services/tutorial-checklist.service';
 import { UserService } from './services/user.service';
 
 @NgModule({
@@ -19,6 +20,7 @@ import { UserService } from './services/user.service';
   providers: [
     ChecklistsService,
     ChecklistService,
+    TutorialChecklistService,
     TagsService,
     AccountService,
     FirebaseAuthenticationProvider,

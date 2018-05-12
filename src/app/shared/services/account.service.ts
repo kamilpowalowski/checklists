@@ -14,12 +14,14 @@ import * as consts from '../firebase.consts';
 import { Account } from '../models/account.model';
 import { Profile } from '../models/profile.model';
 import { User } from '../models/user.model';
+import { TutorialChecklistService } from './tutorial-checklist.service';
 
 @Injectable()
 export class AccountService {
 
   readonly profile = new BehaviorSubject<Profile>(null);
   readonly authenticationState = new BehaviorSubject<AuthenticationState>(AuthenticationState.Unknown);
+
 
   constructor(
     private firestore: AngularFirestore,
@@ -126,7 +128,8 @@ export class AccountService {
       this.saveAccount(account);
       this.saveUser(user);
 
-      this.profile.next(new Profile(account, user));
+      const profile = new Profile(account, user);
+      this.profile.next(profile);
       this.authenticationState.next(AuthenticationState.Authenticated);
     } else {
       this.profile.next(null);

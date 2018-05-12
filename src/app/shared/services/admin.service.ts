@@ -46,7 +46,7 @@ export class AdminService {
     return this.firestore.collection(consts.FEATURED_COLLECTION)
       .doc(checklist.id)
       .valueChanges()
-      .map(data => data != null);
+      .map(data => data !== null);
   }
 
   private observeAdminIds() {

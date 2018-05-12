@@ -11,13 +11,13 @@ export class Checklist {
   items = new BehaviorSubject<ChecklistItem[]>([]);
 
   constructor(
-    public id: string,
+    public id: string | null,
     public owner: string,
     public created: Date,
     public title: string,
-    public description: string,
+    public description: string | null,
     public tags: string[],
-    public isPublic: boolean,
+    public isPublic: boolean | null,
     items: Observable<ChecklistItem[]> | null
   ) {
     this.id = id ? id : smartunique.shortId();

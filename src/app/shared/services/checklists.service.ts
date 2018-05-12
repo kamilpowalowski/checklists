@@ -54,7 +54,7 @@ export class ChecklistsService {
           });
 
         return Observable.combineLatest(checklistsObservables)
-          .map(results => results.filter(result => result != null));
+          .map(results => results.filter(result => result !== null));
       });
   }
 
@@ -88,5 +88,4 @@ export class ChecklistsService {
         });
       });
   }
-
 }

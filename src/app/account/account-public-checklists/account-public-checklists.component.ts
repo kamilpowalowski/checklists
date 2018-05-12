@@ -9,7 +9,6 @@ import { Checklist } from '../../shared/models/checklist.model';
 export class AccountPublicChecklistsComponent implements OnInit {
 
   @Input() checklists: Checklist[];
-  @Input() userDisplayName: string;
 
   constructor() { }
 

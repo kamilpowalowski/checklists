@@ -19,7 +19,7 @@ export class UserService {
     return userReference
       .valueChanges()
       .distinctUntilChanged()
-      .filter(value => value != null)
+      .filter(value => value !== null)
       .map(data => {
         return new User(id, data['display-name'], data['photo']);
       });

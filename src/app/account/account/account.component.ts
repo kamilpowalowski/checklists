@@ -17,7 +17,6 @@ import { ChecklistsService } from '../../shared/services/checklists.service';
 export class AccountComponent implements OnInit {
 
   publicChecklists: Observable<Checklist[]>;
-  userDisplayName: string;
 
   constructor(
     private router: Router,
@@ -28,7 +27,6 @@ export class AccountComponent implements OnInit {
 
   ngOnInit() {
     this.publicChecklists = this.checklistsService.observeAccountChecklists(null, true);
-    this.userDisplayName = this.accountService.profile.getValue().user.displayName;
   }
 
   delete() {

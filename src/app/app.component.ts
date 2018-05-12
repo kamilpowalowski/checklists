@@ -25,7 +25,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private angulartics2GoogleAnalytics: Angulartics2GoogleAnalytics,
     private themeService: NbThemeService,
     private cookieConsentService: NgcCookieConsentService,
-    private accountService: AccountService,
+    private accountService: AccountService
   ) { }
 
   ngOnInit() {

@@ -10,6 +10,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { Checklist } from '../../shared/models/checklist.model';
 import { ChecklistsService } from '../../shared/services/checklists.service';
 import { TagsService } from '../../shared/services/tags.service';
+import { TutorialChecklistService } from '../../shared/services/tutorial-checklist.service';
 import { ChecklistsMenuComponent } from '../checklists/checklists-menu/checklists-menu.component';
 import { ChecklistsTagsComponent } from '../checklists/checklists-tags/checklists-tags.component';
 import { SaveService } from './../../shared/services/save.service';
@@ -55,6 +56,7 @@ export class AccountChecklistsComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private tagsService: TagsService,
     private checklistsService: ChecklistsService,
+    private tutorialChecklistService: TutorialChecklistService,
     private saveService: SaveService
   ) { }
 
@@ -81,6 +83,9 @@ export class AccountChecklistsComponent implements OnInit, OnDestroy {
 
         this.checklists = this.checklistsService.observeAccountChecklists(tag, onlyPublic);
       });
+
+    this.tutorialChecklistService.createTutorialChecklistIfNeeded()
+      .subscribe();
   }
 
   ngOnDestroy() {

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { OpenStartupStatisticComponent } from './open-startup-statistic/open-startup-statistic.component';
+import { OpenStartupStatisticComponent } from './open-startup-statistic.component';
 
 const openRoutes: Routes = [
   {

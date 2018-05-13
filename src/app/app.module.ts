@@ -29,6 +29,8 @@ import { authModuleSettings } from './settings/auth-module.settings';
 import { cookieSettings } from './settings/cookie.settings';
 import { FirebaseAuthenticationProvider } from './shared/services/firebase-authentication.provider';
 import { SharedModule } from './shared/shared.module';
+import { COSMIC_THEME } from './styles/theme.cosmic';
+import { DEFAULT_THEME } from './styles/theme.default';
 
 export function metaFactory(): MetaLoader {
   return new MetaStaticLoader({
@@ -53,7 +55,10 @@ export function metaFactory(): MetaLoader {
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
-    NbThemeModule.forRoot({ name: 'default' }),
+    NbThemeModule.forRoot(
+      { name: 'default' },
+      [DEFAULT_THEME, COSMIC_THEME]
+    ),
     NbAuthModule.forRoot(authModuleSettings),
     NgbModule.forRoot(),
     MarkdownModule.forRoot(),

@@ -68,18 +68,17 @@ export const prerender = functions.https.onRequest((request, response) => {
       .collection('checklists')
       .doc(pathElements[2])
       .get()
-      .then((snapshot) => {
+      .then(snapshot => {
         const checklist = snapshot.data();
         returnPrerenderedHtmlForChecklist(request, response, checklist);
       })
-      .catch((reason) => {
+      .catch(reason => {
         returnPrerenderedHtml(request, response);
       });
     return;
   }
 
   returnPrerenderedHtml(request, response);
-
 });
 
 // New user notification
@@ -93,9 +92,106 @@ export const newUser = functions.auth.user().onCreate(_ => {
   );
 });
 
+// User removed his account notification
+
 export const removeUser = functions.auth.user().onDelete(event => {
   return bot.sendMessage(
     functions.config().bot.chat,
     `User with uid '${event.data.uid}' removed account ${functions.config().domain.host} 😭`
   );
+});
+
+// Checklists collection changed
+
+function modifyChecklistCount(modifier: number): Promise<FirebaseFirestore.WriteResult> {
+  const reference = admin.firestore()
+    .collection('stats')
+    .doc('values');
+
+  return reference
+    .get()
+    .then(snapshot => {
+      const currentValue: number = snapshot.get('checklists');
+      return reference
+        .update({ checklists: currentValue + modifier });
+    });
+}
+
+export const checklistCreated = functions.firestore.document('checklists/{checklistId}')
+  .onCreate(_ => {
+    return modifyChecklistCount(+1);
+  });
+
+export const checklistRemoved = functions.firestore.document('checklists/{checklistId}')
+  .onDelete(_ => {
+    return modifyChecklistCount(-1);
+  });
+
+// Users collection changed
+
+function modifyUsersCount(modifier: number): Promise<FirebaseFirestore.WriteResult> {
+  const reference = admin.firestore()
+    .collection('stats')
+    .doc('values');
+
+  return reference
+    .get()
+    .then(snapshot => {
+      const currentValue: number = snapshot.get('users');
+      return reference
+        .update({ users: currentValue + modifier });
+    });
+}
+
+export const usersCreated = functions.firestore.document('users/{userId}')
+  .onCreate(_ => {
+    return modifyUsersCount(+1);
+  });
+
+export const usersRemoved = functions.firestore.document('users/{userId}')
+  .onDelete(_ => {
+    return modifyUsersCount(-1);
+  });
+
+// Store daily data
+
+export const dailyStats = functions.https.onRequest((request, response) => {
+  const secretToken = functions.config().secret.token;
+  if (request.query['token'] === secretToken) {
+    const reference = admin.firestore()
+      .collection('stats')
+      .doc('values');
+
+    reference
+      .get()
+      .then(snapshot => {
+        const date = new Date();
+        date.setHours(0, 0, 0, 0);
+
+        const checklists: number = snapshot.get('checklists');
+        const checklistsDaily: [{ date: Date, value: number }] = snapshot.get('checklists-daily');
+        checklistsDaily.push({
+          date: date,
+          value: checklists
+        });
+
+        const users: number = snapshot.get('users');
+        const usersDaily: [{ date: Date, value: number }] = snapshot.get('users-daily');
+        usersDaily.push({
+          date: date,
+          value: users
+        });
+
+        reference
+          .update({
+            'checklists-daily': checklistsDaily,
+            'users-daily': usersDaily
+          })
+          .then(_ => {
+            response.status(200).end();
+          })
+      });
+  } else {
+    response.status(401).end();
+  }
 });

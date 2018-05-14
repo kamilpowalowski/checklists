@@ -12,6 +12,10 @@
     ],
     "rewrites": [
       {
+        "source": "daily-stats",
+        "function": "dailyStats"
+      },
+      {
         "source": "**",
         "function": "prerender"
       }

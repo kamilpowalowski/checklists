@@ -59,6 +59,10 @@ service cloud.firestore {
       allow read;
     }
 
+    match /stats/{value} {
+      allow read;
+    }
+
     match /{document=**} {
       allow read, write: if false;
     }

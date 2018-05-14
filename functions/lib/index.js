@@ -7,7 +7,7 @@ const prerenderNode = require("prerender-node");
 const telegraf = require("telegraf");
 // Read README before deploying this functions
 // Prerendering
-admin.initializeApp(functions.config().firebase);
+admin.initializeApp();
 const defaultTitle = 'lizt.co - checklists made easy';
 const defaultDescription = 'community-driven website for creating and sharing checklists';
 function websiteUrl() {
@@ -76,8 +76,8 @@ exports.newUser = functions.auth.user().onCreate(_ => {
     return bot.sendMessage(functions.config().bot.chat, `New user joined ${functions.config().domain.host} 🎉`);
 });
 // User removed his account notification
-exports.removeUser = functions.auth.user().onDelete(event => {
-    return bot.sendMessage(functions.config().bot.chat, `User with uid '${event.data.uid}' removed account ${functions.config().domain.host} 😭`);
+exports.removeUser = functions.auth.user().onDelete((userRecord, context) => {
+    return bot.sendMessage(functions.config().bot.chat, `User with uid '${userRecord.uid}' removed account ${functions.config().domain.host} 😭`);
 });
 // Checklists collection changed
 function modifyChecklistCount(modifier) {
@@ -145,15 +145,14 @@ exports.dailyStats = functions.https.onRequest((request, response) => {
                 date: date,
                 value: users
             });
-            reference
+            return reference
                 .update({
                 'checklists-daily': checklistsDaily,
                 'users-daily': usersDaily
-            })
-                .then(_ => {
-                response.status(200).end();
             });
-        });
+        })
+            .then(_ => response.status(200).end())
+            .catch(error => response.status(500).end(error));
     }
     else {
         response.status(401).end();

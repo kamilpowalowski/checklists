@@ -36,7 +36,7 @@ export class ChecklistService {
   observeChecklist(id: string, fullData: boolean): Observable<Checklist> {
     const checklistReference = this.firestore
       .collection(consts.CHECKLISTS_COLLECTION)
-      .doc<Checklist>(id);
+      .doc(id);
 
     return checklistReference
       .valueChanges()
@@ -48,11 +48,13 @@ export class ChecklistService {
       })
       .map(data => {
         const tags = Object.keys(data['tags']);
+        const created: firebase.firestore.Timestamp = data['created'];
+
         const itemsReference = checklistReference
           .collection<ChecklistItem>(consts.CHECKLISTS_ITEMS_COLLECTION);
         const items = fullData ? this.checklistItems(itemsReference) : null;
         return new Checklist(
-          id, data['owner'], data['created'],
+          id, data['owner'], created.toDate(),
           data['title'], data['description'],
           tags, data['public'], items
         );

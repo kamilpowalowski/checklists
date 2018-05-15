@@ -6,6 +6,7 @@ import { AuthenticatedGuard } from './services/authenticated-guard.service';
 import { ChecklistService } from './services/checklist.service';
 import { ChecklistsService } from './services/checklists.service';
 import { FirebaseAuthenticationProvider } from './services/firebase-authentication.provider';
+import { OpenStartupService } from './services/open-startup.service';
 import { ReportService } from './services/report.service';
 import { SaveService } from './services/save.service';
 import { TagsService } from './services/tags.service';
@@ -28,6 +29,7 @@ import { UserService } from './services/user.service';
     UserService,
     SaveService,
     ReportService,
+    OpenStartupService,
     AdminService
   ]
 })

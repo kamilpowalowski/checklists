@@ -41,9 +41,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.name = environment.production ? 'lizt.co' : '[dev]lizt.co';
   }
 
-  ngOnDestroy() {
-
-  }
+  ngOnDestroy() { }
 
   toggleSidebar() {
     this.sidebarService.toggle(true, 'menu-sidebar');

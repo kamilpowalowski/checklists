@@ -18,6 +18,7 @@ declare const echarts: any;
 export class OpenStartupChartComponent implements AfterViewInit, OnDestroy {
 
   @Input() data: Array<{ date: Date, value: number }>;
+  @Input() unit: string;
   option: any;
   private themeSubscription: Subscription;
 
@@ -55,14 +56,14 @@ export class OpenStartupChartComponent implements AfterViewInit, OnDestroy {
             backgroundColor: eTheme.tooltipBg,
             borderColor: eTheme.tooltipBorderColor,
             borderWidth: 3,
-            formatter: '{c0} users',
+            formatter: `${this.unit}: {c0}`,
             extraCssText: eTheme.tooltipExtraCss,
           },
           xAxis: {
             type: 'category',
             boundaryGap: false,
             offset: 25,
-            data: this.data.map(i => i.date.toLocaleDateString()),
+            data: this.data.map(item => item.date.toDateString()),
             axisTick: {
               show: false,
             },
@@ -145,7 +146,7 @@ export class OpenStartupChartComponent implements AfterViewInit, OnDestroy {
                   ]),
                 },
               },
-              data: this.data.map(i => i.value),
+              data: this.data.map(item => item.value),
             },
             {
               type: 'line',

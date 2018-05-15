@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { Statistics } from '../shared/models/statistics.model';
+import { OpenStartupService } from '../shared/services/open-startup.service';
 
 @Component({
   selector: 'app-open-startup-statistic',
@@ -7,8 +10,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OpenStartupStatisticComponent implements OnInit {
 
-  constructor() {}
+  statistics: Observable<Statistics>;
 
-  ngOnInit() {}
+  constructor(private openStartupService: OpenStartupService) { }
+
+  ngOnInit() {
+    this.statistics = this.openStartupService.observeOpenStartupStatistics();
+  }
 
 }

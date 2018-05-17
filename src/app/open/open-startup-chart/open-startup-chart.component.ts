@@ -19,7 +19,7 @@ export class OpenStartupChartComponent implements AfterViewInit, OnDestroy {
 
   @Input() data: Array<{ date: Date, value: number }>;
   @Input() unit: string;
-  option: any;
+  options: any;
   private themeSubscription: Subscription;
 
   constructor(private theme: NbThemeService) { }
@@ -31,12 +31,12 @@ export class OpenStartupChartComponent implements AfterViewInit, OnDestroy {
       .subscribe(config => {
         const eTheme: any = config.variables.charts;
 
-        this.option = {
+        this.options = {
           grid: {
-            left: 0,
-            top: 0,
-            right: 0,
-            bottom: 80,
+            left: '4',
+            right: '45',
+            bottom: '40',
+            containLabel: true,
           },
           tooltip: {
             trigger: 'axis',
@@ -56,20 +56,22 @@ export class OpenStartupChartComponent implements AfterViewInit, OnDestroy {
             backgroundColor: eTheme.tooltipBg,
             borderColor: eTheme.tooltipBorderColor,
             borderWidth: 3,
-            formatter: `${this.unit}: {c0}`,
+            formatter: `${this.unit}: {c}<br/>{b}`,
             extraCssText: eTheme.tooltipExtraCss,
           },
           xAxis: {
             type: 'category',
             boundaryGap: false,
-            offset: 25,
-            data: this.data.map(item => item.date.toDateString()),
+            offset: 5,
+            data: this.data.map(item => item.date.toLocaleDateString()),
             axisTick: {
               show: false,
             },
             axisLabel: {
               color: eTheme.xAxisTextColor,
-              fontSize: 18,
+              fontSize: 14,
+              rotate: 45,
+              showMinLabel: false
             },
             axisLine: {
               lineStyle: {
@@ -100,7 +102,7 @@ export class OpenStartupChartComponent implements AfterViewInit, OnDestroy {
           series: [
             {
               type: 'line',
-              smooth: true,
+              smooth: false,
               symbolSize: 20,
               itemStyle: {
                 normal: {
@@ -150,7 +152,7 @@ export class OpenStartupChartComponent implements AfterViewInit, OnDestroy {
             },
             {
               type: 'line',
-              smooth: true,
+              smooth: false,
               symbol: 'none',
               lineStyle: {
                 normal: {

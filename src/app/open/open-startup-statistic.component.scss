@@ -1,0 +1,11 @@
+@import '../styles/themes';
+@include nb-install-component() {
+  app-open-startup-chart {
+    display: block;
+    height: nb-theme(card-height-medium);
+    width: 100%;
+  }
+  nb-card-body {
+    overflow: hidden;
+  }
+}

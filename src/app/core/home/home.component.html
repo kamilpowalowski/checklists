@@ -11,6 +11,11 @@
         <nb-card-header>What's new?</nb-card-header>
         <nb-card-body>
           <div>
+            <b>version 0.7.1</b>
+            <ul>
+              <li>
+                <a routerLink="/open">/open</a> page with analytics data</li>
+            </ul>
             <b>version 0.7.0</b>
             <ul>
               <li>tutorialized checklist for new accounts</li>
@@ -19,13 +24,14 @@
             <ul>
               <li>public checklists on account page</li>
             </ul>
+
+          </div>
+          <div [hidden]="!moreVisible">
             <b>version 0.6.12</b>
             <ul>
               <li>updated Angular to version 6.0.0</li>
               <li>changed Cookie Law component</li>
             </ul>
-          </div>
-          <div [hidden]="!moreVisible">
             <b>version 0.6.11</b>
             <ul>
               <li>empty checklist can't be published</li>

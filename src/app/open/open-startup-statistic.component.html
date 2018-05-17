@@ -1,18 +1,26 @@
 <div class="container">
+  <div class="row">
+    <div class="col-12">
+      <nb-card>
+        <nb-card-body>
+          Inspired by <a href="openstartups.co" target="_blank" rel="nofollow">Open Startup™</a> idea by
+          <a href="https://twitter.com/levelsio" target="_blank" rel="nofollow">Pieter Levels</a> I've decided to share <b>lizt.co</b> analytics data (more data will be added).
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
   <ng-container *ngIf="statistics | async; let statistics">
     <div class="row">
-      <div class="col-12">
-        <nb-card size="large">
+      <div class="col-lg-6">
+        <nb-card>
           <nb-card-header>Users</nb-card-header>
           <nb-card-body>
             <app-open-startup-chart [data]="statistics.users" unit="users"></app-open-startup-chart>
           </nb-card-body>
         </nb-card>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-12">
-        <nb-card size="large">
+      <div class="col-lg-6">
+        <nb-card>
           <nb-card-header>Checklists</nb-card-header>
           <nb-card-body>
             <app-open-startup-chart [data]="statistics.checklists" unit="checklists"></app-open-startup-chart>

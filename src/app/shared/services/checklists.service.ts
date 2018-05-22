@@ -25,9 +25,10 @@ export class ChecklistsService {
   observePublicChecklists(tag: string | null): Observable<Checklist[]> {
     return this.observeChecklists(ref => {
       let query = ref
-        .orderBy('created', 'desc')
         .where('public', '==', true);
-      query = tag ? query.where(`tags.${tag}`, '==', true) : query;
+      query = tag
+        ? query.where(`tags.${tag}`, '==', true)
+        : query.orderBy('created', 'desc');
       return query;
     });
   }
@@ -62,10 +63,13 @@ export class ChecklistsService {
     const accountId = this.accountService.profile.getValue().account.id;
     return this.observeChecklists(ref => {
       let query = ref
-        .orderBy('created', 'desc')
         .where('owner', '==', accountId);
+
       query = onlyPublic ? query.where('public', '==', true) : query;
-      query = tag ? query.where(`tags.${tag}`, '==', true) : query;
+      query = tag
+        ? query.where(`tags.${tag}`, '==', true)
+        : query.orderBy('created', 'desc');
+
       return query;
     });
   }

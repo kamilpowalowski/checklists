@@ -22,14 +22,12 @@ export class TutorialChecklistService {
     const reference = this.firestore
       .collection(consts.ACCOUNTS_COLLECTION)
       .doc(id);
-    return reference
-      .valueChanges()
-      .filter(data => data !== null)
+
+    return Observable.fromPromise(reference.ref.get())
       .take(1)
-      .filter(data => data['tutorial-created'] !== true)
+      .filter(snapshot => snapshot.get('tutorial-created') !== true)
       .mergeMap(_ => this.checklistService.storeChecklist(this.generate(id)))
       .mergeMap(checklistId => {
-        console.log('test');
         return Observable.fromPromise(
           reference.set({ 'tutorial-created': true }, { merge: true })
         )

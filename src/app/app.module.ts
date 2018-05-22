@@ -79,6 +79,5 @@ export function metaFactory(): MetaLoader {
 export class AppModule {
   constructor(private firestore: AngularFirestore) {
     firestore.firestore.settings({ timestampsInSnapshots: true });
-    firestore.firestore.enablePersistence();
   }
 }

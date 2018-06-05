@@ -5,7 +5,12 @@ import {
   OnInit
   } from '@angular/core';
 import { Router } from '@angular/router';
-import { NbMenuItem, NbMenuService, NbSidebarService } from '@nebular/theme';
+import {
+  NbMenuItem,
+  NbMenuService,
+  NbSearchService,
+  NbSidebarService
+  } from '@nebular/theme';
 import { environment } from '../../../environments/environment';
 import { User } from '../../shared/models/user.model';
 import { AccountService } from '../../shared/services/account.service';
@@ -25,11 +30,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private sidebarService: NbSidebarService,
+    private searchService: NbSearchService,
     private accountService: AccountService
   ) {
   }
 
   ngOnInit() {
+    this.name = environment.production ? 'lizt.co' : '[dev]lizt.co';
+
     this.accountService.profile
       .subscribe(profile => {
         if (profile) {
@@ -38,7 +46,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
           this.setAnonymousState();
         }
       });
-    this.name = environment.production ? 'lizt.co' : '[dev]lizt.co';
+
+    this.searchService.onSearchSubmit()
+      .subscribe(search => {
+        this.router.navigate(['/checklists', 'search', search.term]);
+      });
   }
 
   ngOnDestroy() { }

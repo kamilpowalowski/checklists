@@ -4,6 +4,7 @@ import { faFacebook, faGoogle, faTwitter } from '@fortawesome/free-brands-svg-ic
 import { NB_AUTH_OPTIONS, NbAuthResult, NbAuthService } from '@nebular/auth';
 import { getDeepFromObject } from '@nebular/auth/helpers';
 import 'rxjs/add/operator/take';
+import { environment } from '../../../environments/environment';
 import { AuthenticationMethod } from '../../shared/enums/authentication-method.enum';
 
 /**
@@ -39,6 +40,10 @@ export class LoginComponent implements OnInit {
   twitterIcon = faTwitter;
 
   returnUrl: string;
+
+  isGoogleActive = true;
+  isFacebookActive = environment.production;
+  isTwitterActive = environment.production;
 
   constructor(
     private authService: NbAuthService,

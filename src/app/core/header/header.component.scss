@@ -14,6 +14,9 @@
     .right {
         order: 1;
         flex-direction: row-reverse;
+        nb-action:first-child {
+            border-left: 1px solid nb-theme(separator) !important;
+        }
     }
     .logo-containter {
         display: flex;
@@ -79,8 +82,10 @@
         }
     }
     @include media-breakpoint-down(xs) {
-        .right /deep/ {
-            display: none;
+        .right {
+            .user {
+                display: none;
+            }
         }
     }
 }

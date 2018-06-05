@@ -5,6 +5,7 @@ import { AccountChecklistsComponent } from './account-checklists/account-checkli
 import { ChecklistCreateComponent } from './checklist-form/checklist-create.component';
 import { ChecklistEditComponent } from './checklist-form/checklist-edit.component';
 import { ChecklistComponent } from './checklist/checklist.component';
+import { ChecklistsSearchComponent } from './checklists-search/checklists-search.component';
 import { ChecklistsComponent } from './checklists/checklists.component';
 
 const checklistsRoutes: Routes = [
@@ -90,6 +91,11 @@ const checklistsRoutes: Routes = [
         pathMatch: 'full'
       }
     ]
+  },
+  {
+    path: 'search/:query',
+    component: ChecklistsSearchComponent,
+    pathMatch: 'full'
   },
   {
     path: ':id/:name',

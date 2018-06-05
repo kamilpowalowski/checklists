@@ -58,13 +58,13 @@
   <div class="links">
     <small class="form-text">Or connect with:</small>
     <div class="socials">
-      <a (click)="login(method.Google)">
+      <a (click)="login(method.Google)" [class.disabled]="!isGoogleActive">
         <fa-icon [icon]="googleIcon"></fa-icon>
       </a>
-      <a (click)="login(method.Facebook)">
+      <a (click)="login(method.Facebook)" [class.disabled]="!isFacebookActive">
         <fa-icon [icon]="facebookIcon"></fa-icon>
       </a>
-      <a (click)="login(method.Twitter)">
+      <a (click)="login(method.Twitter)" [class.disabled]="!isTwitterActive">
         <fa-icon [icon]="twitterIcon"></fa-icon>
       </a>
     </div>

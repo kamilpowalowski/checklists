@@ -10,5 +10,8 @@
         &:hover {
             color: nb-theme(color-fg-heading);
         }
+        &.disabled {
+          pointer-events: none;
+      }
     }
 }

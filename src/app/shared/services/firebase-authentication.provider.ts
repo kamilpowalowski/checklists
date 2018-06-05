@@ -158,6 +158,10 @@ export class FirebaseAuthenticationProvider extends NbAbstractAuthProvider {
       });
   }
 
+  refreshToken(): Observable<NbAuthResult> {
+    return Observable.of(this.processSuccess(null, this.getConfigValue('refreshToken.success'), []));
+  }
+
   private processSuccess(response?: any, redirect?: any, messages?: any): NbAuthResult {
     return new NbAuthResult(true, response, redirect, [], messages);
   }

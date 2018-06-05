@@ -10,6 +10,7 @@ import {
   NbMenuModule,
   NbMenuService,
   NbPopoverModule,
+  NbSearchModule,
   NbSidebarModule,
   NbUserModule
   } from '@nebular/theme';
@@ -41,6 +42,7 @@ import { ThemeSwitcherComponent } from './theme-switcher/theme-switcher.componen
     NbContextMenuModule,
     NbPopoverModule,
     NbCardModule,
+    NbSearchModule,
     EmojiModule,
     FontAwesomeModule,
     MarkdownModule.forChild(),

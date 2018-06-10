@@ -1,3 +1,10 @@
-<p>
-  Checklist searching will be added soon
-</p>
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <app-checklists-menu [title]="title" [items]="items" #menuComponent></app-checklists-menu>
+    </div>
+    <div class="col-md-8">
+      <app-checklists-items [checklists]="checklists | async" [ownTags]="false"></app-checklists-items>
+    </div>
+  </div>
+</div>

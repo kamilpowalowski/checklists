@@ -9,6 +9,7 @@ import { FirebaseAuthenticationProvider } from './services/firebase-authenticati
 import { OpenStartupService } from './services/open-startup.service';
 import { ReportService } from './services/report.service';
 import { SaveService } from './services/save.service';
+import { SearchService } from './services/search.service';
 import { TagsService } from './services/tags.service';
 import { TutorialChecklistService } from './services/tutorial-checklist.service';
 import { UserService } from './services/user.service';
@@ -20,6 +21,7 @@ import { UserService } from './services/user.service';
   declarations: [],
   providers: [
     ChecklistsService,
+    SearchService,
     ChecklistService,
     TutorialChecklistService,
     TagsService,

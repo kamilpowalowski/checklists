@@ -49,7 +49,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     this.searchService.onSearchSubmit()
       .subscribe(search => {
-        this.router.navigate(['/checklists', 'search', search.term]);
+        this.router.navigate(['/checklists', 'search', 'public', search.term]);
       });
   }
 

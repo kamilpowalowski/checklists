@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FusejsService } from 'angular-fusejs';
+import * as Fuse from 'fuse.js';
 import { Observable } from 'rxjs';
 import { SearchScope } from './../enums/search-scope.enum';
 import { Checklist } from './../models/checklist.model';
@@ -10,7 +10,6 @@ import { SaveService } from './save.service';
 export class SearchService {
 
   constructor(
-    private fusejsService: FusejsService,
     private checklistsService: ChecklistsService,
     private saveService: SaveService
   ) { }
@@ -45,7 +44,7 @@ export class SearchService {
   }
 
   private filterChecklists(checklists: Checklist[], query: string): Checklist[] {
-    return this.fusejsService.searchList(checklists, query, {
+    const fuse = new Fuse(checklists, {
       shouldSort: true,
       threshold: 0.6,
       location: 0,
@@ -54,5 +53,7 @@ export class SearchService {
       maxPatternLength: 32,
       minMatchCharLength: 2
     });
+
+    return fuse.search(query);
   }
 }

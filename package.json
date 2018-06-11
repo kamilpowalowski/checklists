@@ -1,6 +1,6 @@
 {
   "name": "lizt.co",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -36,6 +36,7 @@
     "@ngx-share/buttons": "5.3.1",
     "@ngx-share/core": "5.3.1",
     "angular-emojione": "^1.0.2",
+    "angular-fusejs": "^1.0.1",
     "angular-svg-icon": "^5.1.1",
     "angular2-toaster": "^5.1.0",
     "angularfire2": "^5.0.0-rc.5-next",

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { FusejsService } from 'angular-fusejs';
 import { Observable } from 'rxjs';
 import { SearchScope } from './../enums/search-scope.enum';
 import { Checklist } from './../models/checklist.model';
@@ -9,6 +10,7 @@ import { SaveService } from './save.service';
 export class SearchService {
 
   constructor(
+    private fusejsService: FusejsService,
     private checklistsService: ChecklistsService,
     private saveService: SaveService
   ) { }
@@ -43,10 +45,14 @@ export class SearchService {
   }
 
   private filterChecklists(checklists: Checklist[], query: string): Checklist[] {
-    const lowerCaseQuery = query.toLowerCase();
-    return checklists.filter(checklist => {
-      return checklist.title.toLowerCase().indexOf(lowerCaseQuery) >= 0
-        || checklist.tags.includes(lowerCaseQuery);
+    return this.fusejsService.searchList(checklists, query, {
+      shouldSort: true,
+      threshold: 0.6,
+      location: 0,
+      distance: 100,
+      keys: ['title', 'description', 'tags'],
+      maxPatternLength: 32,
+      minMatchCharLength: 2
     });
   }
 }

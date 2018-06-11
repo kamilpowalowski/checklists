@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FusejsModule } from 'angular-fusejs';
 import { AccountService } from './services/account.service';
 import { AdminService } from './services/admin.service';
 import { AuthenticatedGuard } from './services/authenticated-guard.service';
@@ -16,7 +17,8 @@ import { UserService } from './services/user.service';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    FusejsModule
   ],
   declarations: [],
   providers: [

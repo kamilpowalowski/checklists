@@ -1,16 +1,6 @@
-import {
-  Component,
-  Input,
-  OnDestroy,
-  OnInit
-  } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import {
-  NbMenuItem,
-  NbMenuService,
-  NbSearchService,
-  NbSidebarService
-  } from '@nebular/theme';
+import { NbMenuItem, NbSearchService, NbSidebarService } from '@nebular/theme';
 import { environment } from '../../../environments/environment';
 import { User } from '../../shared/models/user.model';
 import { AccountService } from '../../shared/services/account.service';

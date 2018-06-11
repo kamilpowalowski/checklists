@@ -11,6 +11,10 @@
         <nb-card-header>What's new?</nb-card-header>
         <nb-card-body>
           <div>
+            <b>version 0.8.1</b>
+            <ul>
+              <li>search results are based on fuzzy search</li>
+            </ul>
             <b>version 0.8.0</b>
             <ul>
               <li>checklists search</li>
@@ -25,12 +29,12 @@
               <li>
                 <a routerLink="/open">/open</a> page with analytics data</li>
             </ul>
+          </div>
+          <div [hidden]="!moreVisible">
             <b>version 0.7.0</b>
             <ul>
               <li>tutorialized checklist for new accounts</li>
             </ul>
-          </div>
-          <div [hidden]="!moreVisible">
             <b>version 0.6.13</b>
             <ul>
               <li>public checklists on account page</li>

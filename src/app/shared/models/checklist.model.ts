@@ -54,9 +54,9 @@ export class Checklist {
   titleInUrlForm(): string {
     return this.title
       .toLowerCase()
+      .replace(/[^\w\-\s]+/g, '')       // Remove all non-word chars
+      .trim()                          // Trim spaces from end of text
       .replace(/\s+/g, '-')           // Replace spaces with -
-      .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
-      .replace(/\-\-+/g, '-')         // Replace multiple - with single -
-      .trim();                        // Trim - from end of text;
+      .replace(/\-\-+/g, '-');        // Replace multiple - with single -
   }
 }

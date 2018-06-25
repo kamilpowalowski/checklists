@@ -22,19 +22,19 @@ export class SidebarComponent implements OnInit {
         home: true
       },
       {
-        title: 'Public checklists',
+        title: 'Public',
         icon: 'nb-cloudy',
         link: '/checklists/public',
         pathMatch: 'not-full'
       },
       {
-        title: 'My checklists',
+        title: 'My',
         icon: 'nb-star',
         link: '/checklists/me',
         pathMatch: 'not-full'
       },
       {
-        title: 'My account',
+        title: 'Account',
         icon: 'nb-person',
         link: '/account',
         pathMatch: 'full'

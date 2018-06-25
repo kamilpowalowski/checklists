@@ -27,13 +27,11 @@ export class ChecklistsComponent implements OnInit, OnDestroy {
   items = [
     {
       title: 'featured',
-      icon: 'nb-star',
       link: '/checklists/public/featured',
       pathMatch: 'full'
     },
     {
       title: 'all',
-      icon: 'nb-list',
       link: '/checklists/public/all',
       pathMatch: 'full'
     }

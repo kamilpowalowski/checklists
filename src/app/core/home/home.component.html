@@ -1,5 +1,8 @@
 <div class="container">
   <div class="row">
+    <div class="col-md-8">
+      <app-home-featured-checklists [checklists]="featuredChecklists | async"></app-home-featured-checklists>
+    </div>
     <div class="col-md-4">
       <nb-card>
         <nb-card-header>lizt blog (on Medium)</nb-card-header>
@@ -11,6 +14,11 @@
         <nb-card-header>What's new?</nb-card-header>
         <nb-card-body>
           <div>
+            <b>version 0.8.2</b>
+            <ul>
+              <li>removed icon from submenus</li>
+              <li>changed order of elements on home screen</li>
+            </ul>
             <b>version 0.8.1</b>
             <ul>
               <li>search results are based on fuzzy search</li>
@@ -24,13 +32,13 @@
               <li>duplicated tutorial checklist problem fixed</li>
               <li>checklists for given tag are displayed again</li>
             </ul>
+          </div>
+          <div [hidden]="!moreVisible">
             <b>version 0.7.1</b>
             <ul>
               <li>
                 <a routerLink="/open">/open</a> page with analytics data</li>
             </ul>
-          </div>
-          <div [hidden]="!moreVisible">
             <b>version 0.7.0</b>
             <ul>
               <li>tutorialized checklist for new accounts</li>
@@ -82,9 +90,6 @@
           <a href (click)="toggleMoreVisible(); false">{{ moreVisible ? 'read less' : 'read more' }}</a>
         </nb-card-body>
       </nb-card>
-    </div>
-    <div class="col-md-8">
-      <app-home-featured-checklists [checklists]="featuredChecklists | async"></app-home-featured-checklists>
     </div>
   </div>
 </div>

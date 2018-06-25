@@ -29,22 +29,18 @@ export class AccountChecklistsComponent implements OnInit, OnDestroy {
   items = [
     {
       title: 'new checklist',
-      icon: 'nb-compose',
       link: '/checklists/edit/new'
     },
     {
       title: 'all',
-      icon: 'nb-list',
       link: '/checklists/me/all'
     },
     {
       title: 'published',
-      icon: 'nb-cloudy',
       link: '/checklists/me/public'
     },
     {
       title: 'saved',
-      icon: 'nb-heart',
       link: '/checklists/me/saved'
     }
   ];
